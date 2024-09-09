@@ -1,5 +1,7 @@
 ## ARC CWL RO-Crate Profile
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13734332.svg)](https://doi.org/10.5281/zenodo.13734332)
+
 [Latest version](profile/arc_cwl_ro_crate.md)
 
 The ARC CWL RO-Crate profile describes how documentations of computational workflows and their invocations (runs) in Annotated Research Contexts (ARC) can be annotated in RO-Crate metadata.
