@@ -12,7 +12,7 @@ The Common Workflow Language (CWL) allows the use of [metadata](https://www.comm
 
 The ARC CWL profile mainly follows the [Workflow Run Crate](https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate/) profile (which itself combines [Process Run Crate](https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate/)  and [Workflow RO-Crate](https://about.workflowhub.eu/Workflow-RO-Crate/)) and extends it by providing means to annotate additional metadata and align terminology with other parts of an ARC.
 Computational workflows and laboratory workflows show many similarities, they typically only differ in how they are executed.
-In an ARC, the latter are described using the [ISA]() model, again seperating between a workflow description ([`LabProtocol`]()) and its execution ([`LabProcess`]()).
+In an ARC, the latter are described using the [ISA](https://isa-specs.readthedocs.io/en/latest/isajson.html#) model, again seperating between a workflow description ([`LabProtocol`](https://bioschemas.org/types/LabProtocol/0.5-DRAFT)) and its execution ([`LabProcess`](https://bioschemas.org/types/LabProcess/0.1-DRAFT)).
 These types provide properties to annotate parameterized metadata in the form of key-value pairs using ontology terms.
 Therefore, we extend the Workflow Run Crate by integrating these types into the established model.
 
