@@ -6,31 +6,51 @@
   *  - https://orcid.org/
 
 ## Overview
-The ARC CWL RO-Crate profile consists of two basic parts. It is divided in the description of the workflow, that can also be a standalone workflow description, 
-and the workflow invocation. The workflow invocation directly references the workflow description and provides the concrete input and output parameters for the workflow.
+The ARC CWL RO-Crate profile describes computational workflows (descriptions of computational processes to transform data) and their invocations (actual executions with specific inputs, outputs and parameters) in experimental settings, specifically within the framework of Annotated Research Contexts (ARC). It therefore consists of two basic parts, called workflows and runs. The run directly references the workflow description and provides the concrete inputs, outputs and parameters for the workflow.
 
-CWL allows the use of [metadata](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html) describing the workflows. The metadata often contains general information about licensing, authorship and affiliation, but is not limited to that. It is possible to describe the steps described by a workflow, or properties describing the run execution, in more detail. This profile aims to specify where and how the metadata contained within CWL workflow and CWL job files should be stored.
+The Common Workflow Language (CWL) allows the use of [metadata](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html) describing the workflows. The metadata often contains general information about licensing, authorship and affiliation, but is not limited to that. It is possible to describe the steps described by a workflow, or properties describing the run execution, in more detail. This profile aims to specify where and how the metadata contained within CWL workflow and CWL job files should be stored.
+
+The ARC CWL profile mainly follows the [Workflow Run Crate](https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate/) profile (which itself combines [Process Run Crate](https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate/)  and [Workflow RO-Crate](https://about.workflowhub.eu/Workflow-RO-Crate/)) and extends it by providing means to annotate additional metadata and align terminology with other parts of an ARC.
+Computational workflows and laboratory workflows show many similarities, they typically only differ in how they are executed.
+In an ARC, the latter are described using the [ISA](https://isa-specs.readthedocs.io/en/latest/isajson.html#) model, again seperating between a workflow description ([`LabProtocol`](https://bioschemas.org/types/LabProtocol/0.5-DRAFT)) and its execution ([`LabProcess`](https://bioschemas.org/types/LabProcess/0.1-DRAFT)).
+These types provide properties to annotate parameterized metadata in the form of key-value pairs using ontology terms.
+Therefore, we extend the Workflow Run Crate by integrating these types into the established model.
+
+### The Original Data Model
+
+The Workflow Run Crate models workflows using a combination of three types [`File`](https://schema.org/MediaObject), [`SoftwareSourceCode`](https://schema.org/SoftwareSourceCode), [`ComputationalWorkflow`](https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE) following the [Bioschemas ComputationalWorkflow Profile](https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE#nav-description).
+Workflows can have multiple input and output parameters, defined optionally as FormalParameter entities and linked to the workflow's inputs and outputs.
+An example of the original profile can be found [here](https://www.researchobject.org/ro-crate/specification/1.1/workflows.html#complete-workflow-example).
+The profile requires a `ComputationalWorkflow` object to be the `mainEntity` of the `Dataset` object describing root data entity.
+
+Runs are modeled as [CreateAction](https://schema.org/CreateAction) instances corresponding to the execution of a workflow.
+They describe the execution of a computational tool that orchestrates other tools, represented as a workflow executed using a Workflow Management System (WMS).
+Runs point onto the executed workflow using the `instrument` property and onto their inputs and outputs using the `object` and `result` properties.
 
 ### ARC CWL Workflow Profile
 
-The CWL Workflow Profile extends the [Bioschemas ComputationalWorkflow Profile](https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE#nav-description). A computational workflow consists of an orchestrated and repeatable pattern of activity enabled by the systematic organization of resources into processes that transform materials, provide services, or process information (source Wikipedia.org). An example of the original profile can be found [here](https://www.researchobject.org/ro-crate/specification/1.1/workflows.html#complete-workflow-example).
-Computational workflows and laboratory workflows show many similarities, they typically only differ in how they are executed.
-
-To stay consistent of how processes in the ARC are described, we try to stay consistent with the [ISA RO-Crate Profile](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#isa-ro-crate-profile). We therefore propose to use a multi type for the workflow profile. The type is therefore extended by [LabProtocol](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprotocol). Protocols can be described using [PropertyValue](https://schema.org/PropertyValue). Workflow complexity can vary. Workflows executing several tools in succession are common and require more complex annotation. This can be achieved by using lists of property values.
+The CWL Workflow Profile extends the Workflow profile of Workflow Run Crates by incorporating how protocols are modeled in the [ISA RO-Crate Profile](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#isa-ro-crate-profile). We therefore propose to use an additional multi type for the workflow profile. The type is therefore extended by [LabProtocol](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprotocol). Parameters of protocols can be described using [`PropertyValue`](https://schema.org/PropertyValue) and [`DefinedTerm`](https://schema.org/DefinedTerm). Workflow complexity can vary. Workflows executing several tools in succession are common and require more complex annotation. We therefore use a hierarchical model: a workflow can consist of several sub-workflows pointing to them through the `hasPart` property.
 
 ### CWL Workflow Run Profile
 
-The CWL Workflow Run Profile extends the [Workflow Run Crate](https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate/). This profile describes the execution of a computational tool that orchestrates other tools, represented as a workflow executed using a Workflow Management System (WMS). The Workflow Run Crate combines [Process Run Crate](https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate/)  and [Workflow RO-Crate](https://about.workflowhub.eu/Workflow-RO-Crate/), requiring a ComputationalWorkflow mainEntity and [CreateAction](https://schema.org/CreateAction) instances corresponding to the execution. Workflows can have multiple input and output parameters, defined optionally as FormalParameter entities and linked to the workflow's inputs and outputs.
-To continue staying consistent with the [ISA RO-Crate Profile](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#isa-ro-crate-profile), we propose to use multitype for our profile consisting of [LabProcess](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprocess) and CreateAction of the Process Run Crate within the Workflow Run Crate. This allows the annotation of inputs and outputs with metadata describing the properties of those Datasets and the processes leading from inputs to outputs.
+The CWL Workflow Run Profile extends the Run profile in [Workflow Run Crate](https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate/) by incorporating how processes are modeled in the [ISA RO-Crate Profile](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#isa-ro-crate-profile). We propose to use multitype for our profile consisting of [LabProcess](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprocess) and CreateAction of the Process Run Crate within the Workflow Run Crate. This allows the annotation of metadata describing explicit values of workflow parameters within a specific invocation. Here, we use the property `parameterValues` with objects of type `PropertyValue`.
+
+Furthermore, each run in an ARC has its own directory, containing the CWL file as well as generated output files.
+Therefore, a run is modeled in two ways: the directory as an object of type `Dataset` and the previously described `CreateAction`.
+The `Dataset` objects contains the output files and the CWL file via the `hasPart` property and is the `agent` of the `CreateAction`.
+
+As described above, workflows can be structured hierarchically, which is modeled in the RO-Crate through sub-workflows connected via `hasPart`.
+In this case, runs that are invocations of sub-workflows should be modeled as the abstract run object of type `CreateAction,LabProcess`.
+However, such runs do not have their own directory and therefore no corresponding Workflow Run Crate (`Dataset` object).
 
 ```mermaid
 flowchart TD
-        A["File,\nSoftwareSourceCode,\nComputationalWorkflow,\nLabProtocol"] -- "input\noutput" --> B["FormalParameter"]
-        C["CreateAction,\nLabProcess"] -- "instrument" --> A
+        A["File,<br>SoftwareSourceCode,<br>ComputationalWorkflow,<br>LabProtocol"] -- "input/output" --> B["FormalParameter"]
+        C["CreateAction,<br>LabProcess"] -- "instrument" --> A
         C -- "executesLabProtocol" --> A
         C -- "agent" --> D["Person or Organization"]
-        B -- "exampleOfWork" --> E["File or Property Value"]
-        C -- "object result" --> E
+        E["File or Property Value"] -- "exampleOfWork" --> B
+        C -- "object/result" ---> E
         D["Run=Dataset"] -- "processSequence=about" --> C
         D -- "hasPart" --> E
 ```
@@ -60,6 +80,8 @@ with the modifications listed below.
 | @type | MUST | [Text](https://schema.org/Text) | MUST be of type [CreateAction](https://schema.org/CreateAction) and [LabProcess](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprocess)|
 
 ## Example Workflow Run Crate configuration in ARCs
+
+As described above, workflows can be structured hierarchically. Each workflow (or sub-workflow) object in the hierarchy can have an associated run object in the RO-Crate metadata. The structure of JSON objects is visualized below. Every ARC Run consists of one or more Workflow Runs (and is therefore comparable to an [Assay](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#assay) in ISA). To reduce complexity, it is recommended to use top level description (marked red). One workflow describes the transformation of one set of input data to result data. If a workflow consists of several steps, forwarding the resulting data to the next step without returning them as a final result, it is described as one Workflow Run Crate. In other words, runs should only be documented for top-level workflows.
 
 ```mermaid
 flowchart TD
@@ -99,9 +121,10 @@ flowchart TD
   L -- "instrument" --> G
 ```
 
-Each `run` in an ARC is described by one or more Workflow Run Crates. Theoretically, an workflow can be broken down in subworkflows and subprocesses. To reduce complexity, it is recommended to use top level description (marked red). One workflow describes the transformation of one set of input data to result data. If a second workflow is applied on the result data, it can be described in a second Workflow Run Crate. If a workflow consists of several steps, forwarding the resulting data to the next step without returning them as a final result, it is described as one Workflow Run Crate. Every ARC Run consists of one or more Workflow Runs (and is therefore comparable to an [Assay](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#assay).
-
 ## Example ro-crate-metadata.json
+
+> [!IMPORTANT]  
+> Note: Examples are WIP
 
 ### CWL Workflow Profile
 
