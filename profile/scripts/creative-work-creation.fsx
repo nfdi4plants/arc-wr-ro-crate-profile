@@ -501,7 +501,7 @@ let optionalProfileProperties = [
 
 open System.IO
 
-File.WriteAllLines(Path.Combine(__SOURCE_DIRECTORY__,"createive-work.generated.md"), 
+File.WriteAllLines(Path.Combine(__SOURCE_DIRECTORY__,"creative-work.generated.md"), 
     [
         "| Property | Required | Cardinality | Expected Type | Description | Source Profile |"
         "|----------|----------|-------------|---------------|-------------|----------------|"
