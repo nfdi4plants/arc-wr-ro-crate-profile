@@ -1,6 +1,7 @@
 | Property | Required | Cardinality | Expected Type | Description | Source Profile |
 |----------|----------|-------------|---------------|-------------|----------------|
 | <h4>Required Properties</h4> | | | | | |
+| **`@id`** | Required | ONE | [IRI](https://datatracker.ietf.org/doc/html/rfc3987#section-2) | A unique identifier for the dataset | https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate |
 | **`conformsTo`** | Required | ONE | [schema.org/CreativeWork](https://schema.org/CreativeWork) | MUST reference a CreativeWork entity with an @id URI that is consistent with the versioned Permalink of this document, e.g. {"@id": "https://w3id.org/ro/wfrun/process/0.4"} | https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate |
 | <h4>Optional Properties</h4> | | | | | |
 | **`distribution`** | Optional | MANY | [schema.org/DataDownload](https://schema.org/DataDownload) | A downloadable form of this dataset, at a specific location, in a specific format. This property can be repeated if different variations are available. There is no expectation that different downloadable distributions must contain exactly equivalent information (see also DCAT on this point). Different distributions might include or exclude different subsets of the entire dataset, for example. | https://schema.org/Dataset |

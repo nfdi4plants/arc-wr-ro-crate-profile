@@ -4,6 +4,9 @@ open ProfileCreation
 
 let requiredProfileProperties = [
 
+    ProfileRow.create("@id",                Required, ONE,          [   (IRI, END)], 
+                                                                    "A unique identifier for the dataset", 
+                                                                    "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate")
     ProfileRow.create("conformsTo",         Required, ONE,          [   (Schema.CreativeWork, END)], 
                                                                     """MUST reference a CreativeWork entity with an @id URI that is consistent with the versioned Permalink of this document, e.g. {"@id": "https://w3id.org/ro/wfrun/process/0.4"}""", 
                                                                     "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate")
