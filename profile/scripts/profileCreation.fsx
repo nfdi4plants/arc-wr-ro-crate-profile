@@ -140,6 +140,10 @@ module Schema =
     let SizeSpecification = { Name = "SizeSpecification"; Domain = "schema.org"; Link = "https://schema.org/SizeSpecification" }
     let Duration = { Name = "Duration"; Domain = "schema.org"; Link = "https://schema.org/Duration" }
     let VideoObject = { Name = "VideoObject"; Domain = "schema.org"; Link = "https://schema.org/VideoObject" }
+    let DataDownload = { Name = "DataDownload"; Domain = "schema.org"; Link = "https://schema.org/DataDownload" }
+    let DataCatalog = { Name = "DataCatalog"; Domain = "schema.org"; Link = "https://schema.org/DataCatalog" }
+    let Property = { Name = "Property"; Domain = "schema.org"; Link = "https://schema.org/Property" }
+    let StatisticalVariable = { Name = "StatisticalVariable"; Domain = "schema.org"; Link = "https://schema.org/StatisticalVariable" }
 
 module BioSchemas =
     let ComputationalWorkflow = { Name = "ComputationalWorkflow"; Domain = "bioschemas.org"; Link = "https://bioschemas.org/types/ComputationalWorkflow" }

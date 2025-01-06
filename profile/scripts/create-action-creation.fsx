@@ -9,7 +9,7 @@ let requiredProfileProperties = [
     ProfileRow.create("@type",                Required, MANY,         [   (Schema.Text, END)], 
                                                                           "SHOULD be CreateAction to indicate that this tool created the result data entities. MAY be ActivateAction if the provenance does not include any result. MAY be UpdateAction if the tool modified an existing data entity or database in-place.", 
                                                                           "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate")
-    ProfileRow.create("instrument",           Required, MANY,         [   (Schema.Thing, END)], 
+    ProfileRow.create("instrument",           Required, MANY,         [   (Schema.SoftwareApplication, END)], 
                                                                           "Identifier of the executed tool.", 
                                                                           "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate")
 ]
@@ -22,8 +22,12 @@ let recommendedProfileProperties = [
                                                                           (Schema.Time, END)], 
                                                                           "The time the process ended, i.e. when the last of the entities in result has been created. SHOULD be a DateTime in ISO 8601 format.", 
                                                                           "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate")
-    ProfileRow.create("result",               Recommended, ONE,       [   (Schema.Thing, END)], 
-                                                                          "The identifier of one or more entities that were created or modified by this action, e.g. output files.", 
+    ProfileRow.create("result",               Recommended, MANY,      [   (Schema.MediaObject, OR)
+                                                                          (Schema.Dataset, OR)
+                                                                          (Schema.Collection, OR)
+                                                                          (Schema.CreativeWork, OR)
+                                                                          (Schema.PropertyValue, END)], 
+                                                                          "The identifier of one or more entities that were created or modified by this action, e.g. output files. Entities referenced by an action’s object or result SHOULD be of type File (an RO-Crate alias for MediaObject) for files, Dataset for directories and Collection for multi-file datasets, but MAY be a CreativeWork for other types of data (e.g. an online database); they MAY be of type PropertyValue to capture numbers/strings that are not stored as files.", 
                                                                           "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate")
     ProfileRow.create("description",          Recommended, ONE,       [   (Schema.Text, OR)
                                                                           (Schema.TextObject, END)], 
@@ -49,8 +53,12 @@ let optionalProfileProperties = [
                                                                           (Schema.VirtualLocation, END)], 
                                                                           "The location of, for example, where an event is happening, where an organization is located, or where an action takes place.", 
                                                                           "https://schema.org/Action")
-    ProfileRow.create("object",               Optional, ONE,          [   (Schema.Thing, END)], 
-                                                                          "The identifier of one or more entities of the RO-Crate that were consumed by this action, e.g. input files or reference datasets.", 
+    ProfileRow.create("object",               Optional, MANY,         [   (Schema.MediaObject, OR)
+                                                                          (Schema.Dataset, OR)
+                                                                          (Schema.Collection, OR)
+                                                                          (Schema.CreativeWork, OR)
+                                                                          (Schema.PropertyValue, END)], 
+                                                                          "The identifier of one or more entities of the RO-Crate that were consumed by this action, e.g. input files or reference datasets. Entities referenced by an action’s object or result SHOULD be of type File (an RO-Crate alias for MediaObject) for files, Dataset for directories and Collection for multi-file datasets, but MAY be a CreativeWork for other types of data (e.g. an online database); they MAY be of type PropertyValue to capture numbers/strings that are not stored as files.", 
                                                                           "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate")
     ProfileRow.create("participant",          Optional, MANY,         [   (Schema.Organization, OR)
                                                                           (Schema.Person, END)], 
