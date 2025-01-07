@@ -9,9 +9,10 @@ let requiredProfileProperties = [
     ProfileRow.create("@type",                Required, MANY,         [   (Schema.Text, END)], 
                                                                           "SHOULD be CreateAction to indicate that this tool created the result data entities. MAY be ActivateAction if the provenance does not include any result. MAY be UpdateAction if the tool modified an existing data entity or database in-place.", 
                                                                           "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate")
-    ProfileRow.create("instrument",           Required, MANY,         [   (Schema.SoftwareApplication, END)], 
-                                                                          "Identifier of the executed tool.", 
-                                                                          "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate")
+    ProfileRow.create("instrument",           Required, MANY,         [   (Schema.SoftwareApplication, OR)
+                                                                          (BioSchemas.ComputationalWorkflow, END)], 
+                                                                          "Identifier of the executed tool or workflow in case of a Workflow RO-Crate.", 
+                                                                          "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate; https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate")
 ]
 let recommendedProfileProperties = [
     ProfileRow.create("agent",                Recommended, ONE,       [   (Schema.Organization, OR)
