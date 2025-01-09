@@ -98,7 +98,7 @@ let optionalProfileProperties = [
                                                                           "https://schema.org/Thing")
     ProfileRow.create("mainEntityOfPage",     Optional, ONE,          [   (Schema.CreativeWork, OR)
                                                                           (Schema.URL, END)], 
-                                                                          "Indicates a page (or other CreativeWork) for which this thing is the main entity being described. See background notes for details.\nInverse property: mainEntity", 
+                                                                          "Indicates a page (or other CreativeWork) for which this thing is the main entity being described. See background notes for details. Inverse property: mainEntity", 
                                                                           "https://schema.org/Thing")
     ProfileRow.create("potentialAction",      Optional, MANY,         [   (Schema.Action, END)], 
                                                                           "Indicates a potential Action, which describes an idealized action in which this thing would play an 'object' role.", 
@@ -108,7 +108,7 @@ let optionalProfileProperties = [
                                                                           "https://schema.org/Thing")
     ProfileRow.create("subjectOf",            Optional, MANY,         [   (Schema.CreativeWork, OR)
                                                                           (Schema.Event, END)], 
-                                                                          "A CreativeWork or Event about this Thing.\nInverse property: about", 
+                                                                          "A CreativeWork or Event about this Thing. Inverse property: about", 
                                                                           "https://schema.org/Thing")
     ProfileRow.create("url",                  Optional, ONE,          [   (Schema.URL, END)], 
                                                                           "URL of the item.", 
