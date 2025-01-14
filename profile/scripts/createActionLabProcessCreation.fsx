@@ -6,7 +6,7 @@ let requiredProfileProperties = [
     ProfileRow.create("@id",                  Required, ONE,          [   (IRI, END)], 
                                                                           """A unique identifier for the execution, e.g. "urn:uuid:50ec5c76-1f7a-4130-8ef6-846756b228c1", "#f99a8e6c". MAY be an absolute URI, e.g. http://example.com/runs/846756b228c1. The use of randomly generated UUIDs (type 4) is RECOMMENDED. SHOULD be listed under mentions of the root data entity.""", 
                                                                           "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate")
-    ProfileRow.create("@type",                Required, MANY,         [   (Schema.Text, END)], 
+    ProfileRow.create("@type",                Required, SPECIFIC 2,   [   (Schema.Text, END)], 
                                                                           "MUST be LabProcess and CreateAction to indicate that this tool created the result data entities", 
                                                                           "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/release/profile/arc_cwl_ro_crate.md")
     ProfileRow.create("instrument",           Required, MANY,         [   (Schema.SoftwareApplication, OR)
