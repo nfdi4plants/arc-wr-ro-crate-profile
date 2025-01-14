@@ -17,17 +17,20 @@ let requiredProfileProperties = [
                                                                     ], 
                                                                     "SHOULD include: File, Dataset or Collection if it maps to a file, directory or multi-file dataset, respectively; PropertyValue if it maps to a dictionary-like structured value (e.g. a CWL record); DataType or one of its subtypes (e.g. Integer) if it maps to a non-structured value.", 
                                                                     "https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate")
-]
-
-let recommendedProfileProperties = [
-    ProfileRow.create("name",               Recommended, ONE,       [   (Schema.Text, END)], 
-                                                                    "SHOULD match the name of the corresponding workflow parameter slot, e.g. n_lines.", 
-                                                                    "https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate")
-    ProfileRow.create("encodingFormat",     Recommended, MANY,      [   (Schema.Text, OR)
+// Required according to https://www.researchobject.org/ro-crate/specification/1.1/workflows.html when describing inputs or outputs
+    ProfileRow.create("encodingFormat",     Required, MANY,         [   (Schema.Text, OR)
                                                                         (Schema.URL, END)
                                                                     ], 
                                                                     "Media type typically expressed using a MIME format (see IANA site and MDN reference) e.g. application/zip for a SoftwareApplication binary, audio/mpeg for .mp3 etc.). In cases where a CreativeWork has several media type representations, encoding can be used to indicate each MediaObject alongside particular encodingFormat information. Unregistered or niche encoding and file formats can be indicated instead via the most appropriate URL, e.g. defining Web page or a Wikipedia/Wikidata entry. Supersedes fileFormat.", 
-                                                                    "https://bioschemas.org/types/FormalParameter/1.0-RELEASE")
+                                                                    "https://bioschemas.org/types/FormalParameter/1.0-RELEASE,https://www.researchobject.org/ro-crate/specification/1.1/workflows.html")
+]
+
+let recommendedProfileProperties = [
+// Reqquired according to https://www.researchobject.org/ro-crate/specification/1.1/workflows.html, but only recommended
+// in https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate
+    ProfileRow.create("name",               Recommended, ONE,       [   (Schema.Text, END)], 
+                                                                    "SHOULD match the name of the corresponding workflow parameter slot, e.g. n_lines.", 
+                                                                    "https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate")
     ProfileRow.create("sameAs",             Recommended, MANY,      [   (Schema.URL, END)], 
                                                                     "URL of a reference Web page that unambiguously indicates the item's identity. E.g. the URL of the item's Wikipedia page, Wikidata entry, or official website.", 
                                                                     "https://bioschemas.org/types/FormalParameter/1.0-RELEASE")

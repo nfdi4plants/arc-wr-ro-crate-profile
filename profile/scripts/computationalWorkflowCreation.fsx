@@ -47,7 +47,7 @@ let requiredProfileProperties = [
     ProfileRow.create("programmingLanguage",Required, MANY,         [   (Schema.ComputerLanguage, OR)
                                                                         (Schema.Text, END)
                                                                     ], 
-                                                                    "The computer programming language", 
+                                                                    "The computer programming language, Scripts written in a programming language, as well as workflows, generally need a runtime; in RO-Crate the runtime SHOULD be indicated using a liberal interpretation of programmingLanguage", 
                                                                     "https://bioschemas.org/profiles/ComputationalWorkflow")
     ProfileRow.create("sdPublisher",        Required, ONE,          [   (Schema.Organization, OR)
                                                                         (Schema.Person, END)
@@ -174,7 +174,7 @@ let optionalProfileRows = [
     ProfileRow.create("image",                  Optional, ANY,      [   (Schema.ImageObject, OR)
                                                                         (Schema.URL, END)
                                                                     ], 
-                                                                    "An image of the item. This can be a URL or a fully described ImageObject.", 
+                                                                    "An image of the item. This can be a URL or a fully described ImageObject. It can be beneficial to show a diagram or sketch to explain the script/workflow. This may have been generated from a workflow management system, or drawn manually as a diagram.", 
                                                                     "https://bioschemas.org/profiles/ComputationalWorkflow")
     // properties from OUR LabProtocol profile
     ProfileRow.create("comment",                Recommended, ANY,   [   (Schema.Comment, END)], 
