@@ -9,12 +9,17 @@ let requiredProfileProperties = [
     ProfileRow.create("@type",              Required, MANY,         [   (Schema.Text, END)], 
                                                                     "Schema.org class for the resource declared using JSON-LD syntax. For other serialisations please use the appropriate mechanism. While it is permissible to provide multiple types, it is preferred to use a single type.", 
                                                                     "https://schema.org/PropertyValue")
+]
+
+let recommendedProfileProperties = [
+    // Required -> Recommended
     ProfileRow.create("name",               Required, ONE,          [   (Schema.Text, END)], 
                                                                     "The name of the item.", 
                                                                     "https://schema.org/Thing")
 ]
 
-let recommendedProfileProperties = [
+let optionalProfileProperties = [
+    // Recommended -> Optional
     ProfileRow.create("value",              Recommended, ONE,       [   (Schema.Boolean, OR)
                                                                         (Schema.Number, OR)
                                                                         (Schema.StructuredValue, OR)
@@ -22,12 +27,10 @@ let recommendedProfileProperties = [
                                                                     ], 
                                                                     "The value of a QuantitativeValue (including Observation) or property value node. For QuantitativeValue and MonetaryAmount, the recommended type for values is 'Number'. For PropertyValue, it can be 'Text', 'Number', 'Boolean', or 'StructuredValue'. Use values from 0123456789 [Add to Citavi project by ISBN] (Unicode 'DIGIT ZERO' (U+0030) to 'DIGIT NINE' (U+0039)) rather than superficially similar Unicode symbols. Use '.' (Unicode 'FULL STOP' (U+002E)) rather than ',' to indicate a decimal point. Avoid using these symbols as a readability separator.", 
                                                                     "https://schema.org/PropertyValue")
+    // Recommended -> Optional
     ProfileRow.create("exampleOfWork",      Recommended, ONE,       [   (IRI, END)], 
                                                                     "Identifier of the FormalParameter instance realized by this entity.", 
                                                                     "https://schema.org/PropertyValue")
-]
-
-let optionalProfileProperties = [
     ProfileRow.create("measurementMethod",  Optional, ONE,          [   (Schema.DefinedTerm, OR)
                                                                         (Schema.MeasurementMethodEnum, OR)
                                                                         (Schema.Text, OR)
