@@ -7,6 +7,9 @@ let requiredProfileProperties = [
     ProfileRow.create("@id",                Required, ONE,          [   (IRI, END)], 
                                                                     "A unique identifier for the dataset", 
                                                                     "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate")
+    ProfileRow.create("@type",              Required, MANY,         [   (Schema.Dataset, END)], 
+                                                                    "Schema.org/Bioschemas class for the resource declared using JSON-LD syntax. For other serialisations please use the appropriate mechanism. While it is permissible to provide multiple types, it is preferred to use a single type.", 
+                                                                    "https://schema.org/Dataset")
     ProfileRow.create("conformsTo",         Required, ONE,          [   (Schema.CreativeWork, END)], 
                                                                     """MUST reference a CreativeWork entity with an @id URI that is consistent with the versioned Permalink of this document, e.g. {"@id": "https://w3id.org/ro/wfrun/process/0.4"}""", 
                                                                     "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate")
