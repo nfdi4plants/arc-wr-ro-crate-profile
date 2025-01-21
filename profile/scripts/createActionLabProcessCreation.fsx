@@ -13,10 +13,6 @@ let requiredProfileProperties = [
                                                                           (BioSchemas.ComputationalWorkflow, END)], 
                                                                           "Identifier of the executed tool or workflow in case of a Workflow RO-Crate.", 
                                                                           "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate; https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate")
-// The following properties are Required instead of Recommended/Optional as per the https://bioschemas.org/types/LabProcess/0.1-DRAFT schema
-    ProfileRow.create("name",                 Required, ONE,          [   (Schema.Text, END)], 
-                                                                          "Short human-readable description of the execution.", 
-                                                                          "https://bioschemas.org/types/LabProcess/0.1-DRAFT")
     ProfileRow.create("agent",                Required, ONE,          [   (Schema.Organization, OR)
                                                                           (Schema.Person, END)], 
                                                                           "Identifier of a Person or Organization contextual entity that started/executed this tool.", 
@@ -38,14 +34,6 @@ let requiredProfileProperties = [
                                                                           "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate, https://bioschemas.org/types/LabProcess/0.1-DRAFT")
 ]
 let recommendedProfileProperties = [
-    ProfileRow.create("endTime",              Recommended, ONE,       [   (Schema.DateTime, OR)
-                                                                          (Schema.Time, END)], 
-                                                                          "The time the process ended, i.e. when the last of the entities in result has been created. SHOULD be a DateTime in ISO 8601 format.", 
-                                                                          "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate")
-    ProfileRow.create("description",          Recommended, ONE,       [   (Schema.Text, OR)
-                                                                          (Schema.TextObject, END)], 
-                                                                          "Details of the execution, for instance command line arguments or settings. This field is for information only, no particular structure is to be assumed.", 
-                                                                          "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate")
 // The following two properties are from LabProcess
     ProfileRow.create("executesLabProtocol",  Recommended, ONE,       [   (BioSchemas.LabProtocol, END)], 
                                                                           "The protocol executed. In this case, it refers to the multitype entity of the ARC CWL Workflow Profile with File, SoftwareSourceCode, ComputationalWorkflow and LabProtocol", 
@@ -53,8 +41,22 @@ let recommendedProfileProperties = [
     ProfileRow.create("parameterValue",       Recommended, ONE,       [   (Schema.PropertyValue, END)], 
                                                                           "A parameter value of the workflow process, usually a key-value pair using ontology terms", 
                                                                           "https://bioschemas.org/types/LabProcess/0.1-DRAFT")
+// Required -> Recommended
+    ProfileRow.create("name",                 Required, ONE,          [   (Schema.Text, END)], 
+                                                                          "Short human-readable description of the execution.", 
+                                                                          "https://bioschemas.org/types/LabProcess/0.1-DRAFT")
 ]
 let optionalProfileProperties = [
+// Recommended -> Optional
+    ProfileRow.create("endTime",              Optional, ONE,          [   (Schema.DateTime, OR)
+                                                                          (Schema.Time, END)], 
+                                                                          "The time the process ended, i.e. when the last of the entities in result has been created. SHOULD be a DateTime in ISO 8601 format.", 
+                                                                          "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate")
+// Recommended -> Optional
+    ProfileRow.create("description",          Optional, ONE,          [   (Schema.Text, OR)
+                                                                          (Schema.TextObject, END)], 
+                                                                          "Details of the execution, for instance command line arguments or settings. This field is for information only, no particular structure is to be assumed.", 
+                                                                          "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate")
     ProfileRow.create("actionProcess",        Optional, ONE,          [   (Schema.HowTo, END)], 
                                                                           "Description of the process by which the action was performed.", 
                                                                           "https://schema.org/Action")
