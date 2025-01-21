@@ -144,11 +144,13 @@ module Schema =
     let DataCatalog = { Name = "DataCatalog"; Domain = "schema.org"; Link = "https://schema.org/DataCatalog" }
     let Property = { Name = "Property"; Domain = "schema.org"; Link = "https://schema.org/Property" }
     let StatisticalVariable = { Name = "StatisticalVariable"; Domain = "schema.org"; Link = "https://schema.org/StatisticalVariable" }
+    let CreateAction = { Name = "CreateAction"; Domain = "schema.org"; Link = "https://schema.org/CreateAction" }
 
 module BioSchemas =
     let ComputationalWorkflow = { Name = "ComputationalWorkflow"; Domain = "bioschemas.org"; Link = "https://bioschemas.org/types/ComputationalWorkflow" }
     let LabProtocol = { Name = "LabProtocol"; Domain = "bioschemas.org"; Link = "https://bioschemas.org/types/LabProtocol" }
     let FormalParameter = { Name = "FormalParameter"; Domain = "bioschemas.org"; Link = "https://bioschemas.org/types/FormalParameter" }
+    let LabProcess = { Name = "LabProcess"; Domain = "bioschemas.org"; Link = "https://bioschemas.org/types/LabProcess/0.1-DRAFT" }
 
 module WorkflowRunProfile =
     let ProcessRun = { Name = "ProcessRun"; Domain = "workflow-run-crate"; Link = "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate" }

@@ -6,7 +6,9 @@ let requiredProfileProperties = [
     ProfileRow.create("@id",                      Required, ONE,         [   (IRI, END)], 
                                                                              """SHOULD be an absolute URI, but MAY be a relative URI to a data entity in the crate (e.g. "bin/simulation4") or a local identifier for tools that are not otherwise described on the web (e.g. "#statistical-analysis")""", 
                                                                              "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate")
-    ProfileRow.create("@type",                    Required, MANY,        [   (Schema.Text, END)], 
+    ProfileRow.create("@type",                    Required, MANY,        [   (Schema.SoftwareApplication, OR)
+                                                                             (Schema.SoftwareSourceCode, OR)
+                                                                             (BioSchemas.ComputationalWorkflow, END)], 
                                                                              "SHOULD include SoftwareApplication, SoftwareSourceCode or ComputationalWorkflow", 
                                                                              "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate")
 ]

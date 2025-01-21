@@ -6,7 +6,7 @@ let requiredProfileProperties = [
     ProfileRow.create("@id",                Required, ONE,          [   (IRI, END)], 
                                                                     "Used to distinguish the resource being described in JSON-LD. For other serialisations use the appropriate approach.", 
                                                                     "https://bioschemas.org/profiles/FormalParameter/1.1-DRAFT")
-    ProfileRow.create("@type",              Required, MANY,         [   (Schema.Text, END)], 
+    ProfileRow.create("@type",              Required, MANY,         [   (BioSchemas.FormalParameter, END)], 
                                                                     "Schema.org/Bioschemas class for the resource declared using JSON-LD syntax. For other serialisations please use the appropriate mechanism. While it is permissible to provide multiple types, it is preferred to use a single type.", 
                                                                     "https://bioschemas.org/profiles/FormalParameter/1.1-DRAFT")
     ProfileRow.create("additionalType",     Required, ONE,          [   (Schema.Text, OR)

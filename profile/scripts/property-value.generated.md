@@ -2,7 +2,7 @@
 |----------|----------|-------------|---------------|-------------|----------------|
 | <h4>Required Properties</h4> | | | | | |
 | **`@id`** | Required | ONE | [IRI](https://datatracker.ietf.org/doc/html/rfc3987#section-2) | Used to distinguish the resource being described in JSON-LD. For other serialisations use the appropriate approach. | https://schema.org/PropertyValue |
-| **`@type`** | Required | MANY | [schema.org/Text](https://schema.org/Text) | Schema.org class for the resource declared using JSON-LD syntax. For other serialisations please use the appropriate mechanism. While it is permissible to provide multiple types, it is preferred to use a single type. | https://schema.org/PropertyValue |
+| **`@type`** | Required | MANY | [schema.org/PropertyValue](https://schema.org/PropertyValue) | Schema.org class for the resource declared using JSON-LD syntax. For other serialisations please use the appropriate mechanism. While it is permissible to provide multiple types, it is preferred to use a single type. | https://schema.org/PropertyValue |
 | <h4>Recommended Properties</h4> | | | | | |
 | **`name`** | Required | ONE | [schema.org/Text](https://schema.org/Text) | The name of the item. | https://schema.org/Thing |
 | <h4>Optional Properties</h4> | | | | | |
