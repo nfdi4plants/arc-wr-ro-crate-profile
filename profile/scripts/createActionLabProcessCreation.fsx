@@ -43,7 +43,7 @@ let recommendedProfileProperties = [
                                                                           "A parameter value of the workflow process, usually a key-value pair using ontology terms", 
                                                                           "https://bioschemas.org/types/LabProcess/0.1-DRAFT")
 // Required -> Recommended
-    ProfileRow.create("name",                 Required, ONE,          [   (Schema.Text, END)], 
+    ProfileRow.create("name",                 Recommended, ONE,       [   (Schema.Text, END)], 
                                                                           "Short human-readable description of the execution.", 
                                                                           "https://bioschemas.org/types/LabProcess/0.1-DRAFT")
 ]

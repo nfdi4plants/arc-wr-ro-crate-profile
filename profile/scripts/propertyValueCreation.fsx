@@ -13,14 +13,14 @@ let requiredProfileProperties = [
 
 let recommendedProfileProperties = [
     // Required -> Recommended
-    ProfileRow.create("name",               Required, ONE,          [   (Schema.Text, END)], 
+    ProfileRow.create("name",               Recommended, ONE,       [   (Schema.Text, END)], 
                                                                     "The name of the item.", 
                                                                     "https://schema.org/Thing")
 ]
 
 let optionalProfileProperties = [
     // Recommended -> Optional
-    ProfileRow.create("value",              Recommended, ONE,       [   (Schema.Boolean, OR)
+    ProfileRow.create("value",              Optional, ONE,          [   (Schema.Boolean, OR)
                                                                         (Schema.Number, OR)
                                                                         (Schema.StructuredValue, OR)
                                                                         (Schema.Text, END)
@@ -28,7 +28,7 @@ let optionalProfileProperties = [
                                                                     "The value of a QuantitativeValue (including Observation) or property value node. For QuantitativeValue and MonetaryAmount, the recommended type for values is 'Number'. For PropertyValue, it can be 'Text', 'Number', 'Boolean', or 'StructuredValue'. Use values from 0123456789 [Add to Citavi project by ISBN] (Unicode 'DIGIT ZERO' (U+0030) to 'DIGIT NINE' (U+0039)) rather than superficially similar Unicode symbols. Use '.' (Unicode 'FULL STOP' (U+002E)) rather than ',' to indicate a decimal point. Avoid using these symbols as a readability separator.", 
                                                                     "https://schema.org/PropertyValue")
     // Recommended -> Optional
-    ProfileRow.create("exampleOfWork",      Recommended, ONE,       [   (IRI, END)], 
+    ProfileRow.create("exampleOfWork",      Optional, ONE,          [   (IRI, END)], 
                                                                     "Identifier of the FormalParameter instance realized by this entity.", 
                                                                     "https://schema.org/PropertyValue")
     ProfileRow.create("measurementMethod",  Optional, ONE,          [   (Schema.DefinedTerm, OR)

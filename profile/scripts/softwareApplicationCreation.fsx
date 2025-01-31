@@ -17,15 +17,15 @@ let optionalProfileProperties = [
 // name, url and softwareVersion are Required according to https://www.researchobject.org/ro-crate/specification/1.1/workflows.html, but recommended
 // according to https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate
 // Recommended -> Optional
-    ProfileRow.create("name",                     Recommended, ONE,      [   (Schema.Text, END)], 
+    ProfileRow.create("name",                     Optional, ONE,         [   (Schema.Text, END)], 
                                                                              "A human readable name for the tool in general (not just how it was used here)", 
                                                                              "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate")
 // Recommended -> Optional
-    ProfileRow.create("url",                      Recommended, ONE,      [   (Schema.URL, END)], 
+    ProfileRow.create("url",                      Optional, ONE,         [   (Schema.URL, END)], 
                                                                              "Homepage, documentation or source for the tool", 
                                                                              "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate")
 // Recommended -> Optional
-    ProfileRow.create("softwareVersion",          Recommended, ONE,      [   (Schema.Text, END)], 
+    ProfileRow.create("softwareVersion",          Optional, ONE,         [   (Schema.Text, END)], 
                                                                              "Version of the software instance.", 
                                                                              "https://schema.org/SoftwareApplication")
     ProfileRow.create("version",                  Optional, ONE,         [   (Schema.Text, END)], 
