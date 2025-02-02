@@ -339,16 +339,117 @@ specifications.
       "@id": "workflows/FixedScript/workflow.cwl",
       "@type": [ "File", "SoftwareSourceCode", "ComputationalWorkflow", "LabProtocol" ],
       "conformsTo": { "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#computationalworkflow--softwaresourcecode--text--labprotocol" },
-      "name": "Column Addition",
-      "creator": { "@id": "https://orcid.org/0000-0003-3925-6778" },
-      "dateCreated": "2024-02-05",
-      "input": [
-        { "@id": "intensity_table" },
-        { "@id": "file_name" }
+      "creator": { "@id": "https://orcid.org/0000-0003-3925-6778" }
+    },
+    {
+      "@id": "https://orcid.org/0000-0003-3925-6778",
+      "@type": "Person",
+      "givenName": "Timo",
+      "familyName": "Mühlhaus"
+    }
+  ]
+}
+```
+
+#### CWL Workflow Run Profile
+
+Note: `exampleOfWork` and `workExample` are not required, but make it easier to understand.
+
+```json
+{ "@context": [
+    "https://w3id.org/ro/terms/workflow-run/context"
+  ],
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "ro-crate-metadata.json",
+      "conformsTo": [
+        { "@id": "https://w3id.org/ro/crate/1.1" },
+        { "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#cwl-workflow-run-profile" }
       ],
-      "output": [
-        { "@id": "summed_intensities" }
-      ]
+      "about": { "@id": "./workflows" }
+    },
+    {
+      "@id": "./workflows",
+      "@type": "Dataset",
+      "conformsTo": [
+        { "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#cwl-workflow-run-profile" }
+      ],
+      "hasPart": [
+        { "@id": "workflows/FixedScript/workflow.cwl" },
+        { "@id": "assays/measurement1/dataset/table.csv" }
+        { "@id": "runs/FixedScriptResult/result.csv" }
+      ],
+      "mainEntity": { "@id": "workflows/FixedScript/workflow.cwl" }
+    },
+    { "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#cwl-workflow-run-profile",
+      "@type": "CreativeWork",
+      "name": "ARC CWL Workflow Run RO-Crate",
+    },
+    {
+      "@id": "workflows/FixedScript/workflow.cwl",
+      "@type": [ "File", "SoftwareSourceCode", "ComputationalWorkflow", "LabProtocol" ],
+      "conformsTo": { "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#computationalworkflow--softwaresourcecode--text--labprotocol" },
+      "creator": { "@id": "https://orcid.org/0000-0003-3925-6778" }
+    },
+    {
+      "@id": "https://orcid.org/0000-0003-3925-6778",
+      "@type": "Person",
+      "givenName": "Timo",
+      "familyName": "Mühlhaus"
+    },
+    {
+      "@id": "#wfrun-fixed-script",
+      "@type": [ "CreateAction", "LabProcess" ],
+      "instrument": { "@id": "workflows/FixedScript/workflow.cwl" },
+      "agent": { "@id": "https://orcid.org/0000-0003-1512-9504" },
+      "object": [
+          { "@id": "assays/measurement1/dataset/table.csv" },
+          { "@id": "file_name_filled" }
+      ],
+      "result": { "@id": "runs/fsResult1/result.csv" }
+    },
+    {
+      "@id": "https://orcid.org/0000-0003-1512-9504",
+      "@type": "Person",
+      "givenName": "Caroline",
+      "familyName": "Ott"
+    },
+    {
+      "@id": "assays/measurement1/dataset/table.csv",
+      "@type": "File"
+    },
+    {
+      "@id": "#file_name_filled",
+      "@type": "PropertyValue"
+    },
+    {
+      "@id": "runs/fsResult1/result.csv",
+      "@type": "File"
+    }
+  ]
+}
+```
+
+### Workflow Run RO-Crate compliant example
+
+#### CWL Workflow Profile
+
+```json
+{ "@context": "https://w3id.org/ro/crate/1.1/context",
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "ro-crate-metadata.json",
+      "conformsTo": { "@id": "https://w3id.org/ro/crate/1.1" },
+      "about": { "@id": "./" }
+    },
+    {
+      "@id": "workflows/FixedScript/workflow.cwl",
+      "@type": [ "File", "SoftwareSourceCode", "ComputationalWorkflow", "LabProtocol" ],
+      "conformsTo": { "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#computationalworkflow--softwaresourcecode--text--labprotocol" },
+      "name": "Column Addition",
+      "creator": { "@id": "https://orcid.org/0000-0003-3925-6778" }
     },
     {
       "@id": "intensity_table",
