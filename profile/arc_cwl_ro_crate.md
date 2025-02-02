@@ -372,7 +372,8 @@ specifications.
     {
       "@id": "https://orcid.org/0000-0003-3925-6778",
       "@type": "Person",
-      "name": "Timo Mühlhaus"
+      "givenName": "Timo"
+      "familyName": "Mühlhaus"
     }
   ]
 }
@@ -451,7 +452,8 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
     {
       "@id": "https://orcid.org/0000-0003-3925-6778",
       "@type": "Person",
-      "name": "Timo Mühlhaus"
+      "givenName": "Timo"
+      "familyName": "Mühlhaus"
     },
     {
       "@id": "#wfrun-fixed-script",
@@ -467,7 +469,8 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
     {
       "@id": "https://orcid.org/0000-0003-1512-9504",
       "@type": "Person",
-      "name": "Caroline Ott"
+      "givenName": "Caroline",
+      "familyName": "Ott"
     },
     {
       "@id": "assays/measurement1/dataset/table.csv",
