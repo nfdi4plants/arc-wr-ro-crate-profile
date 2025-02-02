@@ -20,16 +20,18 @@ let requiredProfileProperties = [
     ProfileRow.create("dct:conformsTo",     Required, SPECIFIC 2,   [   (IRI, END)], 
                                                                     "Used to state the profiles that the markup relates to. MUST be 'https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE' AND `<insert our LabProtocol profile IRI here>`", 
                                                                     "https://bioschemas.org/profiles/ComputationalWorkflow")
-    ProfileRow.create("input",              Required, MANY,         [   (BioSchemas.FormalParameter, END)], 
-                                                                    "An input required to use the computational workflow (eg. Excel spreadsheet, BAM file)", 
-                                                                    "https://bioschemas.org/profiles/ComputationalWorkflow")
-    ProfileRow.create("output",             Required, MANY,         [   (BioSchemas.FormalParameter, END)], 
-                                                                    "An output produced by the workflow", 
-                                                                    "https://bioschemas.org/profiles/ComputationalWorkflow")
     // properties from https://bioschemas.org/profiles/ComputationalWorkflow
 ]
 
 let recommendedProfileRows = [
+    // Required -> Recommended
+    ProfileRow.create("input",              Recommended, MANY,      [   (BioSchemas.FormalParameter, END)], 
+                                                                    "An input required to use the computational workflow (eg. Excel spreadsheet, BAM file)", 
+                                                                    "https://bioschemas.org/profiles/ComputationalWorkflow")
+    // Required -> Recommended
+    ProfileRow.create("output",             Recommended, MANY,      [   (BioSchemas.FormalParameter, END)], 
+                                                                    "An output produced by the workflow", 
+                                                                    "https://bioschemas.org/profiles/ComputationalWorkflow")
     // Required -> Recommended
     ProfileRow.create("creator",            Recommended, MANY,      [   (Schema.Organization, OR)
                                                                         (Schema.Person, END)
