@@ -337,21 +337,10 @@ specifications.
       "about": { "@id": "./" }
     },
     {
-      "@id": "./workflows",
-      "@type": "Dataset",
-      "hasPart": [
-        { "@id": "workflows/workflow.cwl" }
-      ]
-    },
-    {
-      "@id": "workflows/workflow.cwl",
-      "@type": [ "File", "SoftwareSourceCode", "ComputationalWorkflow" ],
-      "conformsTo": { "@id": "https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE" },
+      "@id": "workflows/FixedScript/workflow.cwl",
+      "@type": [ "File", "SoftwareSourceCode", "ComputationalWorkflow", "LabProtocol" ],
+      "conformsTo": { "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#computationalworkflow--softwaresourcecode--text--labprotocol" },
       "name": "Column Addition",
-      "programmingLanguage": [
-        { "@id": "#FSharp" },
-        { "@id": "https://w3id.org/workflowhub/workflow-ro-crate#cwl" }
-      ],
       "creator": { "@id": "https://orcid.org/0000-0003-3925-6778" },
       "dateCreated": "2024-02-05",
       "input": [
@@ -361,68 +350,30 @@ specifications.
       "output": [
         { "@id": "summed_intensities" }
       ]
-      "about": [
-        # TODO add some example metadata
-        # PropertyValue
-      ]
     },
     {
       "@id": "intensity_table",
       "@type": "FormalParameter",
       "conformsTo": { "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/" },
       "name": "intensity_table",
-      "valueRequired": true,
-      "additionalType": "File",
-      "format": { "@id": "http://edamontology.org/format_3752" }
+      "additionalType": "File"
     },
     {
       "@id": "file_name",
       "@type": "FormalParameter",
       "conformsTo": { "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/" },
-      "name": "file_name"
+      "additionalType": "Text"
     },
     {
       "@id": "summed_intensities",
       "@type": "FormalParameter",
       "conformsTo": { "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/" },
-      "name": "summed_intensities",
-      "additionalType": "File",
-      "encodingFormat": { "@id": "http://edamontology.org/format_3475" }
-    },
-    {
-      "@id": "https://w3id.org/workflowhub/workflow-ro-crate#cwl",
-      "@type": "computerlanguage",
-      "name": "common workflow language",
-      "alternatename": "cwl",
-      "identifier": {
-        "@id": "https://w3id.org/cwl/v1.2/"
-      },
-      "url": {
-        "@id": "https://www.commonwl.org/"
-      }
-    },
-    {
-      "@id": "#FSharp",
-      "@type": "ProgrammingLanguage",
-      "name": "F Sharp",
-      "alternateName": "F#",
-      "url": "https://dotnet.microsoft.com/en-us/languages/fsharp",
-      "version": "6.0"
+      "additionalType": "File"
     },
     {
       "@id": "https://orcid.org/0000-0003-3925-6778",
       "@type": "Person",
       "name": "Timo Mühlhaus"
-    },
-    {
-      "@id": "http://edamontology.org/format_3752",
-      "@type": "Thing",
-      "name": "Comma-separated values"
-    },
-    {
-      "@id": "http://edamontology.org/format_3475",
-      "@type": "Thing",
-      "name": "Tab-separated values"
     }
 }
 ```
