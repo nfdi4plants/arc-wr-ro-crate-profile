@@ -48,7 +48,7 @@ flowchart TD
         A["File,<br>SoftwareSourceCode,<br>ComputationalWorkflow,<br>LabProtocol"] -- "input/output" --> B["FormalParameter"]
         C["CreateAction,<br>LabProcess"] -- "instrument" --> A
         C -- "executesLabProtocol" --> A
-        C -- "agent" --> D["Person or Organization"]
+        C -- "agent" --> F["Person or Organization"]
         E["File or Property Value"] -- "exampleOfWork" --> B
         C -- "object/result" ---> E
         D["Run=Dataset"] -- "processSequence=about" --> C
