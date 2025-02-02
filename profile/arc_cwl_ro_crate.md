@@ -322,10 +322,9 @@ specifications.
 
 ## Example ro-crate-metadata.json
 
-> [!IMPORTANT]  
-> Note: Examples are WIP
+### Minimal required fields
 
-### CWL Workflow Profile
+#### CWL Workflow Profile
 
 ```json
 { "@context": "https://w3id.org/ro/crate/1.1/context",
@@ -375,10 +374,13 @@ specifications.
       "@type": "Person",
       "name": "Timo Mühlhaus"
     }
+  ]
 }
 ```
 
-### CWL Workflow Run Profile
+#### CWL Workflow Run Profile
+
+Note: `exampleOfWork` and `workExample` are not required, but make it easier to understand.
 
 ```json
 { "@context": [
@@ -388,49 +390,33 @@ specifications.
     {
       "@type": "CreativeWork",
       "@id": "ro-crate-metadata.json",
-      "conformsTo": { "@id": "https://w3id.org/ro/crate/1.1" },
-      "about": { "@id": "./" }
-    },-
+      "conformsTo": [
+        { "@id": "https://w3id.org/ro/crate/1.1" },
+        { "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#cwl-workflow-run-profile" }
+      ],
+      "about": { "@id": "./workflows" }
+    },
     {
       "@id": "./workflows",
       "@type": "Dataset",
       "conformsTo": [
-        {"@id": "https://w3id.org/ro/wfrun/process/0.1"},
-        {"@id": "https://w3id.org/ro/wfrun/workflow/0.1"},
-        {"@id": "https://w3id.org/workflowhub/workflow-ro-crate/1.0"}
+        { "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#cwl-workflow-run-profile" }
       ],
       "hasPart": [
-        { "@id": "workflows/workflow.cwl" },
+        { "@id": "workflows/FixedScript/workflow.cwl" },
         { "@id": "assays/measurement1/dataset/table.csv" }
-        { "@id": "runs/fsResult1/result.csv" }
+        { "@id": "runs/FixedScriptResult/result.csv" }
       ],
-      "mainEntity": {"@id": "Galaxy-Workflow-Hello_World.ga"}
-      #TODO Way to reference run instance to correctly fill "mentions" field?
+      "mainEntity": { "@id": "workflows/FixedScript/workflow.cwl" }
     },
-    {   "@id": "https://w3id.org/ro/wfrun/process/0.1",
-        "@type": "CreativeWork",
-        "name": "Process Run Crate",
-        "version": "0.1"
-    },
-    {   "@id": "https://w3id.org/ro/wfrun/workflow/0.1",
-        "@type": "CreativeWork",
-        "name": "Workflow Run Crate",
-        "version": "0.1"
-    },
-    {   "@id": "https://w3id.org/workflowhub/workflow-ro-crate/1.0",
-        "@type": "CreativeWork",
-        "name": "Workflow RO-Crate",
-        "version": "1.0"
+    { "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#cwl-workflow-run-profile",
+      "@type": "CreativeWork",
+      "name": "ARC CWL Workflow Run RO-Crate",
     },
     {
-      "@id": "workflows/workflow.cwl",
-      "@type": [ "File", "SoftwareSourceCode", "ComputationalWorkflow" ],
-      "conformsTo": { "@id": "https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE" },
-      "name": "Column Addition",
-      "programmingLanguage": [
-        { "@id": "#FSharp" },
-        { "@id": "https://w3id.org/workflowhub/workflow-ro-crate#cwl" }
-      ],
+      "@id": "workflows/FixedScript/workflow.cwl",
+      "@type": [ "File", "SoftwareSourceCode", "ComputationalWorkflow", "LabProtocol" ],
+      "conformsTo": { "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#computationalworkflow--softwaresourcecode--text--labprotocol" },
       "creator": { "@id": "https://orcid.org/0000-0003-3925-6778" },
       "dateCreated": "2024-02-05",
       "input": [
@@ -440,56 +426,27 @@ specifications.
       "output": [
         { "@id": "summed_intensities" }
       ]
-      "about": [
-      ]
     },
     {
       "@id": "intensity_table",
       "@type": "FormalParameter",
       "conformsTo": { "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/" },
-      "name": "intensity_table",
-      "valueRequired": true,
       "additionalType": "File",
-      "format": { "@id": "http://edamontology.org/format_3752" },
       "workExample": {"@id": "assays/measurement1/dataset/table.csv"}
     },
     {
       "@id": "file_name",
       "@type": "FormalParameter",
-      "additionalType": "Text"
       "conformsTo": { "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/" },
-      "name": "file_name",
-      "valueRequired": true,
+      "additionalType": "Text",
       "workExample": {"@id": "file_name_filled"}
     },
     {
       "@id": "summed_intensities",
       "@type": "FormalParameter",
       "conformsTo": { "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/" },
-      "name": "summed_intensities",
       "additionalType": "File",
-      "encodingFormat": { "@id": "http://edamontology.org/format_3475" },
-      "workExample": {"@id": "runs/fsResult1/result.csv"}
-    },
-    {
-      "@id": "https://w3id.org/workflowhub/workflow-ro-crate#cwl",
-      "@type": "computerlanguage",
-      "name": "common workflow language",
-      "alternatename": "cwl",
-      "identifier": {
-        "@id": "https://w3id.org/cwl/v1.2/"
-      },
-      "url": {
-        "@id": "https://www.commonwl.org/"
-      }
-    },
-    {
-      "@id": "#FSharp",
-      "@type": "ProgrammingLanguage",
-      "name": "F Sharp",
-      "alternateName": "F#",
-      "url": "https://dotnet.microsoft.com/en-us/languages/fsharp",
-      "version": "6.0"
+      "workExample": { "@id": "runs/fsResult1/result.csv" }
     },
     {
       "@id": "https://orcid.org/0000-0003-3925-6778",
@@ -497,61 +454,36 @@ specifications.
       "name": "Timo Mühlhaus"
     },
     {
-      "@id": "http://edamontology.org/format_3752",
-      "@type": "Thing",
-      "name": "Comma-separated values"
+      "@id": "#wfrun-fixed-script",
+      "@type": [ "CreateAction", "LabProcess" ],
+      "instrument": { "@id": "workflows/FixedScript/workflow.cwl" },
+      "agent": { "@id": "https://orcid.org/0000-0003-1512-9504" },
+      "object": [
+          { "@id": "assays/measurement1/dataset/table.csv" },
+          { "@id": "file_name_filled" }
+      ],
+      "result": { "@id": "runs/fsResult1/result.csv" }
     },
     {
-      "@id": "http://edamontology.org/format_3475",
-      "@type": "Thing",
-      "name": "Tab-separated values"
+      "@id": "https://orcid.org/0000-0003-1512-9504",
+      "@type": "Person",
+      "name": "Caroline Ott"
+    },
+    {
+      "@id": "assays/measurement1/dataset/table.csv",
+      "@type": "File",
+      "exampleOfWork": {"@id": "intensity_table"}
+    },
+    {
+      "@id": "#file_name_filled",
+      "@type": "PropertyValue",
+      "exampleOfWork": {"@id": "file_name"},
+    },
+    {
+      "@id": "runs/fsResult1/result.csv",
+      "@type": "File",
+      "exampleOfWork": {"@id": "summed_intensities"}
     }
-    {
-        "@id": "#wfrun-1",
-        "@type": "CreateAction",
-        "name": "CWL workflow run 1",
-        "endTime": "",
-        "instrument": {"@id": "workflows/workflow.cwl"},
-        "subjectOf": {"@id": ""},
-        "object": [
-            {"@id": "assays/measurement1/dataset/table.csv"},
-            {"@id": "file_name_filled"}
-        ],
-        "result": [
-            {"@id": "runs/fsResult1/result.csv"}
-        ]
-    },
-    {
-        "@id": "assays/measurement1/dataset/table.csv",
-        "@type": "File",
-        "description": "Number columns in csv format",
-        "encodingFormat": "text/plain",
-        "name": "intensity_table",
-        "exampleOfWork": {"@id": "intensity_table"}
-    },
-    {
-        "@id": "#file_name_filled",
-        "@type": "PropertyValue",
-        "@additionalType": "Text",
-        "exampleOfWork": {"@id": "file_name"},
-        "name": "file_name",
-        "value": "./result.csv"
-    },
-    {
-        "@id": "runs/fsResult1/result.csv",
-        "@type": "File",
-        "name": "summed_intensities",
-        "description": "Summed intensity columns",
-        "encodingFormat": "text/plain",
-        "exampleOfWork": {"@id": "summed_intensities"}
-    },
-    {
-        "@id": "cwltool",
-        "@type": "CreativeWork",
-        "encodingFormat": "text/html",
-        "datePublished": "",
-        "name": "Workflow Execution Example Workflow"
-    }
-]
+  ]
 }
 ```
