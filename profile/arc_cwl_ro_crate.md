@@ -449,32 +449,82 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
       "@type": [ "File", "SoftwareSourceCode", "ComputationalWorkflow", "LabProtocol" ],
       "conformsTo": { "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#computationalworkflow--softwaresourcecode--text--labprotocol" },
       "name": "Column Addition",
-      "creator": { "@id": "https://orcid.org/0000-0003-3925-6778" }
+      "programmingLanguage": [
+        { "@id": "#FSharp" },
+        { "@id": "https://w3id.org/workflowhub/workflow-ro-crate#cwl" }
+      ],
+      "creator": { "@id": "https://orcid.org/0000-0003-3925-6778" },
+      "dateCreated": "2024-02-05",
+      "license": "https://opensource.org/license/osl-3-0-php",
+      "sdPublisher": {"@id": "#datahub"},
+      "url": "https://git.nfdi4plants.org/muehlhaus/ArcPrototype/-/blob/main/workflows/FixedScript/workflow.cwl?ref_type=heads"
+      version: "0.1"
+      "input": [
+        { "@id": "intensity_table" },
+        { "@id": "file_name" }
+      ],
+      "output": [
+        { "@id": "summed_intensities" }
+      ]
     },
     {
-      "@id": "intensity_table",
-      "@type": "FormalParameter",
-      "conformsTo": { "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/" },
-      "name": "intensity_table",
+      "@id": "#FSharp",
+      "@type": "ProgrammingLanguage",
+      "name": "F Sharp",
+      "alternateName": "F#",
+      "url": "https://dotnet.microsoft.com/en-us/languages/fsharp",
+      "version": "6.0"
       "additionalType": "File"
     },
     {
-      "@id": "file_name",
-      "@type": "FormalParameter",
-      "conformsTo": { "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/" },
-      "additionalType": "Text"
-    },
-    {
-      "@id": "summed_intensities",
-      "@type": "FormalParameter",
-      "conformsTo": { "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/" },
-      "additionalType": "File"
+      "@id": "https://w3id.org/workflowhub/workflow-ro-crate#cwl",
+      "@type": "computerlanguage",
+      "name": "common workflow language",
+      "alternatename": "cwl",
+      "identifier": "https://w3id.org/cwl/v1.2/",
+      "url": "https://www.commonwl.org/"
     },
     {
       "@id": "https://orcid.org/0000-0003-3925-6778",
       "@type": "Person",
       "givenName": "Timo"
       "familyName": "Mühlhaus"
+    },
+    {
+      "@id": "#datahub",
+      "@type": "Organization",
+      "name": "DataPlant DataHub",
+      "url":"https://git.nfdi4plants.org/explore"
+    },
+    {
+      "@id": "intensity_table",
+      "@type": "FormalParameter",
+      "conformsTo": { "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/" },
+      "format": { "@id": "http://edamontology.org/format_3752" },
+      "additionalType": "File",
+    },
+    {
+      "@id": "file_name",
+      "@type": "FormalParameter",
+      "conformsTo": { "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/" },
+      "additionalType": "Text",
+    },
+    {
+      "@id": "summed_intensities",
+      "@type": "FormalParameter",
+      "conformsTo": { "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/" },
+      "encodingFormat": { "@id": "http://edamontology.org/format_3475" },
+      "additionalType": "File",
+    },
+    {
+      "@id": "http://edamontology.org/format_3752",
+      "@type": "Thing",
+      "name": "Comma-separated values"
+    },
+    {
+      "@id": "http://edamontology.org/format_3475",
+      "@type": "Thing",
+      "name": "Tab-separated values"
     }
   ]
 }
@@ -519,8 +569,17 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
       "@id": "workflows/FixedScript/workflow.cwl",
       "@type": [ "File", "SoftwareSourceCode", "ComputationalWorkflow", "LabProtocol" ],
       "conformsTo": { "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#computationalworkflow--softwaresourcecode--text--labprotocol" },
+      "name": "Column Addition",
+      "programmingLanguage": [
+        { "@id": "#FSharp" },
+        { "@id": "https://w3id.org/workflowhub/workflow-ro-crate#cwl" }
+      ],
       "creator": { "@id": "https://orcid.org/0000-0003-3925-6778" },
       "dateCreated": "2024-02-05",
+      "license": "https://opensource.org/license/osl-3-0-php",
+      "sdPublisher": {"@id": "#datahub"},
+      "url": "https://git.nfdi4plants.org/muehlhaus/ArcPrototype/-/blob/main/workflows/FixedScript/workflow.cwl?ref_type=heads"
+      version: "0.1"
       "input": [
         { "@id": "intensity_table" },
         { "@id": "file_name" }
@@ -530,25 +589,21 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
       ]
     },
     {
-      "@id": "intensity_table",
-      "@type": "FormalParameter",
-      "conformsTo": { "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/" },
-      "additionalType": "File",
-      "workExample": {"@id": "assays/measurement1/dataset/table.csv"}
+      "@id": "#FSharp",
+      "@type": "ProgrammingLanguage",
+      "name": "F Sharp",
+      "alternateName": "F#",
+      "url": "https://dotnet.microsoft.com/en-us/languages/fsharp",
+      "version": "6.0"
+      "additionalType": "File"
     },
     {
-      "@id": "file_name",
-      "@type": "FormalParameter",
-      "conformsTo": { "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/" },
-      "additionalType": "Text",
-      "workExample": {"@id": "file_name_filled"}
-    },
-    {
-      "@id": "summed_intensities",
-      "@type": "FormalParameter",
-      "conformsTo": { "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/" },
-      "additionalType": "File",
-      "workExample": { "@id": "runs/fsResult1/result.csv" }
+      "@id": "https://w3id.org/workflowhub/workflow-ro-crate#cwl",
+      "@type": "computerlanguage",
+      "name": "common workflow language",
+      "alternatename": "cwl",
+      "identifier": "https://w3id.org/cwl/v1.2/",
+      "url": "https://www.commonwl.org/"
     },
     {
       "@id": "https://orcid.org/0000-0003-3925-6778",
@@ -557,9 +612,46 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
       "familyName": "Mühlhaus"
     },
     {
+      "@id": "#datahub",
+      "@type": "Organization",
+      "name": "DataPlant DataHub",
+      "url":"https://git.nfdi4plants.org/explore"
+    },
+    {
+      "@id": "intensity_table",
+      "@type": "FormalParameter",
+      "conformsTo": { "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/" },
+      "format": { "@id": "http://edamontology.org/format_3752" },
+      "additionalType": "File",
+    },
+    {
+      "@id": "file_name",
+      "@type": "FormalParameter",
+      "conformsTo": { "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/" },
+      "additionalType": "Text",
+    },
+    {
+      "@id": "summed_intensities",
+      "@type": "FormalParameter",
+      "conformsTo": { "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/" },
+      "encodingFormat": { "@id": "http://edamontology.org/format_3475" },
+      "additionalType": "File",
+    },
+    {
+      "@id": "http://edamontology.org/format_3752",
+      "@type": "Thing",
+      "name": "Comma-separated values"
+    },
+    {
+      "@id": "http://edamontology.org/format_3475",
+      "@type": "Thing",
+      "name": "Tab-separated values"
+    },
+    {
       "@id": "#wfrun-fixed-script",
       "@type": [ "CreateAction", "LabProcess" ],
       "instrument": { "@id": "workflows/FixedScript/workflow.cwl" },
+      
       "agent": { "@id": "https://orcid.org/0000-0003-1512-9504" },
       "object": [
           { "@id": "assays/measurement1/dataset/table.csv" },
