@@ -381,7 +381,8 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
       ],
       "mainEntity": { "@id": "workflows/FixedScript/workflow.cwl" }
     },
-    { "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#cwl-workflow-run-profile",
+    {
+      "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#cwl-workflow-run-profile",
       "@type": "CreativeWork",
       "name": "ARC CWL Workflow Run RO-Crate",
     },
@@ -401,6 +402,7 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
       "@id": "#wfrun-fixed-script",
       "@type": [ "CreateAction", "LabProcess" ],
       "instrument": { "@id": "workflows/FixedScript/workflow.cwl" },
+      "name" : "Column Addition with fixed script",
       "agent": { "@id": "https://orcid.org/0000-0003-1512-9504" },
       "object": [
           { "@id": "assays/measurement1/dataset/table.csv" },
@@ -560,7 +562,8 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
       ],
       "mainEntity": { "@id": "workflows/FixedScript/workflow.cwl" }
     },
-    { "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#cwl-workflow-run-profile",
+    { 
+      "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#cwl-workflow-run-profile",
       "@type": "CreativeWork",
       "name": "ARC CWL Workflow Run RO-Crate",
     },
@@ -650,7 +653,7 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
       "@id": "#wfrun-fixed-script",
       "@type": [ "CreateAction", "LabProcess" ],
       "instrument": { "@id": "workflows/FixedScript/workflow.cwl" },
-      
+      "name" : "Column Addition with fixed script",
       "agent": { "@id": "https://orcid.org/0000-0003-1512-9504" },
       "object": [
           { "@id": "assays/measurement1/dataset/table.csv" },
