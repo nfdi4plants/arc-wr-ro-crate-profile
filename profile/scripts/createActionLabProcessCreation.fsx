@@ -33,21 +33,18 @@ let requiredProfileProperties = [
                                                                           (Schema.PropertyValue, END)], 
                                                                           "The identifier of one or more entities of the RO-Crate that were consumed by this action, e.g. input files or reference datasets. Entities referenced by an action’s object or result SHOULD be of type File (an RO-Crate alias for MediaObject) for files, Dataset for directories and Collection for multi-file datasets, but MAY be a CreativeWork for other types of data (e.g. an online database); they MAY be of type PropertyValue to capture numbers/strings that are not stored as files.", 
                                                                           "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate, https://bioschemas.org/types/LabProcess/0.1-DRAFT")
-]
-let recommendedProfileProperties = [
-// The following two properties are from LabProcess
-    ProfileRow.create("executesLabProtocol",  Recommended, ONE,       [   (BioSchemas.LabProtocol, END)], 
-                                                                          "The protocol executed. In this case, it refers to the multitype entity of the ARC CWL Workflow Profile with File, SoftwareSourceCode, ComputationalWorkflow and LabProtocol", 
-                                                                          "https://bioschemas.org/types/LabProcess/0.1-DRAFT")
-    ProfileRow.create("parameterValue",       Recommended, ONE,       [   (Schema.PropertyValue, END)], 
-                                                                          "A parameter value of the workflow process, usually a key-value pair using ontology terms", 
-                                                                          "https://bioschemas.org/types/LabProcess/0.1-DRAFT")
-// Required -> Recommended
-    ProfileRow.create("name",                 Recommended, ONE,       [   (Schema.Text, END)], 
+    ProfileRow.create("name",                 Required, ONE,          [   (Schema.Text, END)], 
                                                                           "Short human-readable description of the execution.", 
                                                                           "https://bioschemas.org/types/LabProcess/0.1-DRAFT")
 ]
 let optionalProfileProperties = [
+// The following two properties are from LabProcess
+    ProfileRow.create("executesLabProtocol",  Optional, ONE,          [   (BioSchemas.LabProtocol, END)], 
+                                                                          "The protocol executed. In this case, it refers to the multitype entity of the ARC CWL Workflow Profile with File, SoftwareSourceCode, ComputationalWorkflow and LabProtocol", 
+                                                                          "https://bioschemas.org/types/LabProcess/0.1-DRAFT")
+    ProfileRow.create("parameterValue",       Optional, ONE,          [   (Schema.PropertyValue, END)], 
+                                                                          "A parameter value of the workflow process, usually a key-value pair using ontology terms", 
+                                                                          "https://bioschemas.org/types/LabProcess/0.1-DRAFT")
 // Recommended -> Optional
     ProfileRow.create("endTime",              Optional, ONE,          [   (Schema.DateTime, OR)
                                                                           (Schema.Time, END)], 
@@ -141,8 +138,6 @@ File.WriteAllLines(Path.Combine(__SOURCE_DIRECTORY__,"create-action-lab-process.
     ]
     @ ["| <h4>Required Properties</h4> | | | | | |"]
     @ (requiredProfileProperties |> List.map ProfileRow.toTableRow)
-    @ ["| <h4>Recommended Properties</h4> | | | | | |"]
-    @ (recommendedProfileProperties |> List.map ProfileRow.toTableRow)
     @ ["| <h4>Optional Properties</h4> | | | | | |"]
     @ (optionalProfileProperties |> List.map ProfileRow.toTableRow)
 )
