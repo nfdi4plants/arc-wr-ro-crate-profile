@@ -331,8 +331,11 @@ specifications.
     {
       "@type": "CreativeWork",
       "@id": "ro-crate-metadata.json",
-      "conformsTo": { "@id": "https://w3id.org/ro/crate/1.1" },
-      "about": { "@id": "./" }
+      "conformsTo": [
+        { "@id": "https://w3id.org/ro/crate/1.1" },
+        { "@id": https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#arc-cwl-workflow-profile }
+      ],
+      "about": { "@id": "./workflows" }
     },
     {
       "@id": "workflows/FixedScript/workflow.cwl",
@@ -364,7 +367,7 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
       "@id": "ro-crate-metadata.json",
       "conformsTo": [
         { "@id": "https://w3id.org/ro/crate/1.1" },
-        { "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#cwl-workflow-run-profile" }
+        { "@id": https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#arc-cwl-workflow-profile }
       ],
       "about": { "@id": "./workflows" }
     },
@@ -373,10 +376,13 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
       "@type": "Dataset",
       "conformsTo": [
         { "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#cwl-workflow-run-profile" }
+        { "@id": "https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate.md#assay" }
       ],
+      "additionalType": "Assay",
+      "identifier": "ColumnAddition",
       "hasPart": [
         { "@id": "workflows/FixedScript/workflow.cwl" },
-        { "@id": "assays/measurement1/dataset/table.csv" }
+        { "@id": "./assays/measurement1/dataset/table.csv" }
         { "@id": "runs/FixedScriptResult/result.csv" }
       ],
       "mainEntity": { "@id": "workflows/FixedScript/workflow.cwl" }
@@ -405,10 +411,10 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
       "name" : "Column Addition with fixed script",
       "agent": { "@id": "https://orcid.org/0000-0003-1512-9504" },
       "object": [
-          { "@id": "assays/measurement1/dataset/table.csv" },
+          { "@id": "./assays/measurement1/dataset/table.csv" },
           { "@id": "file_name_filled" }
       ],
-      "result": { "@id": "runs/fsResult1/result.csv" }
+      "result": { "@id": "./runs/fsResult1/result.csv" }
     },
     {
       "@id": "https://orcid.org/0000-0003-1512-9504",
@@ -417,7 +423,7 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
       "familyName": "Ott"
     },
     {
-      "@id": "assays/measurement1/dataset/table.csv",
+      "@id": "./assays/measurement1/dataset/table.csv",
       "@type": "File"
     },
     {
@@ -425,8 +431,194 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
       "@type": "PropertyValue"
     },
     {
-      "@id": "runs/fsResult1/result.csv",
+      "@id": "./runs/fsResult1/result.csv",
       "@type": "File"
+    }
+  ]
+}
+```
+
+### Minimal required fields with metadata
+
+#### CWL Workflow Profile
+
+```json
+{ "@context": "https://w3id.org/ro/crate/1.1/context",
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "ro-crate-metadata.json",
+      "conformsTo": [
+        { "@id": "https://w3id.org/ro/crate/1.1" },
+        { "@id": https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#arc-cwl-workflow-profile }
+      ],
+      "about": { "@id": "./workflows" }
+    },
+    {
+      "@id": "workflows/FixedScript/workflow.cwl",
+      "@type": [ "File", "SoftwareSourceCode", "ComputationalWorkflow", "LabProtocol" ],
+      "conformsTo": { "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#computationalworkflow--softwaresourcecode--text--labprotocol" },
+      "creator": { "@id": "https://orcid.org/0000-0003-3925-6778" }
+      "computationalTool": { "@id": "ProcessParameterValue/Data Transformation=Addition" }
+    },
+    {
+      "@id": "https://orcid.org/0000-0003-3925-6778",
+      "@type": "Person",
+      "givenName": "Timo",
+      "familyName": "Mühlhaus",
+      "email": "muehlhaus@bio.uni-kl.de"
+      "affiliation": { "@id": "RPTU" }
+      "jobTitle": { "@id": "https://credit.niso.org/contributor-roles/formal-analysis/" }
+    }
+    {
+      "@id": "RPTU",
+      "@type": "Organization",
+      "name": "Rheinland-Pfälzische Technische Universität Kaiserslautern-Landau",
+      "url":"https://rptu.de/"
+    },
+    {
+      "@id": "https://credit.niso.org/contributor-roles/formal-analysis/",
+      "@type": "DefinedTerm",
+      "inDefinedTermSet": "CRT",
+      "name": "Formal Analysis",
+      "termCode": "https://credit.niso.org/contributor-roles/formal-analysis/"
+    },
+    {
+      "@id": "ProcessParameterValue/Data Transformation=Addition",
+      "@type": "PropertyValue",
+      "additionalType": "ProcessParameter",
+      "name": "Data Transformation",
+      "propertyID": "NCIT:C43582",
+    }
+  ]
+}
+```
+
+#### CWL Workflow Run Profile
+
+Note: `exampleOfWork` and `workExample` are not required, but make it easier to understand.
+
+```json
+{ "@context": [
+    "https://w3id.org/ro/terms/workflow-run/context"
+  ],
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "ro-crate-metadata.json",
+      "conformsTo": [
+        { "@id": "https://w3id.org/ro/crate/1.1" },
+        { "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#arc-cwl-workflow-profile" }
+      ],
+      "about": { "@id": "./workflows" }
+    },
+    {
+      "@id": "./workflows",
+      "@type": "Dataset",
+      "conformsTo": [
+        { "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#cwl-workflow-run-profile" }
+        { "@id": "https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate.md#assay" }
+      ],
+      "additionalType": "Assay",
+      "identifier": "ColumnAddition",
+      "measurementMethod": { "@id" = "http://edamontology.org/format_3973" },
+      "measurementTechnique": https://dotnet.microsoft.com/en-us/download/dotnet/6.0
+      "hasPart": [
+        { "@id": "workflows/FixedScript/workflow.cwl" },
+        { "@id": "./assays/measurement1/dataset/table.csv" }
+        { "@id": "runs/FixedScriptResult/result.csv" }
+      ],
+      "mainEntity": { "@id": "workflows/FixedScript/workflow.cwl" }
+    },
+    {
+      "@id": "http://edamontology.org/format_3973",
+      "@type": "DefinedTerm",
+      "inDefinedTermSet": "EDAM",
+      "name": "Docker Image",
+      "termCode": "http://edamontology.org/format_3973"
+    },
+    {
+      "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#cwl-workflow-run-profile",
+      "@type": "CreativeWork",
+      "name": "ARC CWL Workflow Run RO-Crate",
+    },
+    {
+      "@id": "workflows/FixedScript/workflow.cwl",
+      "@type": [ "File", "SoftwareSourceCode", "ComputationalWorkflow", "LabProtocol" ],
+      "conformsTo": { "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#computationalworkflow--softwaresourcecode--text--labprotocol" },
+      "creator": { "@id": "https://orcid.org/0000-0003-3925-6778" }
+      "computationalTool": { "@id": "ProcessParameterValue/Data Transformation=Addition" }
+    },
+    {
+      "@id": "https://orcid.org/0000-0003-3925-6778",
+      "@type": "Person",
+      "givenName": "Timo",
+      "familyName": "Mühlhaus",
+      "email": "muehlhaus@bio.uni-kl.de"
+      "affiliation": { "@id": "RPTU" }
+      "jobTitle": { "@id": "https://credit.niso.org/contributor-roles/formal-analysis/" }
+    },
+    {
+      "@id": "RPTU",
+      "@type": "Organization",
+      "name": "Rheinland-Pfälzische Technische Universität Kaiserslautern-Landau",
+      "url":"https://rptu.de/"
+    },
+    {
+      "@id": "https://credit.niso.org/contributor-roles/formal-analysis/",
+      "@type": "DefinedTerm",
+      "inDefinedTermSet": "CRT",
+      "name": "Formal Analysis",
+      "termCode": "https://credit.niso.org/contributor-roles/formal-analysis/"
+    },
+    {
+      "@id": "ProcessParameterValue/Data Transformation=Addition",
+      "@type": "PropertyValue",
+      "additionalType": "ProcessParameter",
+      "name": "Data Transformation",
+      "propertyID": "NCIT:C43582",
+    }
+    {
+      "@id": "#wfrun-fixed-script",
+      "@type": [ "CreateAction", "LabProcess" ],
+      "instrument": { "@id": "workflows/FixedScript/workflow.cwl" },
+      "name" : "Column Addition with fixed script",
+      "agent": { "@id": "https://orcid.org/0000-0003-1512-9504" },
+      "object": [
+          { "@id": "./assays/measurement1/dataset/table.csv" },
+          { "@id": "file_name_filled" }
+      ],
+      "result": { "@id": "./runs/fsResult1/result.csv" },
+      "parameterValue" : { "@id" = "ProcessParameterValue/Data Transformation=Addition" }
+    },
+    {
+      "@id": "https://orcid.org/0000-0003-1512-9504",
+      "@type": "Person",
+      "givenName": "Caroline",
+      "familyName": "Ott"
+      "email": "caroline.ott@rptu.de"
+      "affiliation": { "@id": "RPTU" }"
+    },
+    {
+      "@id": "./assays/measurement1/dataset/table.csv",
+      "@type": "File"
+    },
+    {
+      "@id": "#file_name_filled",
+      "@type": "PropertyValue"
+    },
+    {
+      "@id": "./runs/fsResult1/result.csv",
+      "@type": "File"
+    },
+    {
+      "@id": "ProcessParameterValue/Data Transformation=Addition",
+      "@type": "PropertyValue",
+      "additionalType": "ProcessParameterValue",
+      "name": "Data Transformation",
+      "propertyID": "NCIT:C43582",
+      "value": "Addition",
+      "valueReference": "http://purl.obolibrary.org/obo/NCIT_C64911"
     }
   ]
 }
@@ -442,8 +634,11 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
     {
       "@type": "CreativeWork",
       "@id": "ro-crate-metadata.json",
-      "conformsTo": { "@id": "https://w3id.org/ro/crate/1.1" },
-      "about": { "@id": "./" }
+      "conformsTo": [
+        { "@id": "https://w3id.org/ro/crate/1.1" },
+        { "@id": https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#arc-cwl-workflow-profile }
+      ],
+      "about": { "@id": "./workflows" }
     },
     {
       "@id": "workflows/FixedScript/workflow.cwl",
@@ -459,7 +654,7 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
       "license": "https://opensource.org/license/osl-3-0-php",
       "sdPublisher": {"@id": "#datahub"},
       "url": "https://git.nfdi4plants.org/muehlhaus/ArcPrototype/-/blob/main/workflows/FixedScript/workflow.cwl?ref_type=heads"
-      version: "0.1"
+      "version": "0.1"
       "input": [
         { "@id": "intensity_table" },
         { "@id": "file_name" }
@@ -545,7 +740,7 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
       "@id": "ro-crate-metadata.json",
       "conformsTo": [
         { "@id": "https://w3id.org/ro/crate/1.1" },
-        { "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#cwl-workflow-run-profile" }
+        { "@id": https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#arc-cwl-workflow-profile }
       ],
       "about": { "@id": "./workflows" }
     },
@@ -554,10 +749,13 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
       "@type": "Dataset",
       "conformsTo": [
         { "@id": "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/resolve_workflowRun/profile/arc_cwl_ro_crate.md#cwl-workflow-run-profile" }
+        { "@id": "https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate.md#assay" }
       ],
+      "additionalType": "Assay",
+      "identifier": "ColumnAddition",
       "hasPart": [
         { "@id": "workflows/FixedScript/workflow.cwl" },
-        { "@id": "assays/measurement1/dataset/table.csv" }
+        { "@id": "./assays/measurement1/dataset/table.csv" }
         { "@id": "runs/FixedScriptResult/result.csv" }
       ],
       "mainEntity": { "@id": "workflows/FixedScript/workflow.cwl" }
@@ -581,7 +779,7 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
       "license": "https://opensource.org/license/osl-3-0-php",
       "sdPublisher": {"@id": "#datahub"},
       "url": "https://git.nfdi4plants.org/muehlhaus/ArcPrototype/-/blob/main/workflows/FixedScript/workflow.cwl?ref_type=heads"
-      version: "0.1"
+      "version": "0.1"
       "input": [
         { "@id": "intensity_table" },
         { "@id": "file_name" }
@@ -656,10 +854,10 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
       "name" : "Column Addition with fixed script",
       "agent": { "@id": "https://orcid.org/0000-0003-1512-9504" },
       "object": [
-          { "@id": "assays/measurement1/dataset/table.csv" },
+          { "@id": "./assays/measurement1/dataset/table.csv" },
           { "@id": "file_name_filled" }
       ],
-      "result": { "@id": "runs/fsResult1/result.csv" }
+      "result": { "@id": "./runs/fsResult1/result.csv" }
     },
     {
       "@id": "https://orcid.org/0000-0003-1512-9504",
@@ -668,7 +866,7 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
       "familyName": "Ott"
     },
     {
-      "@id": "assays/measurement1/dataset/table.csv",
+      "@id": "./assays/measurement1/dataset/table.csv",
       "@type": "File",
       "exampleOfWork": {"@id": "intensity_table"}
     },
@@ -678,7 +876,7 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
       "exampleOfWork": {"@id": "file_name"},
     },
     {
-      "@id": "runs/fsResult1/result.csv",
+      "@id": "./runs/fsResult1/result.csv",
       "@type": "File",
       "exampleOfWork": {"@id": "summed_intensities"}
     }
