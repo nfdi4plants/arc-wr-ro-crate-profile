@@ -1,10 +1,10 @@
-## ARC CWL RO-Crate Profile
+## ARC Workflow Run RO-Crate Profile
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13734332.svg)](https://doi.org/10.5281/zenodo.13734332)
 
-[Latest version](profile/arc_cwl_ro_crate.md)
+[Latest version](profile/arc_wr_ro_crate.md)
 
-The ARC CWL RO-Crate profile describes how documentations of computational workflows and their invocations (runs) in Annotated Research Contexts (ARC) can be annotated in RO-Crate metadata.
+The ARC Workflow Run RO-Crate profile describes how documentations of computational workflows and their invocations (runs) in Annotated Research Contexts (ARC) can be annotated in RO-Crate metadata.
 
 When computational analysis is performed on experimental samples or on the data resulting from an assay, this process is referred to as a run.
 

@@ -132,7 +132,7 @@ let optionalProfileRows = [
     ProfileRow.create("maintainer",             Optional, MANY,     [   (Schema.Organization, OR)
                                                                         (Schema.Person, END)
                                                                     ], 
-                                                                    "A maintainer of a Dataset, software package (SoftwareApplication), or other Project. A maintainer is a Person or Organization that manages contributions to, and/or publication of, some (typically complex) artifact. It is common for distributions of software and data to be based on “upstream” sources. When maintainer is applied to a specific version of something e.g. a particular version or packaging of a Dataset, it is always possible that the upstream source has a different maintainer. The isBasedOn property can be used to indicate such relationships between datasets to make the different maintenance roles clear. Similarly in the case of software, a package may have dedicated maintainers working on integration into software distributions such as Ubuntu, as well as upstream maintainers of the underlying work.", 
+                                                                    "A maintainer of a Dataset, software package (SoftwareApplication), or other Project. A maintainer is a Person or Organization that manages contributions to, and/or publication of, some (typically complex) artifact. It is common for distributions of software and data to be based on \"upstream\" sources. When maintainer is applied to a specific version of something e.g. a particular version or packaging of a Dataset, it is always possible that the upstream source has a different maintainer. The isBasedOn property can be used to indicate such relationships between datasets to make the different maintenance roles clear. Similarly in the case of software, a package may have dedicated maintainers working on integration into software distributions such as Ubuntu, as well as upstream maintainers of the underlying work.", 
                                                                     "https://bioschemas.org/profiles/ComputationalWorkflow")
     // Recommended -> Optional
     ProfileRow.create("producer",               Optional, MANY,     [   (Schema.Organization, OR)
@@ -173,12 +173,12 @@ let optionalProfileRows = [
                                                                     "An alias for the item.", 
                                                                     "https://bioschemas.org/profiles/ComputationalWorkflow")
     ProfileRow.create("conditionsOfAccess",     Optional, ONE,      [   (Schema.Text, END)], 
-                                                                    "Conditions that affect the availability of, or method(s) of access to, an item. Typically used for real world items such as an ArchiveComponent held by an ArchiveOrganization. This property is not suitable for use as a general Web access control mechanism. It is expressed only in natural language. For example “Available by appointment from the Reading Room” or “Accessible only from logged-in accounts “.", 
+                                                                    "Conditions that affect the availability of, or method(s) of access to, an item. Typically used for real world items such as an ArchiveComponent held by an ArchiveOrganization. This property is not suitable for use as a general Web access control mechanism. It is expressed only in natural language. For example \"Available by appointment from the Reading Room\" or \"Accessible only from logged-in accounts \".", 
                                                                     "https://bioschemas.org/profiles/ComputationalWorkflow")
     ProfileRow.create("dateModified",           Optional, ONE,      [   (Schema.Date, OR)
                                                                         (Schema.DateTime, END)
                                                                     ], 
-                                                                    "The date on which the CreativeWork was most recently modified or when the item’s entry was modified within a DataFeed.", 
+                                                                    "The date on which the CreativeWork was most recently modified or when the item's entry was modified within a DataFeed.", 
                                                                     "https://bioschemas.org/profiles/ComputationalWorkflow")
     ProfileRow.create("datePublished",          Optional, ONE,      [   (Schema.Date, OR)
                                                                         (Schema.DateTime, END)
@@ -218,7 +218,7 @@ let optionalProfileRows = [
 ]
 open System.IO
 
-File.WriteAllLines(Path.Combine(__SOURCE_DIRECTORY__,"arc-cwl-workflow.generated.md"), 
+File.WriteAllLines(Path.Combine(__SOURCE_DIRECTORY__,"arc-workflow.generated.md"), 
     [
         "| Property | Required | Cardinality | Expected Type | Description | Source Profile |"
         "|----------|----------|-------------|---------------|-------------|----------------|"
