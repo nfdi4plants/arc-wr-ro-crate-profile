@@ -1,0 +1,176 @@
+{
+    "@context": [
+        "https://w3id.org/ro/terms/workflow-run/context"
+    ],
+    "@graph": [
+        {
+            "@type": "CreativeWork",
+            "@id": "ro-crate-metadata.json",
+            "conformsTo": [
+                {
+                    "@id": "https://w3id.org/ro/crate/1.1"
+                },
+                {
+                    "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#arc-wr-workflow-profile"
+                }
+            ],
+            "about": {
+                "@id": "./workflows"
+            }
+        },
+        {
+            "@id": "./workflows",
+            "@type": "Dataset",
+            "conformsTo": [
+                {
+                    "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#workflow-run-profile"
+                },
+                {
+                    "@id": "https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate.md#assay"
+                }
+            ],
+            "additionalType": "Assay",
+            "identifier": "ColumnAddition",
+            "measurementMethod": {
+                "@id" : "http://edamontology.org/format_3973"
+            },
+            "measurementTechnique": "https://dotnet.microsoft.com/en-us/download/dotnet/6.0",
+            "hasPart": [
+                {
+                    "@id": "workflows/FixedScript/workflow.cwl"
+                },
+                {
+                    "@id": "./assays/measurement1/dataset/table.csv"
+                },
+                {
+                    "@id": "runs/FixedScriptResult/result.csv"
+                }
+            ],
+            "mainEntity": {
+                "@id": "workflows/FixedScript/workflow.cwl"
+            }
+        },
+        {
+            "@id": "http://edamontology.org/format_3973",
+            "@type": "DefinedTerm",
+            "inDefinedTermSet": "EDAM",
+            "name": "Docker Image",
+            "termCode": "http://edamontology.org/format_3973"
+        },
+        {
+            "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#workflow-run-profile",
+            "@type": "CreativeWork",
+            "name": "ARC Workflow Run RO-Crate"
+        },
+        {
+            "@id": "workflows/FixedScript/workflow.cwl",
+            "@type": [
+                "File",
+                "SoftwareSourceCode",
+                "ComputationalWorkflow",
+                "LabProtocol"
+            ],
+            "conformsTo": {
+                "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#computationalworkflow--softwaresourcecode--text--labprotocol"
+            },
+            "creator": {
+                "@id": "https://orcid.org/0000-0003-3925-6778"
+            },
+            "computationalTool": {
+                "@id": "ProcessParameterValue/Data Transformation=Addition"
+            }
+        },
+        {
+            "@id": "https://orcid.org/0000-0003-3925-6778",
+            "@type": "Person",
+            "givenName": "Timo",
+            "familyName": "Mühlhaus",
+            "email": "muehlhaus@bio.uni-kl.de",
+            "affiliation": {
+                "@id": "RPTU"
+            },
+            "jobTitle": {
+                "@id": "https://credit.niso.org/contributor-roles/formal-analysis/"
+            }
+        },
+        {
+            "@id": "RPTU",
+            "@type": "Organization",
+            "name": "Rheinland-Pfälzische Technische Universität Kaiserslautern-Landau",
+            "url": "https://rptu.de/"
+        },
+        {
+            "@id": "https://credit.niso.org/contributor-roles/formal-analysis/",
+            "@type": "DefinedTerm",
+            "inDefinedTermSet": "CRT",
+            "name": "Formal Analysis",
+            "termCode": "https://credit.niso.org/contributor-roles/formal-analysis/"
+        },
+        {
+            "@id": "ProcessParameterValue/Data Transformation=Addition",
+            "@type": "PropertyValue",
+            "additionalType": "ProcessParameter",
+            "name": "Data Transformation",
+            "propertyID": "NCIT:C43582"
+        },
+        {
+            "@id": "#wfrun-fixed-script",
+            "@type": [
+                "CreateAction",
+                "LabProcess"
+            ],
+            "instrument": {
+                "@id": "workflows/FixedScript/workflow.cwl"
+            },
+            "name": "Column Addition with fixed script",
+            "agent": {
+                "@id": "https://orcid.org/0000-0003-1512-9504"
+            },
+            "object": [
+                {
+                    "@id": "./assays/measurement1/dataset/table.csv"
+                },
+                {
+                    "@id": "file_name_filled"
+                }
+            ],
+            "result": {
+                "@id": "./runs/fsResult1/result.csv"
+            },
+            "parameterValue": {
+                "@id" : "ProcessParameterValue/Data Transformation=Addition"
+            }
+        },
+        {
+            "@id": "https://orcid.org/0000-0003-1512-9504",
+            "@type": "Person",
+            "givenName": "Caroline",
+            "familyName": "Ott",
+            "email": "caroline.ott@rptu.de",
+            "affiliation": {
+                "@id": "RPTU"
+            }
+        },
+        {
+            "@id": "./assays/measurement1/dataset/table.csv",
+            "@type": "File"
+        },
+        {
+            "@id": "#file_name_filled",
+            "@type": "PropertyValue"
+        },
+        {
+            "@id": "./runs/fsResult1/result.csv",
+            "@type": "File"
+        },
+        {
+            "@id": "ProcessParameterValue/Data Transformation=Addition",
+            "@type": "PropertyValue",
+            "additionalType": "ProcessParameterValue",
+            "name": "Data Transformation",
+            "propertyID": "NCIT:C43582",
+            "value": "Addition",
+            "valueReference": "http://purl.obolibrary.org/obo/NCIT_C64911"
+        }
+    ]
+}
