@@ -1,6 +1,5 @@
-#load "profileCreation.fsx"
-
-open ProfileCreation
+module PropertyValue
+open Domain
 
 let requiredProfileProperties = [
     ProfileRow.create("@id",                Required, ONE,          [   (IRI, END)], 
@@ -123,17 +122,9 @@ let optionalProfileProperties = [
                                                                     "https://schema.org/Thing")
 ]
 
-open System.IO
-
-File.WriteAllLines(Path.Combine(__SOURCE_DIRECTORY__,"property-value.generated.md"), 
-    [
-        "| Property | Required | Cardinality | Expected Type | Description | Source Profile |"
-        "|----------|----------|-------------|---------------|-------------|----------------|"
-    ]
-    @ ["| <h4>Required Properties</h4> | | | | | |"]
-    @ (requiredProfileProperties |> List.map ProfileRow.toTableRow)
-    @ ["| <h4>Recommended Properties</h4> | | | | | |"]
-    @ (recommendedProfileProperties |> List.map ProfileRow.toTableRow)
-    @ ["| <h4>Optional Properties</h4> | | | | | |"]
-    @ (optionalProfileProperties |> List.map ProfileRow.toTableRow)
+let profile = Profile.create(
+    name = "PropertyValue",
+    required = requiredProfileProperties,
+    recommended = recommendedProfileProperties,
+    optional = optionalProfileProperties
 )

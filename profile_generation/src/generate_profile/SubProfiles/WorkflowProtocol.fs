@@ -1,6 +1,5 @@
-#load "profileCreation.fsx"
-
-open ProfileCreation
+module WorkflowProtocol
+open Domain
 
 let requiredProfileProperties = [
     // properties from https://bioschemas.org/profiles/ComputationalWorkflow
@@ -23,7 +22,7 @@ let requiredProfileProperties = [
     // properties from https://bioschemas.org/profiles/ComputationalWorkflow
 ]
 
-let recommendedProfileRows = [
+let recommendedProfileProperties = [
     // Required -> Recommended
     ProfileRow.create("input",              Recommended, MANY,      [   (BioSchemas.FormalParameter, END)], 
                                                                     "An input required to use the computational workflow (eg. Excel spreadsheet, BAM file)", 
@@ -78,7 +77,7 @@ let recommendedProfileRows = [
                                                                     "https://bioschemas.org/profiles/ComputationalWorkflow")
 ]
 
-let optionalProfileRows = [
+let optionalProfileProperties = [
 
     // properties from https://bioschemas.org/profiles/ComputationalWorkflow
     // Recommended -> Optional
@@ -216,17 +215,10 @@ let optionalProfileRows = [
     // url is already part of ComputationalWorkflow profile
     // version is already part of ComputationalWorkflow profile
 ]
-open System.IO
 
-File.WriteAllLines(Path.Combine(__SOURCE_DIRECTORY__,"arc-workflow.generated.md"), 
-    [
-        "| Property | Required | Cardinality | Expected Type | Description | Source Profile |"
-        "|----------|----------|-------------|---------------|-------------|----------------|"
-    ]
-    @ ["| <h4>Required Properties</h4> | | | | | |"]
-    @ (requiredProfileProperties |> List.map ProfileRow.toTableRow)
-    @ ["| <h4>Recommended Properties</h4> | | | | | |"]
-    @ (recommendedProfileRows |> List.map ProfileRow.toTableRow)
-    @ ["| <h4>Optional Properties</h4> | | | | | |"]
-    @ (optionalProfileRows |> List.map ProfileRow.toTableRow)
+let profile = Profile.create(
+    name = "WorkflowProtocol",
+    required = requiredProfileProperties,
+    recommended = recommendedProfileProperties,
+    optional = optionalProfileProperties
 )

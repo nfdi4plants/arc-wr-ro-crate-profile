@@ -1,6 +1,5 @@
-#load "profileCreation.fsx"
-
-open ProfileCreation
+module WorkflowInvocation
+open Domain
 
 let requiredProfileProperties = [
     ProfileRow.create("@id",                  Required, ONE,          [   (IRI, END)], 
@@ -24,14 +23,14 @@ let requiredProfileProperties = [
                                                                           (Schema.Collection, OR)
                                                                           (Schema.CreativeWork, OR)
                                                                           (Schema.PropertyValue, END)], 
-                                                                          "The identifier of one or more entities that were created or modified by this action, e.g. output files. Entities referenced by an action’s object or result SHOULD be of type File (an RO-Crate alias for MediaObject) for files, Dataset for directories and Collection for multi-file datasets, but MAY be a CreativeWork for other types of data (e.g. an online database); they MAY be of type PropertyValue to capture numbers/strings that are not stored as files.", 
+                                                                          "The identifier of one or more entities that were created or modified by this action, e.g. output files. Entities referenced by an actionï¿½s object or result SHOULD be of type File (an RO-Crate alias for MediaObject) for files, Dataset for directories and Collection for multi-file datasets, but MAY be a CreativeWork for other types of data (e.g. an online database); they MAY be of type PropertyValue to capture numbers/strings that are not stored as files.", 
                                                                           "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate, https://bioschemas.org/types/LabProcess/0.1-DRAFT")
     ProfileRow.create("object",               Required, MANY,         [   (Schema.MediaObject, OR)
                                                                           (Schema.Dataset, OR)
                                                                           (Schema.Collection, OR)
                                                                           (Schema.CreativeWork, OR)
                                                                           (Schema.PropertyValue, END)], 
-                                                                          "The identifier of one or more entities of the RO-Crate that were consumed by this action, e.g. input files or reference datasets. Entities referenced by an action’s object or result SHOULD be of type File (an RO-Crate alias for MediaObject) for files, Dataset for directories and Collection for multi-file datasets, but MAY be a CreativeWork for other types of data (e.g. an online database); they MAY be of type PropertyValue to capture numbers/strings that are not stored as files.", 
+                                                                          "The identifier of one or more entities of the RO-Crate that were consumed by this action, e.g. input files or reference datasets. Entities referenced by an actionï¿½s object or result SHOULD be of type File (an RO-Crate alias for MediaObject) for files, Dataset for directories and Collection for multi-file datasets, but MAY be a CreativeWork for other types of data (e.g. an online database); they MAY be of type PropertyValue to capture numbers/strings that are not stored as files.", 
                                                                           "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate, https://bioschemas.org/types/LabProcess/0.1-DRAFT")
     ProfileRow.create("name",                 Required, ONE,          [   (Schema.Text, END)], 
                                                                           "Short human-readable description of the execution.", 
@@ -129,15 +128,9 @@ let optionalProfileProperties = [
                                                                           "https://schema.org/Thing")
 ]
 
-open System.IO
-
-File.WriteAllLines(Path.Combine(__SOURCE_DIRECTORY__,"create-action-lab-process.generated.md"), 
-    [
-        "| Property | Required | Cardinality | Expected Type | Description | Source Profile |"
-        "|----------|----------|-------------|---------------|-------------|----------------|"
-    ]
-    @ ["| <h4>Required Properties</h4> | | | | | |"]
-    @ (requiredProfileProperties |> List.map ProfileRow.toTableRow)
-    @ ["| <h4>Optional Properties</h4> | | | | | |"]
-    @ (optionalProfileProperties |> List.map ProfileRow.toTableRow)
+let profile = Profile.create(
+    name = "WorkflowInvocation",
+    required = requiredProfileProperties,
+    //recommended = recommendedProfileProperties,
+    optional = optionalProfileProperties
 )
