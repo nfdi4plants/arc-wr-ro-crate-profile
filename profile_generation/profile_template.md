@@ -31,15 +31,15 @@
 
 ## Overview
 
-The **ARC Workflow Run (arc-wr) RO-Crate Profiles** are a collection of profiles to describe both _prospective_ (**workflows**, yet to be executed) and _retrospective_ (**runs**, already executed) provenance of the orchestration of computational workflows in [Annotated Research Contexts (ARCs)](https://arc-rdm.org).
+The **ARC Workflow Run (arc-wr) RO-Crate Profiles** are a collection of profiles to describe both _`prospective`_ (**workflows**, yet to be executed) and _`retrospective`_ (**runs**, already executed) provenance of the orchestration of computational workflows in [Annotated Research Contexts (ARCs)](https://arc-rdm.org).
 The profiles are designed to be re-usable in other profile collections and do not need to describe root entities of an RO-crate.
 
 Computational and laboratory workflows share many similarities, but typically only differ in how they are executed.
 In an ARC, the latter are described using the [ISA](https://isa-specs.readthedocs.io/en/latest/isajson.html#) model, separating between a workflow description ([`LabProtocol`](https://bioschemas.org/types/LabProtocol/0.5-DRAFT)) and its execution ([`LabProcess`](https://bioschemas.org/types/LabProcess/0.1-DRAFT)).
 These types provide properties to annotate parameterized metadata in the form of key-value pairs using ontology terms.
 For computational workflows, workflow descriptions are usually called _workflows_, and their execution is usually coined as a _run_ of said workflow.
-**arc-wr** profiles aim to extend established workflow and run profiles to share the same process model as the ISA model, allowing for a seamless integration of computational and laboratory workflows in ARCs.
-Advantage of this common in regards to provenance of computational and laboratory workflows include uniform queries, metadata enrichment, or visualization.
+**arc-wr** profiles aim to extend established workflow and run profiles to share the same process model as the ISA model, allowing for integration of computational and laboratory workflows in ARCs.
+Advantages in regards to provenance include uniform queries, metadata enrichment, or visualization.
 
 **arc-wr** profiles combine a selection of existing profiles, mainly the [Workflow Run Crate (WRC)](https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate/) profile collection (which itself combines [Process Run Crate](https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate/) and [Workflow RO-Crate](https://about.workflowhub.eu/Workflow-RO-Crate/)) and extends it by providing means to annotate additional metadata and align terminology with other parts of an ARC.
 Therefore, the main purpose of the **arc-wr** profiles is to merge the workflows and runs described by the **WRC** with the `LabProtocol` and `LabProcess` profiles formulated in the [ISA RO Crate Profile]() collection, creating a cohesive process model that tracks prospective and retrospective provenance of computational and laboratory workflows.
