@@ -10,8 +10,10 @@
 * Table of Contents
   * [Overview](#overview)
   * [Requirements](#requirements)
-    * [WorkflowProtocol](#workflowprotocol)
-    * [WorkflowProtocolInvocation](#workflowprotocolinvocation)
+    * [ARC Workflow](#arc-workflow)
+    * [Workflow Protocol](#workflow-protocol)
+    * [ARC Run](#arc-run)
+    * [Workflow Invocation](#workflow-invocation)
     * [Dataset](#dataset)
     * [FormalParameter](#formalparameter)
     * [PropertyValue](#propertyvalue)
@@ -42,25 +44,27 @@ For computational workflows, workflow descriptions are usually called _workflows
 Advantages in regards to provenance include uniform queries, metadata enrichment, or visualization.
 
 **arc-wr** profiles combine a selection of existing profiles, mainly the [Workflow Run Crate (WRC)](https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate/) profile collection (which itself combines [Process Run Crate](https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate/) and [Workflow RO-Crate](https://about.workflowhub.eu/Workflow-RO-Crate/)) and extends it by providing means to annotate additional metadata and align terminology with other parts of an ARC.
-Therefore, the main purpose of the **arc-wr** profiles is to merge the workflows and runs described by the **WRC** with the `LabProtocol` and `LabProcess` profiles formulated in the [ISA RO Crate Profile]() collection, creating a cohesive process model that tracks prospective and retrospective provenance of computational and laboratory workflows.
+Therefore, the main purpose of the **arc-wr** profiles is to merge the workflows and runs described by the **WRC** with the `LabProtocol` and `LabProcess` profiles formulated in the [ISA RO Crate Profile](https://doi.org/10.5281/zenodo.13748893) collection, creating a cohesive process model that tracks prospective and retrospective provenance of computational and laboratory workflows.
 To allow for the ARC's _immutable but evolving_ nature, **arc-wr** profiles are in general less strict than the underlying profiles, relaxing requirements for many mandatory fields.
 However, compatibility is guaranteed when following **both** the Mandatory and Recommended fields of the underlying profiles (see also the [compatibility section](#compatibility-with-underlying-profiles)).
 
 ## Requirements
 
-### WorkflowProtocol
+### ARC Workflow
 
-(WIP name)
+[[ARC_WORKFLOW_REQUIREMENTS]]
+
+### Workflow Protocol
 
 [[WORKFLOW_PROTOCOL_REQUIREMENTS]]
 
-### WorkflowProtocolInvocation
+### ARC Run
 
-(WIP name)
+[[ARC_RUN_REQUIREMENTS]]
 
-(ARC Workflow Run Profile)
+### Workflow Invocation
 
-[[WORKFLOW_PROTOCOL_INVOCATION_REQUIREMENTS]]
+[[WORKFLOW_INVOCATION_REQUIREMENTS]]
 
 ### Dataset
 

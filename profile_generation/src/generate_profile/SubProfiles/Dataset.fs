@@ -1,6 +1,5 @@
-#load "profileCreation.fsx"
-
-open ProfileCreation
+module Dataset
+open Domain
 
 let requiredProfileProperties = [
 
@@ -50,15 +49,9 @@ let optionalProfileProperties = [
                                                                     "https://schema.org/Dataset")
 ]
 
-open System.IO
-
-File.WriteAllLines(Path.Combine(__SOURCE_DIRECTORY__,"dataset.generated.md"), 
-    [
-        "| Property | Required | Cardinality | Expected Type | Description | Source Profile |"
-        "|----------|----------|-------------|---------------|-------------|----------------|"
-    ]
-    @ ["| <h4>Required Properties</h4> | | | | | |"]
-    @ (requiredProfileProperties |> List.map ProfileRow.toTableRow)
-    @ ["| <h4>Optional Properties</h4> | | | | | |"]
-    @ (optionalProfileProperties |> List.map ProfileRow.toTableRow)
+let profile = Profile.create(
+    name = "Dataset",
+    required = requiredProfileProperties,
+    //recommended = recommendedProfileProperties,
+    optional = optionalProfileProperties
 )

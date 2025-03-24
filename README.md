@@ -16,6 +16,18 @@ A workflow, on the other hand, is the computational protocol detailing how the d
 
 To annotate metadata provided in CWL in accordance with this separation, the profile uses concepts from [Workflow Run Crate](https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate/). For seamless integration into other ARC metadata, it extends the existing profile by incorporating [ISA](https://isa-specs.readthedocs.io/en/latest/isamodel.html) terms which do the same separation into description and execution. A `LabProtocol` is used to annotate workflows, a `LabProcess` for runs.
 
+## Change and generate profile
+
+The profile is generated programmatically from the runnable project in the `profile_generation` folder.
+
+To change or add profiles, take a look at [these files](./profile_generation/src/generate_profile/SubProfiles)
+
+To generate a new version of the profile, run the following command in the repo root:
+
+```bash
+dotnet run --project .\profile_generation\src\generate_profile\generate_profile.fsproj -- -o ./
+```
+
 ## Contributing to this repository
 
 The default branch `release` of this repo is kept in sync with the latest release tag and the zenodo record. 

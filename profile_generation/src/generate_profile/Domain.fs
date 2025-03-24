@@ -1,3 +1,5 @@
+module Domain
+
 type Required = 
     | Required 
     | Recommended 
@@ -156,3 +158,31 @@ module WorkflowRunProfile =
     let ProcessRun = { Name = "ProcessRun"; Domain = "workflow-run-crate"; Link = "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate" }
     let WorkflowRun = { Name = "WorkflowRun"; Domain = "workflow-run-crate"; Link = "https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate/" }
     let FormalParameter = { Name = "FormalParameter"; Domain = "bioschemas.org"; Link = "https://bioschemas.org/types/FormalParameter" }
+
+
+type Profile = {
+    Name: string
+    Required: ProfileRow list
+    Recommended: ProfileRow list
+    Optional: ProfileRow list
+} with
+    static member create (name: string, required: ProfileRow list, ?recommended: ProfileRow list, ?optional: ProfileRow list) =
+        { 
+            Name = name
+            Required = required
+            Recommended = defaultArg recommended []
+            Optional = defaultArg optional []
+        }
+
+let generateProfileTable (profile: Profile) =
+    [
+        "| Property | Required | Cardinality | Expected Type | Description | Source Profile |"
+        "|----------|----------|-------------|---------------|-------------|----------------|"
+    ]
+    @ ["| <h4>Required Properties</h4> | | | | | |"]
+    @ (profile.Required |> List.map ProfileRow.toTableRow)
+    @ ["| <h4>Recommended Properties</h4> | | | | | |"]
+    @ (profile.Recommended |> List.map ProfileRow.toTableRow)
+    @ ["| <h4>Optional Properties</h4> | | | | | |"]
+    @ (profile.Optional |> List.map ProfileRow.toTableRow)
+    |> String.concat System.Environment.NewLine
