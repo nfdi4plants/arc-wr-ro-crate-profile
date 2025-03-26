@@ -65,16 +65,25 @@ type ProfileRow = {
           Description = description
           SourceProfile = sourceProfile
         }
-    static member toTableRow (row:ProfileRow) =
+    static member toTableRow (renderSourceColumn:bool) (row:ProfileRow) =
         let expectedTypes = row.ExpectedType |> List.map (fun (t, c) -> sprintf "%s%s" (SchemaType.toLink t) (Conjunction.toString c)) |> String.concat ""
-        sprintf 
-            "| **`%s`** | %s | %s | %s | %s | %s |" 
-            row.Property 
-            (Required.toString row.Required) 
-            (Cardinality.toString row.Cardinality) 
-            expectedTypes 
-            row.Description 
-            row.SourceProfile 
+        if renderSourceColumn then
+            sprintf 
+                "| **`%s`** | %s | %s | %s | %s | %s |" 
+                row.Property 
+                (Required.toString row.Required) 
+                (Cardinality.toString row.Cardinality) 
+                expectedTypes 
+                row.Description 
+                row.SourceProfile 
+        else
+            sprintf 
+                "| **`%s`** | %s | %s | %s | %s |" 
+                row.Property 
+                (Required.toString row.Required) 
+                (Cardinality.toString row.Cardinality) 
+                expectedTypes 
+                row.Description 
 
 let IRI = { Name = "IRI"; Domain = ""; Link = "https://datatracker.ietf.org/doc/html/rfc3987#section-2" }
 
@@ -159,6 +168,10 @@ module WorkflowRunProfile =
     let WorkflowRun = { Name = "WorkflowRun"; Domain = "workflow-run-crate"; Link = "https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate/" }
     let FormalParameter = { Name = "FormalParameter"; Domain = "bioschemas.org"; Link = "https://bioschemas.org/types/FormalParameter" }
 
+module MultiTypes =
+
+    let WorkflowInvocation = { Name = "WorkflowInvocation"; Domain = ""; Link = "#workflow-invocation" }
+    let WorkflowProtocol = { Name = "WorkflowProtocol"; Domain = ""; Link = "#workflow-protocol" }
 
 type Profile = {
     Name: string
@@ -174,15 +187,31 @@ type Profile = {
             Optional = defaultArg optional []
         }
 
-let generateProfileTable (profile: Profile) =
-    [
-        "| Property | Required | Cardinality | Expected Type | Description | Source Profile |"
-        "|----------|----------|-------------|---------------|-------------|----------------|"
-    ]
-    @ ["| <h4>Required Properties</h4> | | | | | |"]
-    @ (profile.Required |> List.map ProfileRow.toTableRow)
-    @ ["| <h4>Recommended Properties</h4> | | | | | |"]
-    @ (profile.Recommended |> List.map ProfileRow.toTableRow)
-    @ ["| <h4>Optional Properties</h4> | | | | | |"]
-    @ (profile.Optional |> List.map ProfileRow.toTableRow)
+let generateProfileTable (renderSourceColumn: bool) (profile: Profile) =
+    let header = 
+        if renderSourceColumn then
+            [
+                "| Property | Required | Cardinality | Expected Type | Description | Source Profile |"
+                "|----------|----------|-------------|---------------|-------------|----------------|"
+            ]
+        else
+            [
+                "| Property | Required | Cardinality | Expected Type | Description |"
+                "|----------|----------|-------------|---------------|-------------|"
+            
+            ]
+
+    let subheaderRowTemplate (title:string) = 
+        if renderSourceColumn then
+            [$"| <h4>{title}</h4> | | | | | |"]
+        else
+            [$"| <h4>{title}</h4> | | | | |"]
+
+    header
+    @ subheaderRowTemplate "Required Properties"
+    @ (profile.Required |> List.map (ProfileRow.toTableRow renderSourceColumn))
+    @ subheaderRowTemplate "Recommended Properties"
+    @ (profile.Recommended |> List.map (ProfileRow.toTableRow renderSourceColumn))
+    @ subheaderRowTemplate "Optional Properties"
+    @ (profile.Optional |> List.map (ProfileRow.toTableRow renderSourceColumn))
     |> String.concat System.Environment.NewLine

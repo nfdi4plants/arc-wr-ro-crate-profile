@@ -156,7 +156,7 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
 #### CWL Workflow Profile
 
 ```json
-[[WP_MINIMAL+METADATA_JSON]]
+[[WP_MINIMAL_METADATA_JSON]]
 ```
 
 #### Workflow Run Profile
@@ -164,7 +164,7 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
 Note: `exampleOfWork` and `workExample` are not required, but make it easier to understand.
 
 ```json
-[[WPI_MINIMAL+METADATA_JSON]]
+[[WPI_MINIMAL_METADATA_JSON]]
 ```
 
 ### Workflow Run RO-Crate compliant example

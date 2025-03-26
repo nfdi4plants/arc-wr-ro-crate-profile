@@ -6,7 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="profile_template.md" CopyToOutputDirectory="Always"/>
+    <EmbeddedResource Include="profile_template.md" CopyToOutputDirectory="Always" />
+    <EmbeddedResource Include="examples\wp_minimal.json" CopyToOutputDirectory="Always" />
+    <EmbeddedResource Include="examples\wp_minimal_metadata.json" CopyToOutputDirectory="Always" />
+    <EmbeddedResource Include="examples\wp_workflowrun-compliant.json" CopyToOutputDirectory="Always" />
+    <EmbeddedResource Include="examples\wpi_minimal.json" CopyToOutputDirectory="Always" />
+    <EmbeddedResource Include="examples\wpi_minimal_metadata.json" CopyToOutputDirectory="Always" />
+    <EmbeddedResource Include="examples\wpi_workflowrun-compliant.json" CopyToOutputDirectory="Always" />
     <Compile Include="CLIArgs.fs" />
     <Compile Include="Domain.fs" />
     <Compile Include="SubProfiles\ARCWorkflow.fs" />

@@ -8,7 +8,7 @@ let requiredProfileProperties = [
     ProfileRow.create("@type",                Required, SPECIFIC 2,   [   (Schema.CreateAction, AND)
                                                                           (BioSchemas.LabProcess, END)], 
                                                                           "MUST be LabProcess and CreateAction to indicate that this tool created the result data entities", 
-                                                                          "https://github.com/nfdi4plants/arc-cwl-ro-crate-profile/blob/release/profile/arc_cwl_ro_crate.md")
+                                                                          "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/release/profile/arc_wr_ro_crate.md")
     ProfileRow.create("instrument",           Required, MANY,         [   (Schema.SoftwareApplication, OR)
                                                                           (BioSchemas.ComputationalWorkflow, END)], 
                                                                           "Identifier of the executed tool or workflow in case of a Workflow RO-Crate.", 

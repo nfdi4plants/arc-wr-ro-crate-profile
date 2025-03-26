@@ -1,131 +1,64 @@
 # ARC Workflow Run RO-Crate Profiles
 
-* Version: 0.1
-* Permalink: 
+* Version: 1.0.0-draft.1
+* Permalink: https://doi.org/10.5281/zenodo.13734332
 * Authors
-  *  - https://orcid.org/
+  * Caroline Ott - https://orcid.org/0000-0003-1512-9504
+  * Florian Wetzels - https://orcid.org/0000-0002-5526-7138
+  * Lukas Weil - https://orcid.org/0000-0003-1945-6342
+  * Kevin Schneider - https://orcid.org/0000-0002-2198-5262
+* Table of Contents
+  * [Overview](#overview)
+  * [Requirements](#requirements)
+    * [ARC Workflow](#arc-workflow)
+    * [Workflow Protocol](#workflow-protocol)
+    * [ARC Run](#arc-run)
+    * [Workflow Invocation](#workflow-invocation)
+    * [Dataset](#dataset)
+    * [FormalParameter](#formalparameter)
+    * [PropertyValue](#propertyvalue)
+    * [SoftwareApplication](#softwareapplication)
+  * [Compatibility with underlying profiles](#compatibility-with-underlying-profiles)
+  * [Workflow Run Crate configuration in ARCs](#workflow-run-crate-configuration-in-arcs)
+  * [Example ro-crate-metadata.json](#example-ro-crate-metadatajson)
+    * [Minimal required fields](#minimal-required-fields)
+      * [Workflow Profile](#workflow-profile)
+      * [Workflow Run Profile](#workflow-run-profile)
+    * [Minimal required fields with metadata](#minimal-required-fields-with-metadata)
+      * [CWL Workflow Profile](#cwl-workflow-profile)
+      * [Workflow Run Profile](#workflow-run-profile-1)
+    * [Workflow Run RO-Crate compliant example](#workflow-run-ro-crate-compliant-example)
+      * [Workflow Profile](#workflow-profile-1)
+      * [Workflow Run Profile](#workflow-run-profile-2)
 
 ## Overview
-The ARC Workflow Run RO-Crate profile describes computational workflows (descriptions of computational processes to transform data) and their invocations (actual executions with specific inputs, outputs and parameters) in experimental settings, specifically within the framework of Annotated Research Contexts (ARC). It therefore consists of two basic parts, called workflows and runs. The run directly references the workflow description and provides the concrete inputs, outputs and parameters for the workflow.
 
-The Common Workflow Language (CWL) allows the use of [metadata](https://www.commonwl.org/user_guide/topics/metadata-and-authorship.html) describing the workflows. The metadata often contains general information about licensing, authorship and affiliation, but is not limited to that. It is possible to describe the steps described by a workflow, or properties describing the run execution, in more detail. This profile aims to specify where and how the metadata contained within CWL workflow and CWL job files should be stored.
+The **ARC Workflow Run (arc-wr) RO-Crate Profiles** are a collection of profiles to describe both _`prospective`_ (**workflows**, yet to be executed) and _`retrospective`_ (**runs**, already executed) provenance of the orchestration of computational workflows in [Annotated Research Contexts (ARCs)](https://arc-rdm.org).
+The profiles are designed to be re-usable in other profile collections and do not need to describe root entities of an RO-crate.
 
-The ARC Workflow Run profile mainly follows the [Workflow Run Crate](https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate/) profile (which itself combines [Process Run Crate](https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate/)  and [Workflow RO-Crate](https://about.workflowhub.eu/Workflow-RO-Crate/)) and extends it by providing means to annotate additional metadata and align terminology with other parts of an ARC.
-Computational workflows and laboratory workflows show many similarities, they typically only differ in how they are executed.
-In an ARC, the latter are described using the [ISA](https://isa-specs.readthedocs.io/en/latest/isajson.html#) model, again seperating between a workflow description ([`LabProtocol`](https://bioschemas.org/types/LabProtocol/0.5-DRAFT)) and its execution ([`LabProcess`](https://bioschemas.org/types/LabProcess/0.1-DRAFT)).
+Computational and laboratory workflows share many similarities, but typically only differ in how they are executed.
+In an ARC, the latter are described using the [ISA](https://isa-specs.readthedocs.io/en/latest/isajson.html#) model, separating between a workflow description ([`LabProtocol`](https://bioschemas.org/types/LabProtocol/0.5-DRAFT)) and its execution ([`LabProcess`](https://bioschemas.org/types/LabProcess/0.1-DRAFT)).
 These types provide properties to annotate parameterized metadata in the form of key-value pairs using ontology terms.
-Therefore, we extend the Workflow Run Crate by integrating these types into the established model.
+For computational workflows, workflow descriptions are usually called _workflows_, and their execution is usually coined as a _run_ of said workflow.
+**arc-wr** profiles aim to extend established workflow and run profiles to share the same process model as the ISA model, allowing for integration of computational and laboratory workflows in ARCs.
+Advantages in regards to provenance include uniform queries, metadata enrichment, or visualization.
 
-### The Original Data Model
-
-The Workflow Run Crate models workflows using a combination of three types [`File`](https://schema.org/MediaObject), [`SoftwareSourceCode`](https://schema.org/SoftwareSourceCode), [`ComputationalWorkflow`](https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE) following the [Bioschemas ComputationalWorkflow Profile](https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE#nav-description).
-Workflows can have multiple input and output parameters, defined optionally as FormalParameter entities and linked to the workflow's inputs and outputs.
-An example of the original profile can be found [here](https://www.researchobject.org/ro-crate/specification/1.1/workflows.html#complete-workflow-example).
-The profile requires a `ComputationalWorkflow` object to be the `mainEntity` of the `Dataset` object describing root data entity.
-
-Runs are modeled as [CreateAction](https://schema.org/CreateAction) instances corresponding to the execution of a workflow.
-They describe the execution of a computational tool that orchestrates other tools, represented as a workflow executed using a Workflow Management System (WMS).
-Runs point onto the executed workflow using the `instrument` property and onto their inputs and outputs using the `object` and `result` properties.
-
-### ARC Workflow Profile
-
-The Workflow Profile extends the Workflow profile of Workflow Run Crates by incorporating how protocols are modeled in the [ISA RO-Crate Profile](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#isa-ro-crate-profile). We therefore propose to use an additional multi type for the workflow profile. The type is therefore extended by [LabProtocol](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprotocol). Parameters of protocols can be described using [`PropertyValue`](https://schema.org/PropertyValue) and [`DefinedTerm`](https://schema.org/DefinedTerm). Workflow complexity can vary. Workflows executing several tools in succession are common and require more complex annotation. We therefore use a hierarchical model: a workflow can consist of several sub-workflows pointing to them through the `hasPart` property.
-
-### ARC Workflow Run Profile
-
-The ARC Workflow Run Profile extends the Run profile in [Workflow Run Crate](https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate/) by incorporating how processes are modeled in the [ISA RO-Crate Profile](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#isa-ro-crate-profile). We propose to use multitype for our profile consisting of [LabProcess](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprocess) and CreateAction of the Process Run Crate within the Workflow Run Crate. This allows the annotation of metadata describing explicit values of workflow parameters within a specific invocation. Here, we use the property `parameterValues` with objects of type `PropertyValue`.
-
-Furthermore, each run in an ARC has its own directory, containing the CWL file as well as generated output files.
-Therefore, a run is modeled in two ways: the directory as an object of type `Dataset` and the previously described `CreateAction`.
-The `Dataset` objects contains the output files and the CWL file via the `hasPart` property and is the `agent` of the `CreateAction`.
-
-As described above, workflows can be structured hierarchically, which is modeled in the RO-Crate through sub-workflows connected via `hasPart`.
-In this case, runs that are invocations of sub-workflows should be modeled as the abstract run object of type `CreateAction,LabProcess`.
-However, such runs do not have their own directory and therefore no corresponding Workflow Run Crate (`Dataset` object).
-
-```mermaid
-flowchart TD
-        A["File,<br>SoftwareSourceCode,<br>ComputationalWorkflow,<br>LabProtocol"] -- "input/output" --> B["FormalParameter"]
-        C["CreateAction,<br>LabProcess"] -- "instrument" --> A
-        C -- "executesLabProtocol" --> A
-        C -- "agent" --> F["Person or Organization"]
-        E["File or Property Value"] -- "exampleOfWork" --> B
-        C -- "object/result" ---> E
-        D["Run=Dataset"] -- "processSequence=about" --> C
-        D -- "hasPart" --> E
-```
-The `inputs` and `outputs` of the `ComputationalWorkflow` MAY point to the `objects` and `results` of `CreateAction` via `workExample`, while the latter point to the former via `exampleOfWork`.
+**arc-wr** profiles combine a selection of existing profiles, mainly the [Workflow Run Crate (WRC)](https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate/) profile collection (which itself combines [Process Run Crate](https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate/) and [Workflow RO-Crate](https://about.workflowhub.eu/Workflow-RO-Crate/)) and extends it by providing means to annotate additional metadata and align terminology with other parts of an ARC.
+Therefore, the main purpose of the **arc-wr** profiles is to merge the workflows and runs described by the **WRC** with the `LabProtocol` and `LabProcess` profiles formulated in the [ISA RO Crate Profile](https://doi.org/10.5281/zenodo.13748893) collection, creating a cohesive process model that tracks prospective and retrospective provenance of computational and laboratory workflows.
+To allow for the ARC's _immutable but evolving_ nature, **arc-wr** profiles are in general less strict than the underlying profiles, relaxing requirements for many mandatory fields.
+However, compatibility is guaranteed when following **both** the Mandatory and Recommended fields of the underlying profiles (see also the [compatibility section](#compatibility-with-underlying-profiles)).
 
 ## Requirements
 
-### Workflow Profile
+### ARC Workflow
 
-The requirements of this profile are those of [Bioschemas ComputationalWorkflow Profile](https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE#nav-description) 
-with the modifications listed below.
+| Property | Required | Cardinality | Expected Type | Description |
+|----------|----------|-------------|---------------|-------------|
+| <h4>Required Properties</h4> | | | | |
+| <h4>Recommended Properties</h4> | | | | |
+| <h4>Optional Properties</h4> | | | | |
 
-#### ComputationalWorkflow
-| Property | Required | Expected Type | Description |
-|----------|----------|---------------|-------------|
-| @type | MUST | [Text](https://schema.org/Text) | MUST be of type [File](https://schema.org/MediaObject), [SoftwareSourceCode](https://schema.org/SoftwareSourceCode), [ComputationalWorkflow](https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE) and [LabProtocol](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprotocol)|
-
-### Workflow Run Profile
-
-The requirements of this profile are those of [Workflow Run Crate](https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate/) 
-with the modifications listed below.
-
-#### Process Run Crate
-
-| Property | Required | Expected Type | Description |
-|----------|----------|---------------|-------------|
-| @type | MUST | [Text](https://schema.org/Text) | MUST be of type [CreateAction](https://schema.org/CreateAction) and [LabProcess](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#labprocess)|
-
-## Example Workflow Run Crate configuration in ARCs
-
-As described above, workflows can be structured hierarchically. Each workflow (or sub-workflow) object in the hierarchy can have an associated run object in the RO-Crate metadata. The structure of JSON objects is visualized below. Every ARC Run consists of one or more Workflow Runs (and is therefore comparable to an [Assay](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#assay) in ISA). To reduce complexity, it is recommended to use top level description (marked red). One workflow describes the transformation of one set of input data to result data. If a workflow consists of several steps, forwarding the resulting data to the next step without returning them as a final result, it is described as one Workflow Run Crate. In other words, runs should only be documented for top-level workflows.
-
-```mermaid
-flowchart TD
-  classDef red fill:#f96,stroke:#333,stroke-width:2px;
-
-  subgraph Workflows
-    direction TB
-    A["Workflow(ComputationalWorkflow, LabProtocol)"]:::red
-    C["Subworkflow/Process A"]
-    D["Subworkflow/Process B"]
-    E["Subworkflow/Process AA"]
-    F["Subworkflow/Process AB"]
-    G["Subworkflow/Process AC"]
-  end
-
-  subgraph Runs
-    direction TB
-    B["Run(CreateAction, LabProcess)"]:::red
-    H["Run A"]
-    I["Run B"]
-    J["Run AA"]
-    K["Run AB"]
-    L["Run AC"]
-  end
-
-  A -- "hasPart" --> C
-  A -- "hasPart" --> D
-  C -- "hasPart" --> E
-  C -- "hasPart" --> F
-  C -- "hasPart" --> G
-
-  B -- "instrument" --> A
-  H -- "instrument" --> C
-  I -- "instrument" --> D
-  J -- "instrument" --> E
-  K -- "instrument" --> F
-  L -- "instrument" --> G
-```
-
-## Profile Requirements
-
-This section describes the specifications for other Profiles that are used in the Workflow Run RO-Crate Profile and deviate from their original specifications.
-
-### ComputationalWorkflow | SoftwareSourceCode | Text | LabProtocol
+### Workflow Protocol
 
 | Property | Required | Cardinality | Expected Type | Description | Source Profile |
 |----------|----------|-------------|---------------|-------------|----------------|
@@ -172,7 +105,29 @@ This section describes the specifications for other Profiles that are used in th
 | **`comment`** | Optional | MANY | [schema.org/Comment](https://schema.org/Comment) |  | isa-ro-crate-profile/LabProtocol |
 | **`computationalTool`** | Optional | MANY | [schema.org/SoftwareApplication](https://schema.org/SoftwareApplication)<br>OR [schema.org/DefinedTerm](https://schema.org/DefinedTerm)<br>OR [schema.org/PropertyValue](https://schema.org/PropertyValue) | Software or tool used as part of the lab protocol to complete a part of it. | isa-ro-crate-profile/LabProtocol |
 
-### CreateAction | LabProcess
+### ARC Run
+
+| Property | Required | Cardinality | Expected Type | Description |
+|----------|----------|-------------|---------------|-------------|
+| <h4>Required Properties</h4> | | | | |
+| **`@id`** | Required | ONE | [schema.org/Text](https://schema.org/Text)<br>OR [schema.org/URL](https://schema.org/URL) | Used to distinguish the resource being described in JSON-LD. |
+| **`@type`** | Required | ONE | [schema.org/Dataset](https://schema.org/Dataset) | Schema.org/Bioschemas class(es) for the resource declared using JSON-LD syntax. |
+| **`additionalType`** | Required | ONE | [schema.org/Text](https://schema.org/Text)<br>OR [schema.org/URL](https://schema.org/URL) | MUST be 'ARC Run' or ontology term to identify it as an ARC Run |
+| **`identifier`** | Required | ONE | [schema.org/Text](https://schema.org/Text)<br>OR [schema.org/URL](https://schema.org/URL) | A mandatory unique identifier, either a temporary identifier supplied by users or one generated by a repository or other database. For example, it could be an identifier complying with the LSID specification |
+| <h4>Recommended Properties</h4> | | | | |
+| **`name`** | Recommended | ONE | [schema.org/Text](https://schema.org/Text) | A concise phrase used to encapsulate the purpose and goal of the ARC Run. |
+| **`description`** | Recommended | ONE | [schema.org/Text](https://schema.org/Text) | A textual description of the ARC Run, with components such as objective or goals. |
+| **`about`** | Recommended | MANY | [WorkflowInvocation](#workflow-invocation) | The Workflow Invocation(s) described by the ARC Run. MUST follow the [Workflow Invocation profile](#workflow-invocation). MUST be equal to the `mentions` property |
+| **`mentions`** | Recommended | MANY | [WorkflowInvocation](#workflow-invocation) | The Workflow Invocation(s) described by the ARC Run. MUST follow the [Workflow Invocation profile](#workflow-invocation). MUST be equal to the `about` property |
+| **`creator`** | Recommended | MANY | [schema.org/Person](https://schema.org/Person) | The performer(s) of the ARC Run. |
+| **`hasPart`** | Recommended | MANY | [schema.org/MediaObject](https://schema.org/MediaObject)<br>OR [WorkflowProtocol](#workflow-protocol) | All data files that are part of the ARC Run. In an ARC, this should include all contents of the respective `run folder` represented by the ARC Run object. |
+| **`measurementMethod`** | Recommended | ONE | [schema.org/URL](https://schema.org/URL)<br>OR [schema.org/DefinedTerm](https://schema.org/DefinedTerm) | Term to identify the technology used to perform the computation, e.g. statistical testing. The term can be free text or from, for example, a controlled vocabulary or an ontology. |
+| **`measurementTechnique`** | Recommended | ONE | [schema.org/URL](https://schema.org/URL)<br>OR [schema.org/DefinedTerm](https://schema.org/DefinedTerm) | Software Publisher/Creator and/or Software name used for the computation. |
+| <h4>Optional Properties</h4> | | | | |
+| **`url`** | Recommended | ONE | [schema.org/URL](https://schema.org/URL) | The filename or path of the metadata file describing the run. Optional, since in some contexts like an ARC the filename is implicit. |
+| **`variableMeasured`** | Recommended | ONE | [schema.org/Text](https://schema.org/Text)<br>OR [schema.org/PropertyValue](https://schema.org/PropertyValue) | A term to qualify the endpoint, or what is being computed (e.g. gene expression profiling or protein identification). The term can be free text or from, for example, a controlled vocabulary or an ontology. |
+
+### Workflow Invocation
 
 | Property | Required | Cardinality | Expected Type | Description | Source Profile |
 |----------|----------|-------------|---------------|-------------|----------------|
@@ -181,11 +136,12 @@ This section describes the specifications for other Profiles that are used in th
 | **`@type`** | Required | 2 | [schema.org/CreateAction](https://schema.org/CreateAction)<br>AND [bioschemas.org/LabProcess](https://bioschemas.org/types/LabProcess/0.1-DRAFT) | MUST be LabProcess and CreateAction to indicate that this tool created the result data entities | https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/release/profile/arc_wr_ro_crate.md |
 | **`instrument`** | Required | MANY | [schema.org/SoftwareApplication](https://schema.org/SoftwareApplication)<br>OR [bioschemas.org/ComputationalWorkflow](https://bioschemas.org/types/ComputationalWorkflow) | Identifier of the executed tool or workflow in case of a Workflow RO-Crate. | https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate; https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate |
 | **`agent`** | Required | ONE | [schema.org/Organization](https://schema.org/Organization)<br>OR [schema.org/Person](https://schema.org/Person) | Identifier of a Person or Organization contextual entity that started/executed this tool. | https://bioschemas.org/types/LabProcess/0.1-DRAFT |
-| **`result`** | Required | MANY | [schema.org/MediaObject](https://schema.org/MediaObject)<br>OR [schema.org/Dataset](https://schema.org/Dataset)<br>OR [schema.org/Collection](https://schema.org/Collection)<br>OR [schema.org/CreativeWork](https://schema.org/CreativeWork)<br>OR [schema.org/PropertyValue](https://schema.org/PropertyValue) | The identifier of one or more entities that were created or modified by this action, e.g. output files. Entities referenced by an action’s object or result SHOULD be of type File (an RO-Crate alias for MediaObject) for files, Dataset for directories and Collection for multi-file datasets, but MAY be a CreativeWork for other types of data (e.g. an online database); they MAY be of type PropertyValue to capture numbers/strings that are not stored as files. | https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate, https://bioschemas.org/types/LabProcess/0.1-DRAFT |
-| **`object`** | Required | MANY | [schema.org/MediaObject](https://schema.org/MediaObject)<br>OR [schema.org/Dataset](https://schema.org/Dataset)<br>OR [schema.org/Collection](https://schema.org/Collection)<br>OR [schema.org/CreativeWork](https://schema.org/CreativeWork)<br>OR [schema.org/PropertyValue](https://schema.org/PropertyValue) | The identifier of one or more entities of the RO-Crate that were consumed by this action, e.g. input files or reference datasets. Entities referenced by an action’s object or result SHOULD be of type File (an RO-Crate alias for MediaObject) for files, Dataset for directories and Collection for multi-file datasets, but MAY be a CreativeWork for other types of data (e.g. an online database); they MAY be of type PropertyValue to capture numbers/strings that are not stored as files. | https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate, https://bioschemas.org/types/LabProcess/0.1-DRAFT |
+| **`result`** | Required | MANY | [schema.org/MediaObject](https://schema.org/MediaObject)<br>OR [schema.org/Dataset](https://schema.org/Dataset)<br>OR [schema.org/Collection](https://schema.org/Collection)<br>OR [schema.org/CreativeWork](https://schema.org/CreativeWork)<br>OR [schema.org/PropertyValue](https://schema.org/PropertyValue) | The identifier of one or more entities that were created or modified by this action, e.g. output files. Entities referenced by an action�s object or result SHOULD be of type File (an RO-Crate alias for MediaObject) for files, Dataset for directories and Collection for multi-file datasets, but MAY be a CreativeWork for other types of data (e.g. an online database); they MAY be of type PropertyValue to capture numbers/strings that are not stored as files. | https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate, https://bioschemas.org/types/LabProcess/0.1-DRAFT |
+| **`object`** | Required | MANY | [schema.org/MediaObject](https://schema.org/MediaObject)<br>OR [schema.org/Dataset](https://schema.org/Dataset)<br>OR [schema.org/Collection](https://schema.org/Collection)<br>OR [schema.org/CreativeWork](https://schema.org/CreativeWork)<br>OR [schema.org/PropertyValue](https://schema.org/PropertyValue) | The identifier of one or more entities of the RO-Crate that were consumed by this action, e.g. input files or reference datasets. Entities referenced by an action�s object or result SHOULD be of type File (an RO-Crate alias for MediaObject) for files, Dataset for directories and Collection for multi-file datasets, but MAY be a CreativeWork for other types of data (e.g. an online database); they MAY be of type PropertyValue to capture numbers/strings that are not stored as files. | https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate, https://bioschemas.org/types/LabProcess/0.1-DRAFT |
 | **`name`** | Required | ONE | [schema.org/Text](https://schema.org/Text) | Short human-readable description of the execution. | https://bioschemas.org/types/LabProcess/0.1-DRAFT |
+| <h4>Recommended Properties</h4> | | | | | |
 | <h4>Optional Properties</h4> | | | | | |
-| **`executesLabProtocol`** | Optional | ONE | [bioschemas.org/LabProtocol](https://bioschemas.org/types/LabProtocol) | The protocol executed. In this case, it refers to the multitype entity of the ARC Workflow Profile with File, SoftwareSourceCode, ComputationalWorkflow and LabProtocol | https://bioschemas.org/types/LabProcess/0.1-DRAFT |
+| **`executesLabProtocol`** | Optional | ONE | [bioschemas.org/LabProtocol](https://bioschemas.org/types/LabProtocol) | The protocol executed. In this case, it refers to the multitype entity of the ARC CWL Workflow Profile with File, SoftwareSourceCode, ComputationalWorkflow and LabProtocol | https://bioschemas.org/types/LabProcess/0.1-DRAFT |
 | **`parameterValue`** | Optional | ONE | [schema.org/PropertyValue](https://schema.org/PropertyValue) | A parameter value of the workflow process, usually a key-value pair using ontology terms | https://bioschemas.org/types/LabProcess/0.1-DRAFT |
 | **`endTime`** | Optional | ONE | [schema.org/DateTime](https://schema.org/DateTime)<br>OR [schema.org/Time](https://schema.org/Time) | The time the process ended, i.e. when the last of the entities in result has been created. SHOULD be a DateTime in ISO 8601 format. | https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate |
 | **`description`** | Optional | ONE | [schema.org/Text](https://schema.org/Text)<br>OR [schema.org/TextObject](https://schema.org/TextObject) | Details of the execution, for instance command line arguments or settings. This field is for information only, no particular structure is to be assumed. | https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate |
@@ -217,6 +173,7 @@ This section describes the specifications for other Profiles that are used in th
 | **`@id`** | Required | ONE | [IRI](https://datatracker.ietf.org/doc/html/rfc3987#section-2) | A unique identifier for the dataset | https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate |
 | **`@type`** | Required | MANY | [schema.org/Dataset](https://schema.org/Dataset) | Schema.org/Bioschemas class for the resource declared using JSON-LD syntax. For other serialisations please use the appropriate mechanism. While it is permissible to provide multiple types, it is preferred to use a single type. | https://schema.org/Dataset |
 | **`conformsTo`** | Required | ONE | [schema.org/CreativeWork](https://schema.org/CreativeWork) | MUST reference a CreativeWork entity with an @id URI that is consistent with the versioned Permalink of this document, e.g. {"@id": "https://w3id.org/ro/wfrun/process/0.4"} | https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate |
+| <h4>Recommended Properties</h4> | | | | | |
 | <h4>Optional Properties</h4> | | | | | |
 | **`distribution`** | Optional | MANY | [schema.org/DataDownload](https://schema.org/DataDownload) | A downloadable form of this dataset, at a specific location, in a specific format. This property can be repeated if different variations are available. There is no expectation that different downloadable distributions must contain exactly equivalent information (see also DCAT on this point). Different distributions might include or exclude different subsets of the entire dataset, for example. | https://schema.org/Dataset |
 | **`includedInDataCatalog`** | Optional | MANY | [schema.org/DataCatalog](https://schema.org/DataCatalog) | A data catalog which contains this dataset. Supersedes catalog, includedDataCatalog. Inverse property: dataset. | https://schema.org/Dataset |
@@ -290,6 +247,7 @@ This section describes the specifications for other Profiles that are used in th
 | <h4>Required Properties</h4> | | | | | |
 | **`@id`** | Required | ONE | [IRI](https://datatracker.ietf.org/doc/html/rfc3987#section-2) | SHOULD be an absolute URI, but MAY be a relative URI to a data entity in the crate (e.g. "bin/simulation4") or a local identifier for tools that are not otherwise described on the web (e.g. "#statistical-analysis") | https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate |
 | **`@type`** | Required | MANY | [schema.org/SoftwareApplication](https://schema.org/SoftwareApplication)<br>OR [schema.org/SoftwareSourceCode](https://schema.org/SoftwareSourceCode)<br>OR [bioschemas.org/ComputationalWorkflow](https://bioschemas.org/types/ComputationalWorkflow) | SHOULD include SoftwareApplication, SoftwareSourceCode or ComputationalWorkflow | https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate |
+| <h4>Recommended Properties</h4> | | | | | |
 | <h4>Optional Properties</h4> | | | | | |
 | **`name`** | Optional | ONE | [schema.org/Text](https://schema.org/Text) | A human readable name for the tool in general (not just how it was used here) | https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate |
 | **`url`** | Optional | ONE | [schema.org/URL](https://schema.org/URL) | Homepage, documentation or source for the tool | https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate |
@@ -317,6 +275,56 @@ This section describes the specifications for other Profiles that are used in th
 | **`storageRequirements`** | Optional | ONE | [schema.org/Text](https://schema.org/Text)<br>OR [schema.org/URL](https://schema.org/URL) | Storage requirements (free space required). | https://schema.org/SoftwareApplication |
 | **`supportingData`** | Optional | MANY | [schema.org/DataFeed](https://schema.org/DataFeed) | Supporting data for a SoftwareApplication. | https://schema.org/SoftwareApplication |
 
+## Compatibility with underlying profiles
+
+## Workflow Run Crate configuration in ARCs
+
+As described above, workflows can be structured hierarchically.
+Each workflow (or sub-workflow) object in the hierarchy can have an associated run object in the RO-Crate metadata.
+The structure of JSON objects is visualized below.
+Every ARC Run consists of one or more Workflow Runs (and is therefore comparable to an [Assay](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/main/profile/isa_ro_crate.md#assay) in ISA).
+To reduce complexity, it is recommended to use top level description (marked red).
+One workflow describes the transformation of one set of input data to result data.
+If a workflow consists of several steps, forwarding the resulting data to the next step without returning them as a final result, it is described as one Workflow Run Crate.
+In other words, runs should only be documented for top-level workflows.
+
+```mermaid
+flowchart TD
+  classDef red fill:#f96,stroke:#333,stroke-width:2px;
+
+  subgraph Workflows
+    direction TB
+    A["Workflow(ComputationalWorkflow, LabProtocol)"]:::red
+    C["Subworkflow/Process A"]
+    D["Subworkflow/Process B"]
+    E["Subworkflow/Process AA"]
+    F["Subworkflow/Process AB"]
+    G["Subworkflow/Process AC"]
+  end
+
+  subgraph Runs
+    direction TB
+    B["Run(CreateAction, LabProcess)"]:::red
+    H["Run A"]
+    I["Run B"]
+    J["Run AA"]
+    K["Run AB"]
+    L["Run AC"]
+  end
+
+  A -- "hasPart" --> C
+  A -- "hasPart" --> D
+  C -- "hasPart" --> E
+  C -- "hasPart" --> F
+  C -- "hasPart" --> G
+
+  B -- "instrument" --> A
+  H -- "instrument" --> C
+  I -- "instrument" --> D
+  J -- "instrument" --> E
+  K -- "instrument" --> F
+  L -- "instrument" --> G
+```
 
 ## Example ro-crate-metadata.json
 
@@ -325,30 +333,46 @@ This section describes the specifications for other Profiles that are used in th
 #### Workflow Profile
 
 ```json
-{ "@context": "https://w3id.org/ro/crate/1.1/context",
-  "@graph": [
-    {
-      "@type": "CreativeWork",
-      "@id": "ro-crate-metadata.json",
-      "conformsTo": [
-        { "@id": "https://w3id.org/ro/crate/1.1" },
-        { "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#arc-wr-workflow-profile" }
-      ],
-      "about": { "@id": "./workflows" }
-    },
-    {
-      "@id": "workflows/FixedScript/workflow.cwl",
-      "@type": [ "File", "SoftwareSourceCode", "ComputationalWorkflow", "LabProtocol" ],
-      "conformsTo": { "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#computationalworkflow--softwaresourcecode--text--labprotocol" },
-      "creator": { "@id": "https://orcid.org/0000-0003-3925-6778" }
-    },
-    {
-      "@id": "https://orcid.org/0000-0003-3925-6778",
-      "@type": "Person",
-      "givenName": "Timo",
-      "familyName": "Mühlhaus"
-    }
-  ]
+{
+    "@context": "https://w3id.org/ro/crate/1.1/context",
+    "@graph": [
+        {
+            "@type": "CreativeWork",
+            "@id": "ro-crate-metadata.json",
+            "conformsTo": [
+                {
+                    "@id": "https://w3id.org/ro/crate/1.1"
+                },
+                {
+                    "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#arc-wr-workflow-profile"
+                }
+            ],
+            "about": {
+                "@id": "./workflows"
+            }
+        },
+        {
+            "@id": "workflows/FixedScript/workflow.cwl",
+            "@type": [
+                "File",
+                "SoftwareSourceCode",
+                "ComputationalWorkflow",
+                "LabProtocol"
+            ],
+            "conformsTo": {
+                "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#computationalworkflow--softwaresourcecode--text--labprotocol"
+            },
+            "creator": {
+                "@id": "https://orcid.org/0000-0003-3925-6778"
+            }
+        },
+        {
+            "@id": "https://orcid.org/0000-0003-3925-6778",
+            "@type": "Person",
+            "givenName": "Timo",
+            "familyName": "Mühlhaus"
+        }
+    ]
 }
 ```
 
@@ -357,83 +381,124 @@ This section describes the specifications for other Profiles that are used in th
 Note: `exampleOfWork` and `workExample` are not required, but make it easier to understand.
 
 ```json
-{ "@context": [
-    "https://w3id.org/ro/terms/workflow-run/context"
-  ],
-  "@graph": [
-    {
-      "@type": "CreativeWork",
-      "@id": "ro-crate-metadata.json",
-      "conformsTo": [
-        { "@id": "https://w3id.org/ro/crate/1.1" },
-        { "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#arc-wr-workflow-profile" }
-      ],
-      "about": { "@id": "./workflows" }
-    },
-    {
-      "@id": "./workflows",
-      "@type": "Dataset",
-      "conformsTo": [
-        { "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#cwl-workflow-run-profile" }
-        { "@id": "https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate.md#assay" }
-      ],
-      "additionalType": "Assay",
-      "identifier": "ColumnAddition",
-      "hasPart": [
-        { "@id": "workflows/FixedScript/workflow.cwl" },
-        { "@id": "./assays/measurement1/dataset/table.csv" }
-        { "@id": "runs/FixedScriptResult/result.csv" }
-      ],
-      "mainEntity": { "@id": "workflows/FixedScript/workflow.cwl" }
-    },
-    {
-      "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#cwl-workflow-run-profile",
-      "@type": "CreativeWork",
-      "name": "ARC Workflow Run RO-Crate",
-    },
-    {
-      "@id": "workflows/FixedScript/workflow.cwl",
-      "@type": [ "File", "SoftwareSourceCode", "ComputationalWorkflow", "LabProtocol" ],
-      "conformsTo": { "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#computationalworkflow--softwaresourcecode--text--labprotocol" },
-      "creator": { "@id": "https://orcid.org/0000-0003-3925-6778" }
-    },
-    {
-      "@id": "https://orcid.org/0000-0003-3925-6778",
-      "@type": "Person",
-      "givenName": "Timo",
-      "familyName": "Mühlhaus"
-    },
-    {
-      "@id": "#wfrun-fixed-script",
-      "@type": [ "CreateAction", "LabProcess" ],
-      "instrument": { "@id": "workflows/FixedScript/workflow.cwl" },
-      "name" : "Column Addition with fixed script",
-      "agent": { "@id": "https://orcid.org/0000-0003-1512-9504" },
-      "object": [
-          { "@id": "./assays/measurement1/dataset/table.csv" },
-          { "@id": "file_name_filled" }
-      ],
-      "result": { "@id": "./runs/fsResult1/result.csv" }
-    },
-    {
-      "@id": "https://orcid.org/0000-0003-1512-9504",
-      "@type": "Person",
-      "givenName": "Caroline",
-      "familyName": "Ott"
-    },
-    {
-      "@id": "./assays/measurement1/dataset/table.csv",
-      "@type": "File"
-    },
-    {
-      "@id": "#file_name_filled",
-      "@type": "PropertyValue"
-    },
-    {
-      "@id": "./runs/fsResult1/result.csv",
-      "@type": "File"
-    }
-  ]
+{
+    "@context": [
+        "https://w3id.org/ro/terms/workflow-run/context"
+    ],
+    "@graph": [
+        {
+            "@type": "CreativeWork",
+            "@id": "ro-crate-metadata.json",
+            "conformsTo": [
+                {
+                    "@id": "https://w3id.org/ro/crate/1.1"
+                },
+                {
+                    "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#arc-wr-workflow-profile"
+                }
+            ],
+            "about": {
+                "@id": "./workflows"
+            }
+        },
+        {
+            "@id": "./workflows",
+            "@type": "Dataset",
+            "conformsTo": [
+                {
+                    "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#cwl-workflow-run-profile"
+                }
+        {
+                    "@id": "https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate.md#assay"
+                }
+            ],
+            "additionalType": "Assay",
+            "identifier": "ColumnAddition",
+            "hasPart": [
+                {
+                    "@id": "workflows/FixedScript/workflow.cwl"
+                },
+                {
+                    "@id": "./assays/measurement1/dataset/table.csv"
+                }
+        {
+                    "@id": "runs/FixedScriptResult/result.csv"
+                }
+            ],
+            "mainEntity": {
+                "@id": "workflows/FixedScript/workflow.cwl"
+            }
+        },
+        {
+            "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#cwl-workflow-run-profile",
+            "@type": "CreativeWork",
+            "name": "ARC Workflow Run RO-Crate",
+        },
+        {
+            "@id": "workflows/FixedScript/workflow.cwl",
+            "@type": [
+                "File",
+                "SoftwareSourceCode",
+                "ComputationalWorkflow",
+                "LabProtocol"
+            ],
+            "conformsTo": {
+                "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#computationalworkflow--softwaresourcecode--text--labprotocol"
+            },
+            "creator": {
+                "@id": "https://orcid.org/0000-0003-3925-6778"
+            }
+        },
+        {
+            "@id": "https://orcid.org/0000-0003-3925-6778",
+            "@type": "Person",
+            "givenName": "Timo",
+            "familyName": "Mühlhaus"
+        },
+        {
+            "@id": "#wfrun-fixed-script",
+            "@type": [
+                "CreateAction",
+                "LabProcess"
+            ],
+            "instrument": {
+                "@id": "workflows/FixedScript/workflow.cwl"
+            },
+            "name": "Column Addition with fixed script",
+            "agent": {
+                "@id": "https://orcid.org/0000-0003-1512-9504"
+            },
+            "object": [
+                {
+                    "@id": "./assays/measurement1/dataset/table.csv"
+                },
+                {
+                    "@id": "file_name_filled"
+                }
+            ],
+            "result": {
+                "@id": "./runs/fsResult1/result.csv"
+            }
+        },
+        {
+            "@id": "https://orcid.org/0000-0003-1512-9504",
+            "@type": "Person",
+            "givenName": "Caroline",
+            "familyName": "Ott"
+        },
+        {
+            "@id": "./assays/measurement1/dataset/table.csv",
+            "@type": "File"
+        },
+        {
+            "@id": "#file_name_filled",
+            "@type": "PropertyValue"
+        },
+        {
+            "@id": "./runs/fsResult1/result.csv",
+            "@type": "File"
+        }
+    ]
 }
 ```
 
@@ -442,54 +507,76 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
 #### CWL Workflow Profile
 
 ```json
-{ "@context": "https://w3id.org/ro/crate/1.1/context",
-  "@graph": [
-    {
-      "@type": "CreativeWork",
-      "@id": "ro-crate-metadata.json",
-      "conformsTo": [
-        { "@id": "https://w3id.org/ro/crate/1.1" },
-        { "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#arc-wr-workflow-profile" }
-      ],
-      "about": { "@id": "./workflows" }
-    },
-    {
-      "@id": "workflows/FixedScript/workflow.cwl",
-      "@type": [ "File", "SoftwareSourceCode", "ComputationalWorkflow", "LabProtocol" ],
-      "conformsTo": { "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#computationalworkflow--softwaresourcecode--text--labprotocol" },
-      "creator": { "@id": "https://orcid.org/0000-0003-3925-6778" },
-      "computationalTool": { "@id": "ProcessParameterValue/Data Transformation=Addition" }
-    },
-    {
-      "@id": "https://orcid.org/0000-0003-3925-6778",
-      "@type": "Person",
-      "givenName": "Timo",
-      "familyName": "Mühlhaus",
-      "email": "muehlhaus@bio.uni-kl.de",
-      "affiliation": { "@id": "RPTU" },
-      "jobTitle": { "@id": "https://credit.niso.org/contributor-roles/formal-analysis/" }
-    }
-    {
-      "@id": "RPTU",
-      "@type": "Organization",
-      "name": "Rheinland-Pfälzische Technische Universität Kaiserslautern-Landau",
-      "url":"https://rptu.de/"
-    },
-    {
-      "@id": "https://credit.niso.org/contributor-roles/formal-analysis/",
-      "@type": "DefinedTerm",
-      "inDefinedTermSet": "CRT",
-      "name": "Formal Analysis",
-      "termCode": "https://credit.niso.org/contributor-roles/formal-analysis/"
-    },
-    {
-      "@id": "ProcessParameterValue/Data Transformation=Addition",
-      "@type": "PropertyValue",
-      "additionalType": "ProcessParameter",
-      "name": "Data Transformation",
-      "propertyID": "NCIT:C43582",
-    }
-  ]
+{
+    "@context": "https://w3id.org/ro/crate/1.1/context",
+    "@graph": [
+        {
+            "@type": "CreativeWork",
+            "@id": "ro-crate-metadata.json",
+            "conformsTo": [
+                {
+                    "@id": "https://w3id.org/ro/crate/1.1"
+                },
+                {
+                    "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#arc-wr-workflow-profile"
+                }
+            ],
+            "about": {
+                "@id": "./workflows"
+            }
+        },
+        {
+            "@id": "workflows/FixedScript/workflow.cwl",
+            "@type": [
+                "File",
+                "SoftwareSourceCode",
+                "ComputationalWorkflow",
+                "LabProtocol"
+            ],
+            "conformsTo": {
+                "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#computationalworkflow--softwaresourcecode--text--labprotocol"
+            },
+            "creator": {
+                "@id": "https://orcid.org/0000-0003-3925-6778"
+            },
+            "computationalTool": {
+                "@id": "ProcessParameterValue/Data Transformation=Addition"
+            }
+        },
+        {
+            "@id": "https://orcid.org/0000-0003-3925-6778",
+            "@type": "Person",
+            "givenName": "Timo",
+            "familyName": "Mühlhaus",
+            "email": "muehlhaus@bio.uni-kl.de",
+            "affiliation": {
+                "@id": "RPTU"
+            },
+            "jobTitle": {
+                "@id": "https://credit.niso.org/contributor-roles/formal-analysis/"
+            }
+        },
+        {
+            "@id": "RPTU",
+            "@type": "Organization",
+            "name": "Rheinland-Pfälzische Technische Universität Kaiserslautern-Landau",
+            "url": "https://rptu.de/"
+        },
+        {
+            "@id": "https://credit.niso.org/contributor-roles/formal-analysis/",
+            "@type": "DefinedTerm",
+            "inDefinedTermSet": "CRT",
+            "name": "Formal Analysis",
+            "termCode": "https://credit.niso.org/contributor-roles/formal-analysis/"
+        },
+        {
+            "@id": "ProcessParameterValue/Data Transformation=Addition",
+            "@type": "PropertyValue",
+            "additionalType": "ProcessParameter",
+            "name": "Data Transformation",
+            "propertyID": "NCIT:C43582"
+        }
+    ]
 }
 ```
 
@@ -498,128 +585,181 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
 Note: `exampleOfWork` and `workExample` are not required, but make it easier to understand.
 
 ```json
-{ "@context": [
-    "https://w3id.org/ro/terms/workflow-run/context"
-  ],
-  "@graph": [
-    {
-      "@type": "CreativeWork",
-      "@id": "ro-crate-metadata.json",
-      "conformsTo": [
-        { "@id": "https://w3id.org/ro/crate/1.1" },
-        { "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#arc-wr-workflow-profile" }
-      ],
-      "about": { "@id": "./workflows" }
-    },
-    {
-      "@id": "./workflows",
-      "@type": "Dataset",
-      "conformsTo": [
-        { "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#workflow-run-profile" }
-        { "@id": "https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate.md#assay" }
-      ],
-      "additionalType": "Assay",
-      "identifier": "ColumnAddition",
-      "measurementMethod": { "@id" = "http://edamontology.org/format_3973" },
-      "measurementTechnique": "https://dotnet.microsoft.com/en-us/download/dotnet/6.0"
-      "hasPart": [
-        { "@id": "workflows/FixedScript/workflow.cwl" },
-        { "@id": "./assays/measurement1/dataset/table.csv" }
-        { "@id": "runs/FixedScriptResult/result.csv" }
-      ],
-      "mainEntity": { "@id": "workflows/FixedScript/workflow.cwl" }
-    },
-    {
-      "@id": "http://edamontology.org/format_3973",
-      "@type": "DefinedTerm",
-      "inDefinedTermSet": "EDAM",
-      "name": "Docker Image",
-      "termCode": "http://edamontology.org/format_3973"
-    },
-    {
-      "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#workflow-run-profile",
-      "@type": "CreativeWork",
-      "name": "ARC Workflow Run RO-Crate",
-    },
-    {
-      "@id": "workflows/FixedScript/workflow.cwl",
-      "@type": [ "File", "SoftwareSourceCode", "ComputationalWorkflow", "LabProtocol" ],
-      "conformsTo": { "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#computationalworkflow--softwaresourcecode--text--labprotocol" },
-      "creator": { "@id": "https://orcid.org/0000-0003-3925-6778" }
-      "computationalTool": { "@id": "ProcessParameterValue/Data Transformation=Addition" }
-    },
-    {
-      "@id": "https://orcid.org/0000-0003-3925-6778",
-      "@type": "Person",
-      "givenName": "Timo",
-      "familyName": "Mühlhaus",
-      "email": "muehlhaus@bio.uni-kl.de"
-      "affiliation": { "@id": "RPTU" }
-      "jobTitle": { "@id": "https://credit.niso.org/contributor-roles/formal-analysis/" }
-    },
-    {
-      "@id": "RPTU",
-      "@type": "Organization",
-      "name": "Rheinland-Pfälzische Technische Universität Kaiserslautern-Landau",
-      "url":"https://rptu.de/"
-    },
-    {
-      "@id": "https://credit.niso.org/contributor-roles/formal-analysis/",
-      "@type": "DefinedTerm",
-      "inDefinedTermSet": "CRT",
-      "name": "Formal Analysis",
-      "termCode": "https://credit.niso.org/contributor-roles/formal-analysis/"
-    },
-    {
-      "@id": "ProcessParameterValue/Data Transformation=Addition",
-      "@type": "PropertyValue",
-      "additionalType": "ProcessParameter",
-      "name": "Data Transformation",
-      "propertyID": "NCIT:C43582",
-    }
-    {
-      "@id": "#wfrun-fixed-script",
-      "@type": [ "CreateAction", "LabProcess" ],
-      "instrument": { "@id": "workflows/FixedScript/workflow.cwl" },
-      "name" : "Column Addition with fixed script",
-      "agent": { "@id": "https://orcid.org/0000-0003-1512-9504" },
-      "object": [
-          { "@id": "./assays/measurement1/dataset/table.csv" },
-          { "@id": "file_name_filled" }
-      ],
-      "result": { "@id": "./runs/fsResult1/result.csv" },
-      "parameterValue" : { "@id" = "ProcessParameterValue/Data Transformation=Addition" }
-    },
-    {
-      "@id": "https://orcid.org/0000-0003-1512-9504",
-      "@type": "Person",
-      "givenName": "Caroline",
-      "familyName": "Ott",
-      "email": "caroline.ott@rptu.de",
-      "affiliation": { "@id": "RPTU" }
-    },
-    {
-      "@id": "./assays/measurement1/dataset/table.csv",
-      "@type": "File"
-    },
-    {
-      "@id": "#file_name_filled",
-      "@type": "PropertyValue"
-    },
-    {
-      "@id": "./runs/fsResult1/result.csv",
-      "@type": "File"
-    },
-    {
-      "@id": "ProcessParameterValue/Data Transformation=Addition",
-      "@type": "PropertyValue",
-      "additionalType": "ProcessParameterValue",
-      "name": "Data Transformation",
-      "propertyID": "NCIT:C43582",
-      "value": "Addition",
-      "valueReference": "http://purl.obolibrary.org/obo/NCIT_C64911"
-    }
-  ]
+{
+    "@context": [
+        "https://w3id.org/ro/terms/workflow-run/context"
+    ],
+    "@graph": [
+        {
+            "@type": "CreativeWork",
+            "@id": "ro-crate-metadata.json",
+            "conformsTo": [
+                {
+                    "@id": "https://w3id.org/ro/crate/1.1"
+                },
+                {
+                    "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#arc-wr-workflow-profile"
+                }
+            ],
+            "about": {
+                "@id": "./workflows"
+            }
+        },
+        {
+            "@id": "./workflows",
+            "@type": "Dataset",
+            "conformsTo": [
+                {
+                    "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#workflow-run-profile"
+                },
+                {
+                    "@id": "https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate.md#assay"
+                }
+            ],
+            "additionalType": "Assay",
+            "identifier": "ColumnAddition",
+            "measurementMethod": {
+                "@id" : "http://edamontology.org/format_3973"
+            },
+            "measurementTechnique": "https://dotnet.microsoft.com/en-us/download/dotnet/6.0",
+            "hasPart": [
+                {
+                    "@id": "workflows/FixedScript/workflow.cwl"
+                },
+                {
+                    "@id": "./assays/measurement1/dataset/table.csv"
+                },
+                {
+                    "@id": "runs/FixedScriptResult/result.csv"
+                }
+            ],
+            "mainEntity": {
+                "@id": "workflows/FixedScript/workflow.cwl"
+            }
+        },
+        {
+            "@id": "http://edamontology.org/format_3973",
+            "@type": "DefinedTerm",
+            "inDefinedTermSet": "EDAM",
+            "name": "Docker Image",
+            "termCode": "http://edamontology.org/format_3973"
+        },
+        {
+            "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#workflow-run-profile",
+            "@type": "CreativeWork",
+            "name": "ARC Workflow Run RO-Crate"
+        },
+        {
+            "@id": "workflows/FixedScript/workflow.cwl",
+            "@type": [
+                "File",
+                "SoftwareSourceCode",
+                "ComputationalWorkflow",
+                "LabProtocol"
+            ],
+            "conformsTo": {
+                "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#computationalworkflow--softwaresourcecode--text--labprotocol"
+            },
+            "creator": {
+                "@id": "https://orcid.org/0000-0003-3925-6778"
+            },
+            "computationalTool": {
+                "@id": "ProcessParameterValue/Data Transformation=Addition"
+            }
+        },
+        {
+            "@id": "https://orcid.org/0000-0003-3925-6778",
+            "@type": "Person",
+            "givenName": "Timo",
+            "familyName": "Mühlhaus",
+            "email": "muehlhaus@bio.uni-kl.de",
+            "affiliation": {
+                "@id": "RPTU"
+            },
+            "jobTitle": {
+                "@id": "https://credit.niso.org/contributor-roles/formal-analysis/"
+            }
+        },
+        {
+            "@id": "RPTU",
+            "@type": "Organization",
+            "name": "Rheinland-Pfälzische Technische Universität Kaiserslautern-Landau",
+            "url": "https://rptu.de/"
+        },
+        {
+            "@id": "https://credit.niso.org/contributor-roles/formal-analysis/",
+            "@type": "DefinedTerm",
+            "inDefinedTermSet": "CRT",
+            "name": "Formal Analysis",
+            "termCode": "https://credit.niso.org/contributor-roles/formal-analysis/"
+        },
+        {
+            "@id": "ProcessParameterValue/Data Transformation=Addition",
+            "@type": "PropertyValue",
+            "additionalType": "ProcessParameter",
+            "name": "Data Transformation",
+            "propertyID": "NCIT:C43582"
+        },
+        {
+            "@id": "#wfrun-fixed-script",
+            "@type": [
+                "CreateAction",
+                "LabProcess"
+            ],
+            "instrument": {
+                "@id": "workflows/FixedScript/workflow.cwl"
+            },
+            "name": "Column Addition with fixed script",
+            "agent": {
+                "@id": "https://orcid.org/0000-0003-1512-9504"
+            },
+            "object": [
+                {
+                    "@id": "./assays/measurement1/dataset/table.csv"
+                },
+                {
+                    "@id": "file_name_filled"
+                }
+            ],
+            "result": {
+                "@id": "./runs/fsResult1/result.csv"
+            },
+            "parameterValue": {
+                "@id" : "ProcessParameterValue/Data Transformation=Addition"
+            }
+        },
+        {
+            "@id": "https://orcid.org/0000-0003-1512-9504",
+            "@type": "Person",
+            "givenName": "Caroline",
+            "familyName": "Ott",
+            "email": "caroline.ott@rptu.de",
+            "affiliation": {
+                "@id": "RPTU"
+            }
+        },
+        {
+            "@id": "./assays/measurement1/dataset/table.csv",
+            "@type": "File"
+        },
+        {
+            "@id": "#file_name_filled",
+            "@type": "PropertyValue"
+        },
+        {
+            "@id": "./runs/fsResult1/result.csv",
+            "@type": "File"
+        },
+        {
+            "@id": "ProcessParameterValue/Data Transformation=Addition",
+            "@type": "PropertyValue",
+            "additionalType": "ProcessParameterValue",
+            "name": "Data Transformation",
+            "propertyID": "NCIT:C43582",
+            "value": "Addition",
+            "valueReference": "http://purl.obolibrary.org/obo/NCIT_C64911"
+        }
+    ]
 }
 ```
 
@@ -628,100 +768,138 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
 #### Workflow Profile
 
 ```json
-{ "@context": "https://w3id.org/ro/crate/1.1/context",
-  "@graph": [
-    {
-      "@type": "CreativeWork",
-      "@id": "ro-crate-metadata.json",
-      "conformsTo": [
-        { "@id": "https://w3id.org/ro/crate/1.1" },
-        { "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#arc-wr-workflow-profile" }
-      ],
-      "about": { "@id": "./workflows" }
-    },
-    {
-      "@id": "workflows/FixedScript/workflow.cwl",
-      "@type": [ "File", "SoftwareSourceCode", "ComputationalWorkflow", "LabProtocol" ],
-      "conformsTo": { "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#computationalworkflow--softwaresourcecode--text--labprotocol" },
-      "name": "Column Addition",
-      "programmingLanguage": [
-        { "@id": "#FSharp" },
-        { "@id": "https://w3id.org/workflowhub/workflow-ro-crate#cwl" }
-      ],
-      "creator": { "@id": "https://orcid.org/0000-0003-3925-6778" },
-      "dateCreated": "2024-02-05",
-      "license": "https://opensource.org/license/osl-3-0-php",
-      "sdPublisher": {"@id": "#datahub"},
-      "url": "https://git.nfdi4plants.org/muehlhaus/ArcPrototype/-/blob/main/workflows/FixedScript/workflow.cwl?ref_type=heads",
-      "version": "0.1",
-      "input": [
-        { "@id": "intensity_table" },
-        { "@id": "file_name" }
-      ],
-      "output": [
-        { "@id": "summed_intensities" }
-      ]
-    },
-    {
-      "@id": "#FSharp",
-      "@type": "ProgrammingLanguage",
-      "name": "F Sharp",
-      "alternateName": "F#",
-      "url": "https://dotnet.microsoft.com/en-us/languages/fsharp",
-      "version": "6.0",
-      "additionalType": "File"
-    },
-    {
-      "@id": "https://w3id.org/workflowhub/workflow-ro-crate#cwl",
-      "@type": "computerlanguage",
-      "name": "common workflow language",
-      "alternatename": "cwl",
-      "identifier": "https://w3id.org/cwl/v1.2/",
-      "url": "https://www.commonwl.org/"
-    },
-    {
-      "@id": "https://orcid.org/0000-0003-3925-6778",
-      "@type": "Person",
-      "givenName": "Timo",
-      "familyName": "Mühlhaus"
-    },
-    {
-      "@id": "#datahub",
-      "@type": "Organization",
-      "name": "DataPlant DataHub",
-      "url":"https://git.nfdi4plants.org/explore"
-    },
-    {
-      "@id": "intensity_table",
-      "@type": "FormalParameter",
-      "conformsTo": { "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/" },
-      "format": { "@id": "http://edamontology.org/format_3752" },
-      "additionalType": "File",
-    },
-    {
-      "@id": "file_name",
-      "@type": "FormalParameter",
-      "conformsTo": { "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/" },
-      "additionalType": "Text",
-    },
-    {
-      "@id": "summed_intensities",
-      "@type": "FormalParameter",
-      "conformsTo": { "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/" },
-      "encodingFormat": { "@id": "http://edamontology.org/format_3475" },
-      "additionalType": "File",
-    },
-    {
-      "@id": "http://edamontology.org/format_3752",
-      "@type": "Thing",
-      "name": "Comma-separated values"
-    },
-    {
-      "@id": "http://edamontology.org/format_3475",
-      "@type": "Thing",
-      "name": "Tab-separated values"
-    }
-  ]
+{
+    "@context": "https://w3id.org/ro/crate/1.1/context",
+    "@graph": [
+        {
+            "@type": "CreativeWork",
+            "@id": "ro-crate-metadata.json",
+            "conformsTo": [
+                {
+                    "@id": "https://w3id.org/ro/crate/1.1"
+                },
+                {
+                    "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#arc-wr-workflow-profile"
+                }
+            ],
+            "about": {
+                "@id": "./workflows"
+            }
+        },
+        {
+            "@id": "workflows/FixedScript/workflow.cwl",
+            "@type": [
+                "File",
+                "SoftwareSourceCode",
+                "ComputationalWorkflow",
+                "LabProtocol"
+            ],
+            "conformsTo": {
+                "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#computationalworkflow--softwaresourcecode--text--labprotocol"
+            },
+            "name": "Column Addition",
+            "programmingLanguage": [
+                {
+                    "@id": "#FSharp"
+                },
+                {
+                    "@id": "https://w3id.org/workflowhub/workflow-ro-crate#cwl"
+                }
+            ],
+            "creator": {
+                "@id": "https://orcid.org/0000-0003-3925-6778"
+            },
+            "dateCreated": "2024-02-05",
+            "license": "https://opensource.org/license/osl-3-0-php",
+            "sdPublisher": {
+                "@id": "#datahub"
+            },
+            "url": "https://git.nfdi4plants.org/muehlhaus/ArcPrototype/-/blob/main/workflows/FixedScript/workflow.cwl?ref_type=heads",
+            "version": "0.1",
+            "input": [
+                {
+                    "@id": "intensity_table"
+                },
+                {
+                    "@id": "file_name"
+                }
+            ],
+            "output": [
+                {
+                    "@id": "summed_intensities"
+                }
+            ]
+        },
+        {
+            "@id": "#FSharp",
+            "@type": "ProgrammingLanguage",
+            "name": "F Sharp",
+            "alternateName": "F#",
+            "url": "https://dotnet.microsoft.com/en-us/languages/fsharp",
+            "version": "6.0",
+            "additionalType": "File"
+        },
+        {
+            "@id": "https://w3id.org/workflowhub/workflow-ro-crate#cwl",
+            "@type": "computerlanguage",
+            "name": "common workflow language",
+            "alternatename": "cwl",
+            "identifier": "https://w3id.org/cwl/v1.2/",
+            "url": "https://www.commonwl.org/"
+        },
+        {
+            "@id": "https://orcid.org/0000-0003-3925-6778",
+            "@type": "Person",
+            "givenName": "Timo",
+            "familyName": "Mühlhaus"
+        },
+        {
+            "@id": "#datahub",
+            "@type": "Organization",
+            "name": "DataPlant DataHub",
+            "url": "https://git.nfdi4plants.org/explore"
+        },
+        {
+            "@id": "intensity_table",
+            "@type": "FormalParameter",
+            "conformsTo": {
+                "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/"
+            },
+            "format": {
+                "@id": "http://edamontology.org/format_3752"
+            },
+            "additionalType": "File"
+        },
+        {
+            "@id": "file_name",
+            "@type": "FormalParameter",
+            "conformsTo": {
+                "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/"
+            },
+            "additionalType": "Text"
+        },
+        {
+            "@id": "summed_intensities",
+            "@type": "FormalParameter",
+            "conformsTo": {
+                "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/"
+            },
+            "encodingFormat": {
+                "@id": "http://edamontology.org/format_3475"
+            },
+            "additionalType": "File"
+        },
+        {
+            "@id": "http://edamontology.org/format_3752",
+            "@type": "Thing",
+            "name": "Comma-separated values"
+        },
+        {
+            "@id": "http://edamontology.org/format_3475",
+            "@type": "Thing",
+            "name": "Tab-separated values"
+        }
+    ]
 }
 ```
 
@@ -730,155 +908,224 @@ Note: `exampleOfWork` and `workExample` are not required, but make it easier to 
 Note: `exampleOfWork` and `workExample` are not required, but make it easier to understand.
 
 ```json
-{ "@context": [
-    "https://w3id.org/ro/terms/workflow-run/context"
-  ],
-  "@graph": [
-    {
-      "@type": "CreativeWork",
-      "@id": "ro-crate-metadata.json",
-      "conformsTo": [
-        { "@id": "https://w3id.org/ro/crate/1.1" },
-        { "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#arc-wr-workflow-profile" }
-      ],
-      "about": { "@id": "./workflows" }
-    },
-    {
-      "@id": "./workflows",
-      "@type": "Dataset",
-      "conformsTo": [
-        { "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#workflow-run-profile" }
-        { "@id": "https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate.md#assay" }
-      ],
-      "additionalType": "Assay",
-      "identifier": "ColumnAddition",
-      "hasPart": [
-        { "@id": "workflows/FixedScript/workflow.cwl" },
-        { "@id": "./assays/measurement1/dataset/table.csv" }
-        { "@id": "runs/FixedScriptResult/result.csv" }
-      ],
-      "mainEntity": { "@id": "workflows/FixedScript/workflow.cwl" }
-    },
-    { 
-      "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#workflow-run-profile",
-      "@type": "CreativeWork",
-      "name": "ARC Workflow Run RO-Crate",
-    },
-    {
-      "@id": "workflows/FixedScript/workflow.cwl",
-      "@type": [ "File", "SoftwareSourceCode", "ComputationalWorkflow", "LabProtocol" ],
-      "conformsTo": { "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#computationalworkflow--softwaresourcecode--text--labprotocol" },
-      "name": "Column Addition",
-      "programmingLanguage": [
-        { "@id": "#FSharp" },
-        { "@id": "https://w3id.org/workflowhub/workflow-ro-crate#cwl" }
-      ],
-      "creator": { "@id": "https://orcid.org/0000-0003-3925-6778" },
-      "dateCreated": "2024-02-05",
-      "license": "https://opensource.org/license/osl-3-0-php",
-      "sdPublisher": {"@id": "#datahub"},
-      "url": "https://git.nfdi4plants.org/muehlhaus/ArcPrototype/-/blob/main/workflows/FixedScript/workflow.cwl?ref_type=heads"
-      "version": "0.1"
-      "input": [
-        { "@id": "intensity_table" },
-        { "@id": "file_name" }
-      ],
-      "output": [
-        { "@id": "summed_intensities" }
-      ]
-    },
-    {
-      "@id": "#FSharp",
-      "@type": "ProgrammingLanguage",
-      "name": "F Sharp",
-      "alternateName": "F#",
-      "url": "https://dotnet.microsoft.com/en-us/languages/fsharp",
-      "version": "6.0",
-      "additionalType": "File"
-    },
-    {
-      "@id": "https://w3id.org/workflowhub/workflow-ro-crate#cwl",
-      "@type": "computerlanguage",
-      "name": "common workflow language",
-      "alternatename": "cwl",
-      "identifier": "https://w3id.org/cwl/v1.2/",
-      "url": "https://www.commonwl.org/"
-    },
-    {
-      "@id": "https://orcid.org/0000-0003-3925-6778",
-      "@type": "Person",
-      "givenName": "Timo"
-      "familyName": "Mühlhaus"
-    },
-    {
-      "@id": "#datahub",
-      "@type": "Organization",
-      "name": "DataPlant DataHub",
-      "url":"https://git.nfdi4plants.org/explore"
-    },
-    {
-      "@id": "intensity_table",
-      "@type": "FormalParameter",
-      "conformsTo": { "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/" },
-      "format": { "@id": "http://edamontology.org/format_3752" },
-      "additionalType": "File",
-    },
-    {
-      "@id": "file_name",
-      "@type": "FormalParameter",
-      "conformsTo": { "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/" },
-      "additionalType": "Text",
-    },
-    {
-      "@id": "summed_intensities",
-      "@type": "FormalParameter",
-      "conformsTo": { "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/" },
-      "encodingFormat": { "@id": "http://edamontology.org/format_3475" },
-      "additionalType": "File",
-    },
-    {
-      "@id": "http://edamontology.org/format_3752",
-      "@type": "Thing",
-      "name": "Comma-separated values"
-    },
-    {
-      "@id": "http://edamontology.org/format_3475",
-      "@type": "Thing",
-      "name": "Tab-separated values"
-    },
-    {
-      "@id": "#wfrun-fixed-script",
-      "@type": [ "CreateAction", "LabProcess" ],
-      "instrument": { "@id": "workflows/FixedScript/workflow.cwl" },
-      "name" : "Column Addition with fixed script",
-      "agent": { "@id": "https://orcid.org/0000-0003-1512-9504" },
-      "object": [
-          { "@id": "./assays/measurement1/dataset/table.csv" },
-          { "@id": "file_name_filled" }
-      ],
-      "result": { "@id": "./runs/fsResult1/result.csv" }
-    },
-    {
-      "@id": "https://orcid.org/0000-0003-1512-9504",
-      "@type": "Person",
-      "givenName": "Caroline",
-      "familyName": "Ott"
-    },
-    {
-      "@id": "./assays/measurement1/dataset/table.csv",
-      "@type": "File",
-      "exampleOfWork": {"@id": "intensity_table"}
-    },
-    {
-      "@id": "#file_name_filled",
-      "@type": "PropertyValue",
-      "exampleOfWork": {"@id": "file_name"},
-    },
-    {
-      "@id": "./runs/fsResult1/result.csv",
-      "@type": "File",
-      "exampleOfWork": {"@id": "summed_intensities"}
-    }
-  ]
+{
+    "@context": [
+        "https://w3id.org/ro/terms/workflow-run/context"
+    ],
+    "@graph": [
+        {
+            "@type": "CreativeWork",
+            "@id": "ro-crate-metadata.json",
+            "conformsTo": [
+                {
+                    "@id": "https://w3id.org/ro/crate/1.1"
+                },
+                {
+                    "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#arc-wr-workflow-profile"
+                }
+            ],
+            "about": {
+                "@id": "./workflows"
+            }
+        },
+        {
+            "@id": "./workflows",
+            "@type": "Dataset",
+            "conformsTo": [
+                {
+                    "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#workflow-run-profile"
+                },
+                {
+                    "@id": "https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate.md#assay"
+                }
+            ],
+            "additionalType": "Assay",
+            "identifier": "ColumnAddition",
+            "hasPart": [
+                {
+                    "@id": "workflows/FixedScript/workflow.cwl"
+                },
+                {
+                    "@id": "./assays/measurement1/dataset/table.csv"
+                },
+                {
+                    "@id": "runs/FixedScriptResult/result.csv"
+                }
+            ],
+            "mainEntity": {
+                "@id": "workflows/FixedScript/workflow.cwl"
+            }
+        },
+        {
+            "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#workflow-run-profile",
+            "@type": "CreativeWork",
+            "name": "ARC Workflow Run RO-Crate"
+        },
+        {
+            "@id": "workflows/FixedScript/workflow.cwl",
+            "@type": [
+                "File",
+                "SoftwareSourceCode",
+                "ComputationalWorkflow",
+                "LabProtocol"
+            ],
+            "conformsTo": {
+                "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#computationalworkflow--softwaresourcecode--text--labprotocol"
+            },
+            "name": "Column Addition",
+            "programmingLanguage": [
+                {
+                    "@id": "#FSharp"
+                },
+                {
+                    "@id": "https://w3id.org/workflowhub/workflow-ro-crate#cwl"
+                }
+            ],
+            "creator": {
+                "@id": "https://orcid.org/0000-0003-3925-6778"
+            },
+            "dateCreated": "2024-02-05",
+            "license": "https://opensource.org/license/osl-3-0-php",
+            "sdPublisher": {
+                "@id": "#datahub"
+            },
+            "url": "https://git.nfdi4plants.org/muehlhaus/ArcPrototype/-/blob/main/workflows/FixedScript/workflow.cwl?ref_type=heads",
+            "version": "0.1",
+            "input": [
+                {
+                    "@id": "intensity_table"
+                },
+                {
+                    "@id": "file_name"
+                }
+            ],
+            "output": [
+                {
+                    "@id": "summed_intensities"
+                }
+            ]
+        },
+        {
+            "@id": "#FSharp",
+            "@type": "ProgrammingLanguage",
+            "name": "F Sharp",
+            "alternateName": "F#",
+            "url": "https://dotnet.microsoft.com/en-us/languages/fsharp",
+            "version": "6.0",
+            "additionalType": "File"
+        },
+        {
+            "@id": "https://w3id.org/workflowhub/workflow-ro-crate#cwl",
+            "@type": "computerlanguage",
+            "name": "common workflow language",
+            "alternatename": "cwl",
+            "identifier": "https://w3id.org/cwl/v1.2/",
+            "url": "https://www.commonwl.org/"
+        },
+        {
+            "@id": "https://orcid.org/0000-0003-3925-6778",
+            "@type": "Person",
+            "givenName": "Timo",
+            "familyName": "Mühlhaus"
+        },
+        {
+            "@id": "#datahub",
+            "@type": "Organization",
+            "name": "DataPlant DataHub",
+            "url": "https://git.nfdi4plants.org/explore"
+        },
+        {
+            "@id": "intensity_table",
+            "@type": "FormalParameter",
+            "conformsTo": {
+                "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/"
+            },
+            "format": {
+                "@id": "http://edamontology.org/format_3752"
+            },
+            "additionalType": "File"
+        },
+        {
+            "@id": "file_name",
+            "@type": "FormalParameter",
+            "conformsTo": {
+                "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/"
+            },
+            "additionalType": "Text"
+        },
+        {
+            "@id": "summed_intensities",
+            "@type": "FormalParameter",
+            "conformsTo": {
+                "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/"
+            },
+            "encodingFormat": {
+                "@id": "http://edamontology.org/format_3475"
+            },
+            "additionalType": "File"
+        },
+        {
+            "@id": "http://edamontology.org/format_3752",
+            "@type": "Thing",
+            "name": "Comma-separated values"
+        },
+        {
+            "@id": "http://edamontology.org/format_3475",
+            "@type": "Thing",
+            "name": "Tab-separated values"
+        },
+        {
+            "@id": "#wfrun-fixed-script",
+            "@type": [
+                "CreateAction",
+                "LabProcess"
+            ],
+            "instrument": {
+                "@id": "workflows/FixedScript/workflow.cwl"
+            },
+            "name": "Column Addition with fixed script",
+            "agent": {
+                "@id": "https://orcid.org/0000-0003-1512-9504"
+            },
+            "object": [
+                {
+                    "@id": "./assays/measurement1/dataset/table.csv"
+                },
+                {
+                    "@id": "file_name_filled"
+                }
+            ],
+            "result": {
+                "@id": "./runs/fsResult1/result.csv"
+            }
+        },
+        {
+            "@id": "https://orcid.org/0000-0003-1512-9504",
+            "@type": "Person",
+            "givenName": "Caroline",
+            "familyName": "Ott"
+        },
+        {
+            "@id": "./assays/measurement1/dataset/table.csv",
+            "@type": "File",
+            "exampleOfWork": {
+                "@id": "intensity_table"
+            }
+        },
+        {
+            "@id": "#file_name_filled",
+            "@type": "PropertyValue",
+            "exampleOfWork": {
+                "@id": "file_name"
+            }
+        },
+        {
+            "@id": "./runs/fsResult1/result.csv",
+            "@type": "File",
+            "exampleOfWork": {
+                "@id": "summed_intensities"
+            }
+        }
+    ]
 }
 ```
