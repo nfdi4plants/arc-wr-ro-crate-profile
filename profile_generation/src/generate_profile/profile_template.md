@@ -60,6 +60,10 @@ However, compatibility is guaranteed when following **both** the Mandatory and R
 
 ### ARC Run
 
+An ARC Run is an object that bundles ISA-compliant administrative metadata (e.g., the person that executed it) and the retrospective provenance of the run in form of [Workflow Invocation(s)](#workflow-invocation).
+It is based upon [schema.org/Dataset](https://schema.org/Dataset) and maps to the [ISA-XLSX **Run**]().
+In the context of an ARC, an ARC Run can be seen as the top-level object describing the contents and provenance of a single _run folder_ inside the _runs folder_.
+
 [[ARC_RUN_REQUIREMENTS]]
 
 ### Workflow Invocation
