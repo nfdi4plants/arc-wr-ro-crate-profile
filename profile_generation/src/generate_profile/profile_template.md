@@ -48,6 +48,34 @@ Therefore, the main purpose of the **arc-wr** profiles is to merge the workflows
 To allow for the ARC's _immutable but evolving_ nature, **arc-wr** profiles are in general less strict than the underlying profiles, relaxing requirements for many mandatory fields.
 However, compatibility is guaranteed when following **both** the Mandatory and Recommended fields of the underlying profiles (see also the [compatibility section](#compatibility-with-underlying-profiles)).
 
+The 4 main entities described by the **arc-wr** profiles are:
+
+* `ARC Workflow`, an object that bundles ISA metadata
+* `Workflow Protocol`, prospective metadata of a workflow. It can represent the _Main Workflow_ (`main entity`) of a `Workflow RO Crate`, extending it with `LabProtocol` metadata.
+* `Workflow Invocation` is an invocation of a `Workflow Protocol`, bundling `CreateAction` with `LabProtocol`. Contains actual values for the parameter slots of the `Workflow Protocol`.
+* `ARC Run` is an object that bundles ISA metadata and `WorkflowInvocation`.
+
+They are connected via the following relations:
+
+```mermaid
+flowchart TD
+
+run["<b>ARC Run</b><br>(Dataset)"]
+
+workflow["<b>ARC Workflow</b><br>(Dataset)"]
+
+runProcess["<b>Workflow Invocation</b><br>(CreateAction, LabProcess)"]
+
+workflowProtocol["<b>Workflow Protocol</b><br>(File, Software, ComputationalWorkflow, LabProtocol)"]
+
+run --mentions--> runProcess
+run --about--> runProcess
+
+runProcess --instrument--> workflowProtocol
+runProcess --executesLabProtocol--> workflowProtocol
+workflow --mainEntity--> workflowProtocol
+```
+
 ## Requirements
 
 ### ARC Workflow
