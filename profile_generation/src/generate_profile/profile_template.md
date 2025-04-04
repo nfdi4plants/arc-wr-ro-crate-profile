@@ -50,10 +50,21 @@ However, compatibility is guaranteed when following **both** the Mandatory and R
 
 The 4 main entities described by the **arc-wr** profiles are:
 
-* `ARC Workflow`, an object that bundles ISA metadata
-* `Workflow Protocol`, prospective metadata of a workflow. It can represent the _Main Workflow_ (`main entity`) of a `Workflow RO Crate`, extending it with `LabProtocol` metadata.
-* `Workflow Invocation` is an invocation of a `Workflow Protocol`, bundling `CreateAction` with `LabProtocol`. Contains actual values for the parameter slots of the `Workflow Protocol`.
-* `ARC Run` is an object that bundles ISA metadata and `WorkflowInvocation`.
+* [**`ARC Workflow`**](#arc-workflow)
+  * A `Dataset` container object that describes a `workflow folder` inside an ARC.
+  * Can be used to enrich a [`Workflow Protocol`](#workflow-protocol) with additional ISA metadata.
+  * Contains a  `mainEntity` following the [`Workflow Protocol` profile](#workflow-protocol) that describes the _Main Workflow_ of this `workflow folder`, analogous to [Workflow RO Crates](https://about.workflowhub.eu/Workflow-RO-Crate/).
+  * Can be a valid [Workflow RO Crate](https://about.workflowhub.eu/Workflow-RO-Crate/), see the [Compatibility section](#compatibility-with-underlying-profiles).
+* [**`Workflow Protocol`**](#workflow-protocol)
+  * Contains prospective metadata of a workflow, e.g. descriptions of inputs and outputs.
+  * A Multi-type object of the types [`MediaObject`](https://schema.org/MediaObject), [`SoftwareSourceCode`](https://schema.org/SoftwareSourceCode), [`ComputationalWorkflow`](https://bioschemas.org/types/ComputationalWorkflow/1.0-RELEASE), and [`LabProtocol`](https://bioschemas.org/types/LabProtocol). It represents the union of computational and laboratory workflow description.
+  * Can represent a _Main Workflow_ (`main entity`) of a [Workflow RO Crate](https://about.workflowhub.eu/Workflow-RO-Crate/) following the [bioschemas ComputationalWorkflow profile](https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE), extended with `LabProtocol` metadata (see also the [Compatibility section](#compatibility-with-underlying-profiles)).
+* [**`ARC Run`**](#arc-run)
+  * A `Dataset` container object that describes a `run folder` inside an ARC.
+  * Can be used to enrich [`Workflow Invocations`](#workflow-invocation) with additional ISA metadata.
+* [**`Workflow Invocation`**](#workflow-invocation)
+  * A Multi-type object of the types [`CreateAction`](https://schema.org/CreateAction) and [`LabProcess`](https://bioschemas.org/types/LabProcess/0.1-DRAFT). It represents the union of computational and laboratory workflow execution.
+  * Represents the invocation of a `Workflow Protocol` with actual values for the parameter slots of the executed `Workflow Protocol`.
 
 They are connected via the following relations:
 
