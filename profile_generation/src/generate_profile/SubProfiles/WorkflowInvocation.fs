@@ -9,6 +9,11 @@ let requiredProfileProperties = [
                                                                           (BioSchemas.LabProcess, END)], 
                                                                           "MUST be LabProcess and CreateAction to indicate that this tool created the result data entities", 
                                                                           "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/release/profile/arc_wr_ro_crate.md")
+    ProfileRow.create("additionalType",       Required, ONE,          [   (Schema.Text, OR)
+                                                                          (Schema.URL, END)
+                                                                      ], 
+                                                                          "MUST be 'Workflow Invocation' or ontology term to identify it as a Workflow Invocation", 
+                                                                          "**THIS PROFILE**")
     ProfileRow.create("instrument",           Required, MANY,         [   (Schema.SoftwareApplication, OR)
                                                                           (BioSchemas.ComputationalWorkflow, END)], 
                                                                           "Identifier of the executed tool or workflow in case of a Workflow RO-Crate.", 
@@ -44,12 +49,12 @@ let optionalProfileProperties = [
     ProfileRow.create("parameterValue",       Optional, ONE,          [   (Schema.PropertyValue, END)], 
                                                                           "A parameter value of the workflow process, usually a key-value pair using ontology terms", 
                                                                           "https://bioschemas.org/types/LabProcess/0.1-DRAFT")
-// Recommended -> Optional
+    // Recommended -> Optional
     ProfileRow.create("description",          Optional, ONE,          [   (Schema.Text, OR)
                                                                           (Schema.TextObject, END)], 
                                                                           "Details of the execution, for instance command line arguments or settings. This field is for information only, no particular structure is to be assumed.", 
                                                                           "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate")
-// endTime is a property of Action, but specifically mentioned as optional in the LabProcess schema
+    // endTime is a property of Action, but specifically mentioned as optional in the LabProcess schema
     ProfileRow.create("endTime",              Optional, ONE,          [   (Schema.DateTime, OR)
                                                                           (Schema.Time, END)], 
                                                                           "The endTime of something. For a reserved event or service (e.g. FoodEstablishmentReservation), the time that it is expected to end. For actions that span a period of time, when the action was performed. E.g. John wrote a book from January to December. For media, including audio and video, it's the time offset of the end of a clip within a larger file.", 

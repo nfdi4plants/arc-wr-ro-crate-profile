@@ -37,11 +37,6 @@ let recommendedProfileProperties = [
                                                                             ],
                                                                             "All data files that are part of the ARC Workflow. In an ARC, this SHOULD include all contents of the respective `workflow folder` represented by the ARC Workflow object. Can also be used so signify sub-workflows that are part of this workflow's intended orchestration - if this is the case, MUST follow the [Workflow Protocol profile](#workflow-protocol).",
                                                                             "**THIS PROFILE**")
-    ProfileRow.create("intendedUse",            Recommended, ONE,           [   (Schema.URL, OR)
-                                                                                (Schema.DefinedTerm, END)
-                                                                            ],
-                                                                            "Term to classify the ARC Workflow. The term can be free text or from, for example, a controlled vocabulary or an ontology.",
-                                                                            "**THIS PROFILE**")
 ]
 let optionalProfileProperties = [
     ProfileRow.create("url",                    Recommended, ONE,           [   (Schema.URL, END)],

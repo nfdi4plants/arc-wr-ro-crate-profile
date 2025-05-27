@@ -13,17 +13,20 @@ let requiredProfileProperties = [
                                                                     ], 
                                                                     "Schema.org/Bioschemas class for the resource declared using JSON-LD syntax. For other serialisations please use the appropriate mechanism. While it is permissible to provide multiple types, it is preferred to use a single type.", 
                                                                     "**THIS PROFILE**")
+    ProfileRow.create("additionalType",     Required, ONE,          [    (Schema.Text, OR)
+                                                                         (Schema.URL, END)
+                                                                    ], 
+                                                                    "MUST be 'Workflow Protocol' or ontology term to identify it as a Workflow Protocol", 
+                                                                    "**THIS PROFILE**")
     ProfileRow.create("@id",                Required, ONE,          [   (IRI, END)], 
                                                                     "Used to distinguish the resource being described in JSON-LD. For other serialisations use the appropriate approach.", 
                                                                     "https://bioschemas.org/profiles/ComputationalWorkflow")
-    ProfileRow.create("dct:conformsTo",     Required, SPECIFIC 2,   [   (IRI, END)], 
-                                                                    "Used to state the profiles that the markup relates to. MUST be 'https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE' AND `<insert our LabProtocol profile IRI here>`", 
-                                                                    "https://bioschemas.org/profiles/ComputationalWorkflow")
-    // properties from https://bioschemas.org/profiles/ComputationalWorkflow
 ]
 
 let recommendedProfileProperties = [
-    // Required -> Recommended
+    ProfileRow.create("dct:conformsTo",     Recommended, SPECIFIC 1,[   (IRI, END)], 
+                                                                    "Used to state the profiles that the markup relates to. MUST be 'https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE'", 
+                                                                    "https://bioschemas.org/profiles/ComputationalWorkflow")
     ProfileRow.create("input",              Recommended, MANY,      [   (BioSchemas.FormalParameter, END)], 
                                                                     "An input required to use the computational workflow (eg. Excel spreadsheet, BAM file)", 
                                                                     "https://bioschemas.org/profiles/ComputationalWorkflow")
@@ -88,7 +91,7 @@ let optionalProfileProperties = [
     ProfileRow.create("hasPart",                Optional, MANY,     [   (Schema.CreativeWork, END)], 
                                                                     "The tools/scripts that are (potentially) used by the ComputationalWorkflow when it is executed, The parts are not ordered; they normally correspond to steps in the workflow, there is no specified mapping.", 
                                                                     "https://bioschemas.org/profiles/ComputationalWorkflow")
-   // properties from OUR LabProtocol profile
+    // properties from OUR LabProtocol profile
     // description is already part of ComputationalWorkflow profile
     // Recommended -> Optional
     ProfileRow.create("intendedUse",            Optional, ONE,      [   (Schema.DefinedTerm, OR)
@@ -107,10 +110,6 @@ let optionalProfileProperties = [
                                                                     ], 
                                                                     "Software or tool used as part of the lab protocol to complete a part of it.", 
                                                                     "isa-ro-crate-profile/LabProtocol")
-    // labEquipment makes no sense here:
-    // reagent makes no sense here:
-    // url is already part of ComputationalWorkflow profile
-    // version is already part of ComputationalWorkflow profile
 ]
 
 let profile = Profile.create(

@@ -17,6 +17,7 @@
     * [Dataset](#dataset)
     * [FormalParameter](#formalparameter)
     * [PropertyValue](#propertyvalue)
+      * [PropertyValue - Workflow Input](#propertyvalue---workflow-input)
     * [SoftwareApplication](#softwareapplication)
   * [Compatibility with underlying profiles](#compatibility-with-underlying-profiles)
   * [Workflow Run Crate configuration in ARCs](#workflow-run-crate-configuration-in-arcs)
@@ -103,7 +104,6 @@ workflow --mainEntity--> workflowProtocol
 | **`name`** | Recommended | ONE | [schema.org/Text](https://schema.org/Text) | A concise phrase used to encapsulate the purpose and goal of the ARC Workflow. |
 | **`description`** | Recommended | ONE | [schema.org/Text](https://schema.org/Text) | A textual description of the ARC Workflow, with components such as objective or goals. |
 | **`hasPart`** | Recommended | MANY | [schema.org/MediaObject](https://schema.org/MediaObject)<br>OR [WorkflowProtocol](#workflow-protocol) | All data files that are part of the ARC Workflow. In an ARC, this SHOULD include all contents of the respective `workflow folder` represented by the ARC Workflow object. Can also be used so signify sub-workflows that are part of this workflow's intended orchestration - if this is the case, MUST follow the [Workflow Protocol profile](#workflow-protocol). |
-| **`intendedUse`** | Recommended | ONE | [schema.org/URL](https://schema.org/URL)<br>OR [schema.org/DefinedTerm](https://schema.org/DefinedTerm) | Term to classify the ARC Workflow. The term can be free text or from, for example, a controlled vocabulary or an ontology. |
 | <h4>Optional Properties</h4> | | | | |
 | **`url`** | Recommended | ONE | [schema.org/URL](https://schema.org/URL) | The filename or path of the metadata file describing the run. Optional, since in some contexts like an ARC the filename is implicit. |
 | **`version`** | Recommended | ONE | [schema.org/Number](https://schema.org/Number)<br>OR [schema.org/Text](https://schema.org/Text) | The filename or path of the metadata file describing the run. Optional, since in some contexts like an ARC the filename is implicit. |
@@ -115,9 +115,10 @@ workflow --mainEntity--> workflowProtocol
 | <h4>Required Properties</h4> | | | | | |
 | **`@context`** | Required | ONE | [schema.org/URL](https://schema.org/URL) | Used to provide the context (namespaces) for the JSON-LD file. Not needed in other serialisations. | https://bioschemas.org/profiles/ComputationalWorkflow |
 | **`@type`** | Required | 4 | [schema.org/Text](https://schema.org/Text)<br>AND [schema.org/SoftwareSourceCode](https://schema.org/SoftwareSourceCode)<br>AND [bioschemas.org/ComputationalWorkflow](https://bioschemas.org/types/ComputationalWorkflow)<br>AND [bioschemas.org/LabProtocol](https://bioschemas.org/types/LabProtocol) | Schema.org/Bioschemas class for the resource declared using JSON-LD syntax. For other serialisations please use the appropriate mechanism. While it is permissible to provide multiple types, it is preferred to use a single type. | **THIS PROFILE** |
+| **`additionalType`** | Required | ONE | [schema.org/Text](https://schema.org/Text)<br>OR [schema.org/URL](https://schema.org/URL) | MUST be 'Workflow Protocol' or ontology term to identify it as a Workflow Protocol | **THIS PROFILE** |
 | **`@id`** | Required | ONE | [IRI](https://datatracker.ietf.org/doc/html/rfc3987#section-2) | Used to distinguish the resource being described in JSON-LD. For other serialisations use the appropriate approach. | https://bioschemas.org/profiles/ComputationalWorkflow |
-| **`dct:conformsTo`** | Required | 2 | [IRI](https://datatracker.ietf.org/doc/html/rfc3987#section-2) | Used to state the profiles that the markup relates to. MUST be 'https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE' AND `<insert our LabProtocol profile IRI here>` | https://bioschemas.org/profiles/ComputationalWorkflow |
 | <h4>Recommended Properties</h4> | | | | | |
+| **`dct:conformsTo`** | Recommended | 1 | [IRI](https://datatracker.ietf.org/doc/html/rfc3987#section-2) | Used to state the profiles that the markup relates to. MUST be 'https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE' | https://bioschemas.org/profiles/ComputationalWorkflow |
 | **`input`** | Recommended | MANY | [bioschemas.org/FormalParameter](https://bioschemas.org/types/FormalParameter) | An input required to use the computational workflow (eg. Excel spreadsheet, BAM file) | https://bioschemas.org/profiles/ComputationalWorkflow |
 | **`output`** | Recommended | MANY | [bioschemas.org/FormalParameter](https://bioschemas.org/types/FormalParameter) | An output produced by the workflow | https://bioschemas.org/profiles/ComputationalWorkflow |
 | **`creator`** | Recommended | MANY | [schema.org/Organization](https://schema.org/Organization)<br>OR [schema.org/Person](https://schema.org/Person) | The creator/author of this CreativeWork. This is the same as the Author property for CreativeWork. | https://bioschemas.org/profiles/ComputationalWorkflow |
@@ -168,6 +169,7 @@ In the context of an ARC, an ARC Run can be seen as the top-level object describ
 | <h4>Required Properties</h4> | | | | | |
 | **`@id`** | Required | ONE | [IRI](https://datatracker.ietf.org/doc/html/rfc3987#section-2) | A unique identifier for the execution, e.g. "urn:uuid:50ec5c76-1f7a-4130-8ef6-846756b228c1", "#f99a8e6c". MAY be an absolute URI, e.g. http://example.com/runs/846756b228c1. The use of randomly generated UUIDs (type 4) is RECOMMENDED. SHOULD be listed under mentions of the root data entity. | https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate |
 | **`@type`** | Required | 2 | [schema.org/CreateAction](https://schema.org/CreateAction)<br>AND [bioschemas.org/LabProcess](https://bioschemas.org/types/LabProcess/0.1-DRAFT) | MUST be LabProcess and CreateAction to indicate that this tool created the result data entities | https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/release/profile/arc_wr_ro_crate.md |
+| **`additionalType`** | Required | ONE | [schema.org/Text](https://schema.org/Text)<br>OR [schema.org/URL](https://schema.org/URL) | MUST be 'Workflow Invocation' or ontology term to identify it as a Workflow Invocation | **THIS PROFILE** |
 | **`instrument`** | Required | MANY | [schema.org/SoftwareApplication](https://schema.org/SoftwareApplication)<br>OR [bioschemas.org/ComputationalWorkflow](https://bioschemas.org/types/ComputationalWorkflow) | Identifier of the executed tool or workflow in case of a Workflow RO-Crate. | https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate; https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate |
 | **`agent`** | Required | ONE | [schema.org/Organization](https://schema.org/Organization)<br>OR [schema.org/Person](https://schema.org/Person) | Identifier of a Person or Organization contextual entity that started/executed this tool. | https://bioschemas.org/types/LabProcess/0.1-DRAFT |
 | **`result`** | Required | MANY | [schema.org/MediaObject](https://schema.org/MediaObject)<br>OR [schema.org/Dataset](https://schema.org/Dataset)<br>OR [schema.org/Collection](https://schema.org/Collection)<br>OR [schema.org/CreativeWork](https://schema.org/CreativeWork)<br>OR [schema.org/PropertyValue](https://schema.org/PropertyValue) | The identifier of one or more entities that were created or modified by this action, e.g. output files. Entities referenced by an action�s object or result SHOULD be of type File (an RO-Crate alias for MediaObject) for files, Dataset for directories and Collection for multi-file datasets, but MAY be a CreativeWork for other types of data (e.g. an online database); they MAY be of type PropertyValue to capture numbers/strings that are not stored as files. | https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate, https://bioschemas.org/types/LabProcess/0.1-DRAFT |
@@ -255,6 +257,22 @@ In the context of an ARC, an ARC Run can be seen as the top-level object describ
 | **`url`** | Optional | ONE | [schema.org/URL](https://schema.org/URL) | URL of the item. | https://schema.org/Thing |
 | **`potentialAction`** | Optional | MANY | [schema.org/Action](https://schema.org/Action) | Indicates a potential Action, which describes an idealized action in which this thing would play an 'object' role. | https://schema.org/Thing |
 | **`subjectOf`** | Optional | MANY | [schema.org/CreativeWork](https://schema.org/CreativeWork)<br>OR [schema.org/Event](https://schema.org/Event) | A CreativeWork or Event about this Thing. Inverse property: about | https://schema.org/Thing |
+
+#### PropertyValue - Workflow Input
+
+A `PropertyValue` that is used as an `object` in a [Workflow Invocation](#workflow-invocation) to describe the realized value for an `input` of a [Workflow Protocol](#workflow-protocol). Distinguishes this `PropertyValue` from process sequence related `object`s by linking it to the realized `input` via the `exampleOfWork` property.
+
+| Property | Required | Cardinality | Expected Type | Description | Source Profile |
+|----------|----------|-------------|---------------|-------------|----------------|
+| <h4>Required Properties</h4> | | | | | |
+| **`@id`** | Required | ONE | [IRI](https://datatracker.ietf.org/doc/html/rfc3987#section-2) | Used to distinguish the resource being described in JSON-LD. For other serialisations use the appropriate approach. | https://schema.org/PropertyValue |
+| **`@type`** | Required | MANY | [schema.org/PropertyValue](https://schema.org/PropertyValue) | Schema.org class for the resource declared using JSON-LD syntax. For other serialisations please use the appropriate mechanism. While it is permissible to provide multiple types, it is preferred to use a single type. | https://schema.org/PropertyValue |
+| **`additionalType`** | Required | ONE | [schema.org/Text](https://schema.org/Text)<br>OR [schema.org/URL](https://schema.org/URL) | MUST be 'Workflow Input' or ontology term to identify it as a Workflow Input | **THIS PROFILE** |
+| **`exampleOfWork`** | Required | ONE | [IRI](https://datatracker.ietf.org/doc/html/rfc3987#section-2) | Identifier of the FormalParameter instance realized by this entity - intended to describe realization of `input`s of [Workflow Protocols](#workflow-protocol) in [Workflow Invocations](workflow-invocation). MUST refer to a `input` of a [Workflow Protocol](#workflow-protocol) to distinguish from inputs that are process parameters. | https://schema.org/PropertyValue |
+| **`value`** | Required | ONE | [schema.org/Boolean](https://schema.org/Boolean)<br>OR [schema.org/Number](https://schema.org/Number)<br>OR [schema.org/StructuredValue](https://schema.org/StructuredValue)<br>OR [schema.org/Text](https://schema.org/Text) | The value of a QuantitativeValue (including Observation) or property value node. For QuantitativeValue and MonetaryAmount, the recommended type for values is 'Number'. For PropertyValue, it can be 'Text', 'Number', 'Boolean', or 'StructuredValue'. Use values from 0123456789 [Add to Citavi project by ISBN] (Unicode 'DIGIT ZERO' (U+0030) to 'DIGIT NINE' (U+0039)) rather than superficially similar Unicode symbols. Use '.' (Unicode 'FULL STOP' (U+002E)) rather than ',' to indicate a decimal point. Avoid using these symbols as a readability separator. | https://schema.org/PropertyValue |
+| <h4>Recommended Properties</h4> | | | | | |
+| **`name`** | Required | ONE | [schema.org/Text](https://schema.org/Text) | The name of the item. | https://schema.org/Thing |
+| <h4>Optional Properties</h4> | | | | | |
 
 ### SoftwareApplication
 

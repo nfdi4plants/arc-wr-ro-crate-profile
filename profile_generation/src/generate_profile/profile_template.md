@@ -17,6 +17,7 @@
     * [Dataset](#dataset)
     * [FormalParameter](#formalparameter)
     * [PropertyValue](#propertyvalue)
+      * [PropertyValue - Workflow Input](#propertyvalue---workflow-input)
     * [SoftwareApplication](#softwareapplication)
   * [Compatibility with underlying profiles](#compatibility-with-underlying-profiles)
   * [Workflow Run Crate configuration in ARCs](#workflow-run-crate-configuration-in-arcs)
@@ -120,6 +121,12 @@ In the context of an ARC, an ARC Run can be seen as the top-level object describ
 ### PropertyValue
 
 [[PROPERTY_VALUE_PROFILE_REQUIREMENTS]]
+
+#### PropertyValue - Workflow Input
+
+A `PropertyValue` that is used as an `object` in a [Workflow Invocation](#workflow-invocation) to describe the realized value for an `input` of a [Workflow Protocol](#workflow-protocol). Distinguishes this `PropertyValue` from process sequence related `object`s by linking it to the realized `input` via the `exampleOfWork` property.
+
+[[WORKFLOW_INPUT_PROFILE_REQUIREMENTS]]
 
 ### SoftwareApplication
 

@@ -7,6 +7,7 @@ let [<Literal>] WORKFLOW_INVOCATION_REQUIREMENTS = """[[WORKFLOW_INVOCATION_REQU
 let [<Literal>] DATASET_PROFILE_REQUIREMENTS = """[[DATASET_PROFILE_REQUIREMENTS]]"""
 let [<Literal>] FORMAL_PARAMETER_PROFILE_REQUIREMENTS = """[[FORMAL_PARAMETER_PROFILE_REQUIREMENTS]]"""
 let [<Literal>] PROPERTY_VALUE_PROFILE_REQUIREMENTS = """[[PROPERTY_VALUE_PROFILE_REQUIREMENTS]]"""
+let [<Literal>] WORKFLOW_INPUT_PROFILE_REQUIREMENTS = """[[WORKFLOW_INPUT_PROFILE_REQUIREMENTS]]"""
 let [<Literal>] SOFTWARE_APPLICATION_PROFILE_REQUIREMENTS = """[[SOFTWARE_APPLICATION_PROFILE_REQUIREMENTS]]"""
 let [<Literal>] WP_MINIMAL_JSON = """[[WP_MINIMAL_JSON]]"""
 let [<Literal>] WPI_MINIMAL_JSON = """[[WPI_MINIMAL_JSON]]"""
@@ -58,6 +59,7 @@ let main argv =
             .Replace(DATASET_PROFILE_REQUIREMENTS, Domain.generateProfileTable true Dataset.profile)
             .Replace(FORMAL_PARAMETER_PROFILE_REQUIREMENTS, Domain.generateProfileTable true FormalParameter.profile)
             .Replace(PROPERTY_VALUE_PROFILE_REQUIREMENTS, Domain.generateProfileTable true PropertyValue.profile)
+            .Replace(WORKFLOW_INPUT_PROFILE_REQUIREMENTS, Domain.generateProfileTable true WorkflowInput.profile)
             .Replace(SOFTWARE_APPLICATION_PROFILE_REQUIREMENTS, Domain.generateProfileTable true SoftwareApplication.profile)
             .Replace(WP_MINIMAL_JSON, EmbeddedResource.load("examples.wp_minimal.json"))
             .Replace(WPI_MINIMAL_JSON, EmbeddedResource.load("examples.wpi_minimal.json"))
