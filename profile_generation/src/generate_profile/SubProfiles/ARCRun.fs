@@ -54,7 +54,11 @@ let recommendedProfileProperties = [
                                                                             ],
                                                                             "Software Publisher/Creator and/or Software name used for the computation.",
                                                                             "**THIS PROFILE**")
-
+    // necessary according to https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate
+    // to be a valid process run crate root entity (when scoped profiles are eventually drafted for ro crate spec)
+    ProfileRow.create("conformsTo",             Recommended, ONE,           [   (Schema.CreativeWork, END)], 
+                                                                            """MUST reference a CreativeWork entity with an @id URI that is consistent with the versioned Permalink of this document, e.g. {"@id": "https://w3id.org/ro/wfrun/process/0.4"}""", 
+                                                                            "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate")
 ]
 let optionalProfileProperties = [
     ProfileRow.create("url",                    Optional, ONE,              [   (Schema.URL, END)],
