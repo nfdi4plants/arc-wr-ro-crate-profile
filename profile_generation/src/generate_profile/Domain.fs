@@ -218,9 +218,9 @@ let generateProfileTable (renderSourceColumn: bool) (profile: Profile) =
 
     let subheaderRowTemplate (title:string) = 
         if renderSourceColumn then
-            [$"| <h4>{title}</h4> | | | | | |"]
+            [$"| <h4>{title}</h4><br> | | | | | |"]
         else
-            [$"| <h4>{title}</h4> | | | | |"]
+            [$"| <h4>{title}</h4><br> | | | | |"]
 
     header
     @ subheaderRowTemplate "Required Properties"
