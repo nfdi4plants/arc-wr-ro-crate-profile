@@ -21,10 +21,6 @@ let requiredProfileProperties = [
     ProfileRow.create("executesLabProtocol",  Required, ONE,          [   (BioSchemas.LabProtocol, END)], 
                                                                           "The Workflow Protocol executed. MUST be equal to the `instrument` property", 
                                                                           "https://bioschemas.org/types/LabProcess/0.1-DRAFT")
-    ProfileRow.create("agent",                Required, ONE,          [   (Schema.Organization, OR)
-                                                                          (Schema.Person, END)], 
-                                                                          "Identifier of a Person or Organization contextual entity that started/executed this tool.", 
-                                                                          "https://bioschemas.org/types/LabProcess/0.1-DRAFT")
 // Expected types of result and object come from https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate
     ProfileRow.create("result",               Required, MANY,         [   (Schema.MediaObject, OR)
                                                                           (Schema.Dataset, OR)
@@ -47,7 +43,7 @@ let requiredProfileProperties = [
 let optionalProfileProperties = [
 // The following two properties are from LabProcess
     ProfileRow.create("parameterValue",       Optional, ONE,          [   (Schema.PropertyValue, END)], 
-                                                                          "A parameter value of the workflow process, usually a key-value pair using ontology terms", 
+                                                                          "A parameter value of the workflow invocation, usually a key-value pair using ontology terms", 
                                                                           "https://bioschemas.org/types/LabProcess/0.1-DRAFT")
     // Recommended -> Optional
     ProfileRow.create("description",          Optional, ONE,          [   (Schema.Text, OR)
