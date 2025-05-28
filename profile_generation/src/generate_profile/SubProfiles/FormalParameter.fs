@@ -20,25 +20,22 @@ let requiredProfileProperties = [
 
 let recommendedProfileProperties = [
 // Required according to https://www.researchobject.org/ro-crate/specification/1.1/workflows.html when describing inputs or outputs
+// Means one should follow the FormalParameter profile https://bioschemas.org/profiles/FormalParameter/1.1-DRAFT
 // Required -> Recommended
+    ProfileRow.create("dct:conformsTo",     Recommended, SPECIFIC 1,[   (IRI, END)], 
+                                                                    "Used to state the profiles that the markup relates to. MUST be 'https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21'", 
+                                                                    "https://bioschemas.org/profiles/ComputationalWorkflow")
     ProfileRow.create("encodingFormat",     Recommended, MANY,      [   (Schema.Text, OR)
                                                                         (Schema.URL, END)
                                                                     ], 
                                                                     "Media type typically expressed using a MIME format (see IANA site and MDN reference) e.g. application/zip for a SoftwareApplication binary, audio/mpeg for .mp3 etc.). In cases where a CreativeWork has several media type representations, encoding can be used to indicate each MediaObject alongside particular encodingFormat information. Unregistered or niche encoding and file formats can be indicated instead via the most appropriate URL, e.g. defining Web page or a Wikipedia/Wikidata entry. Supersedes fileFormat.", 
                                                                     "https://bioschemas.org/types/FormalParameter/1.0-RELEASE,https://www.researchobject.org/ro-crate/specification/1.1/workflows.html")
+    ProfileRow.create("name",               Recommended, ONE,       [   (Schema.Text, END)], 
+                                                                    "SHOULD match the name of the corresponding workflow parameter slot, e.g. n_lines.", 
+                                                                    "https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate")
 ]
 
 let optionalProfileProperties = [
-// Required according to https://www.researchobject.org/ro-crate/specification/1.1/workflows.html, but only recommended
-// in https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate
-// Recommended -> Optional
-    ProfileRow.create("name",               Optional, ONE,          [   (Schema.Text, END)], 
-                                                                    "SHOULD match the name of the corresponding workflow parameter slot, e.g. n_lines.", 
-                                                                    "https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate")
-// Recommended -> Optional
-    ProfileRow.create("sameAs",             Optional, MANY,         [   (Schema.URL, END)], 
-                                                                    "URL of a reference Web page that unambiguously indicates the item's identity. E.g. the URL of the item's Wikipedia page, Wikidata entry, or official website.", 
-                                                                    "https://bioschemas.org/types/FormalParameter/1.0-RELEASE")
     ProfileRow.create("description",        Optional, ONE,          [   (Schema.Text, END)], 
                                                                     "A description of the parameter's purpose, e.g. Number of lines.", 
                                                                     "https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate")
@@ -53,43 +50,9 @@ let optionalProfileProperties = [
     ProfileRow.create("valueRequired",      Optional, ONE,          [   (Schema.Boolean, END)], 
                                                                     "For an input, whether a value must be specified for the workflow to be run. Default is false.", 
                                                                     "https://bioschemas.org/types/FormalParameter/1.0-RELEASE")
-    ProfileRow.create("identifier",         Optional, MANY,         [   (Schema.PropertyValue, OR)
-                                                                        (Schema.Text, OR)
-                                                                        (Schema.URL, END)
-                                                                    ], 
-                                                                    "The identifier property represents any kind of identifier for any kind of Thing, such as ISBNs, GTIN codes, UUIDs etc. Schema.org provides dedicated properties for representing many of these, either as textual strings or as URL (URI) links.", 
-                                                                    "https://bioschemas.org/types/FormalParameter/1.0-RELEASE")
-    ProfileRow.create("image",              Optional, ONE,          [   (Schema.ImageObject, OR)
-                                                                        (Schema.URL, END)
-                                                                    ], 
-                                                                    "An image of the item. This can be a URL or a fully described ImageObject.", 
-                                                                    "https://bioschemas.org/types/FormalParameter/1.0-RELEASE")
-    ProfileRow.create("mainEntityOfPage",   Optional, ONE,          [   (Schema.CreativeWork, OR)
-                                                                        (Schema.URL, END)
-                                                                    ], 
-                                                                    "Indicates a page (or other CreativeWork) for which this thing is the main entity being described. See background notes for details. Inverse property: mainEntity.", 
-                                                                    "https://bioschemas.org/types/FormalParameter/1.0-RELEASE")
-    ProfileRow.create("potentialAction",    Optional, MANY,         [   (Schema.Action, END)], 
-                                                                    "Indicates a potential Action, which describes an idealized action in which this thing would play an 'object' role.", 
-                                                                    "https://bioschemas.org/types/FormalParameter/1.0-RELEASE")
-    ProfileRow.create("subjectOf",          Optional, MANY,         [   (Schema.CreativeWork, OR)
-                                                                        (Schema.Event, END)
-                                                                    ], 
-                                                                    "A CreativeWork or Event about this Thing. Inverse property: about.", 
-                                                                    "https://bioschemas.org/types/FormalParameter/1.0-RELEASE")
-    ProfileRow.create("url",                Optional, ONE,          [   (Schema.URL, END)], 
-                                                                    "URL of the item.", 
-                                                                    "https://bioschemas.org/types/FormalParameter/1.0-RELEASE")
-    ProfileRow.create("alternateName",      Optional, MANY,         [   (Schema.Text, END)], 
-                                                                    "An alias for the item.", 
-                                                                    "https://bioschemas.org/types/FormalParameter/1.0-RELEASE")
-    ProfileRow.create("disambiguatingDescription", Optional, ONE,   [  (Schema.Text, END)], 
-                                                                    "A sub property of description. A short description of the item used to disambiguate from other, similar items. Information from other properties (in particular, name) may be necessary for the description to be useful for disambiguation.", 
-                                                                    "https://bioschemas.org/types/FormalParameter/1.0-RELEASE")
 ]
 
 open System.IO
-
 
 let profile = Profile.create(
     name = "SoftwareApplication",
