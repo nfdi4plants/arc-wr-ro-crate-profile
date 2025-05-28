@@ -1,5 +1,6 @@
 ﻿module Main
 
+let [<Literal>] VERSION = """[[VERSION]]"""
 let [<Literal>] ARC_WORKFLOW_REQUIREMENTS = """[[ARC_WORKFLOW_REQUIREMENTS]]"""
 let [<Literal>] WORKFLOW_PROTOCOL_REQUIREMENTS = """[[WORKFLOW_PROTOCOL_REQUIREMENTS]]"""
 let [<Literal>] ARC_RUN_REQUIREMENTS = """[[ARC_RUN_REQUIREMENTS]]"""
@@ -45,6 +46,8 @@ let main argv =
 
         let verbose = args.TryGetResult(CLIArgs.Verbose) |> Option.isSome
 
+        let version = args.GetResult(CLIArgs.Version)
+
         let outPath = args.GetResult(CLIArgs.OutputPath)
         
         let outName = args.TryGetResult(CLIArgs.OutputName) |> Option.defaultValue "profile_generated.md"
@@ -52,6 +55,9 @@ let main argv =
         let outPath = Path.Combine(outPath, outName)
 
         template
+            // Replacement by CLI flags
+            .Replace(VERSION, version)
+            // Replacement by generated profile tables
             .Replace(ARC_WORKFLOW_REQUIREMENTS, Domain.generateProfileTable false ARCWorkflow.profile)
             .Replace(WORKFLOW_PROTOCOL_REQUIREMENTS, Domain.generateProfileTable true WorkflowProtocol.profile)
             .Replace(ARC_RUN_REQUIREMENTS, Domain.generateProfileTable false ARCRun.profile)
@@ -61,6 +67,7 @@ let main argv =
             .Replace(PROPERTY_VALUE_PROFILE_REQUIREMENTS, Domain.generateProfileTable true PropertyValue.profile)
             .Replace(WORKFLOW_INPUT_PROFILE_REQUIREMENTS, Domain.generateProfileTable true WorkflowInput.profile)
             .Replace(SOFTWARE_APPLICATION_PROFILE_REQUIREMENTS, Domain.generateProfileTable true SoftwareApplication.profile)
+            // Replacement by example JSON files
             .Replace(WP_MINIMAL_JSON, EmbeddedResource.load("examples.wp_minimal.json"))
             .Replace(WPI_MINIMAL_JSON, EmbeddedResource.load("examples.wpi_minimal.json"))
             .Replace(WP_MINIMAL_METADATA_JSON, EmbeddedResource.load("examples.wp_minimal_metadata.json"))

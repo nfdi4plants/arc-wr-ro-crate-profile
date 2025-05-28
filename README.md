@@ -25,7 +25,7 @@ To change or add profiles, take a look at [these files](./profile_generation/src
 To generate a new version of the profile, run the following command in the repo root:
 
 ```bash
-dotnet run --project .\profile_generation\src\generate_profile\generate_profile.fsproj -- -o ./profile -on arc_wr_ro_crate.md
+dotnet run --project .\profile_generation\src\generate_profile\generate_profile.fsproj -- -o ./profile -on arc_wr_ro_crate.md -v <version string here>
 ```
 
 ## Contributing to this repository

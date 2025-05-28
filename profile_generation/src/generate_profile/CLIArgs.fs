@@ -4,16 +4,18 @@ open Argu
 
 [<HelpFlags([|"--help"; "-h"|])>]
 type CLIArgs =
-    | [<Unique>] Verbose
-    | [<Unique; AltCommandLine("-o")>] OutputPath of string
+    | [<Unique; Mandatory; AltCommandLine("-v")>] Version of string
+    | [<Unique; Mandatory; AltCommandLine("-o")>] OutputPath of string
     | [<Unique; AltCommandLine("-on")>] OutputName of string
+    | [<Unique; >] Verbose
 
     interface IArgParserTemplate with
         member s.Usage =
             match s with
-            | Verbose         -> "Use verbose error messages (with full error stack)."
-            | OutputPath _      -> "path of the output"
-            | OutputName _      -> "alternatively set a file name for the output. Default is 'profile_generated.md'"
+            | Version _     -> "Mandatory. The version string of the generated profile"
+            | OutputPath _  -> "Mandatory. Path of the output"
+            | Verbose       -> "Use verbose error messages (with full error stack). Disabled by default."
+            | OutputName _  -> "alternatively set a file name for the output. Default is 'profile_generated.md'"
 
     static member createParser() =
 
