@@ -41,23 +41,14 @@ let requiredProfileProperties = [
                                                                           "https://bioschemas.org/types/LabProcess/0.1-DRAFT")
 ]
 let optionalProfileProperties = [
-// The following two properties are from LabProcess
+    // parameterValue should be used for process sequence parameters
     ProfileRow.create("parameterValue",       Optional, ONE,          [   (Schema.PropertyValue, END)], 
                                                                           "A parameter value of the workflow invocation, usually a key-value pair using ontology terms", 
                                                                           "https://bioschemas.org/types/LabProcess/0.1-DRAFT")
-    // Recommended -> Optional
     ProfileRow.create("description",          Optional, ONE,          [   (Schema.Text, OR)
                                                                           (Schema.TextObject, END)], 
                                                                           "Details of the execution, for instance command line arguments or settings. This field is for information only, no particular structure is to be assumed.", 
                                                                           "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate")
-    // endTime is a property of Action, but specifically mentioned as optional in the LabProcess schema
-    ProfileRow.create("endTime",              Optional, ONE,          [   (Schema.DateTime, OR)
-                                                                          (Schema.Time, END)], 
-                                                                          "The endTime of something. For a reserved event or service (e.g. FoodEstablishmentReservation), the time that it is expected to end. For actions that span a period of time, when the action was performed. E.g. John wrote a book from January to December. For media, including audio and video, it's the time offset of the end of a clip within a larger file.", 
-                                                                          "https://bioschemas.org/types/LabProcess/0.1-DRAFT")
-    ProfileRow.create("disambiguatingDescription", Optional, ONE,     [   (Schema.Text, END)], 
-                                                                          "A sub property of description. A short description of the item used to disambiguate from other, similar items. Information from other properties (in particular, name) may be necessary for the description to be useful for disambiguation.", 
-                                                                          "https://schema.org/Thing")
 ]
 
 let profile = Profile.create(
