@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -19,7 +19,6 @@
     <Compile Include="SubProfiles\WorkflowProtocol.fs" />
     <Compile Include="SubProfiles\ARCRun.fs" />
     <Compile Include="SubProfiles\WorkflowInvocation.fs" />
-    <Compile Include="SubProfiles\Dataset.fs" />
     <Compile Include="SubProfiles\FormalParameter.fs" />
     <Compile Include="SubProfiles\PropertyValue.fs" />
     <Compile Include="SubProfiles\WorkflowInput.fs" />

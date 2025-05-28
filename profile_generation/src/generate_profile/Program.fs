@@ -5,7 +5,6 @@ let [<Literal>] ARC_WORKFLOW_REQUIREMENTS = """[[ARC_WORKFLOW_REQUIREMENTS]]"""
 let [<Literal>] WORKFLOW_PROTOCOL_REQUIREMENTS = """[[WORKFLOW_PROTOCOL_REQUIREMENTS]]"""
 let [<Literal>] ARC_RUN_REQUIREMENTS = """[[ARC_RUN_REQUIREMENTS]]"""
 let [<Literal>] WORKFLOW_INVOCATION_REQUIREMENTS = """[[WORKFLOW_INVOCATION_REQUIREMENTS]]"""
-let [<Literal>] DATASET_PROFILE_REQUIREMENTS = """[[DATASET_PROFILE_REQUIREMENTS]]"""
 let [<Literal>] FORMAL_PARAMETER_PROFILE_REQUIREMENTS = """[[FORMAL_PARAMETER_PROFILE_REQUIREMENTS]]"""
 let [<Literal>] PROPERTY_VALUE_PROFILE_REQUIREMENTS = """[[PROPERTY_VALUE_PROFILE_REQUIREMENTS]]"""
 let [<Literal>] WORKFLOW_INPUT_PROFILE_REQUIREMENTS = """[[WORKFLOW_INPUT_PROFILE_REQUIREMENTS]]"""
@@ -62,7 +61,6 @@ let main argv =
             .Replace(WORKFLOW_PROTOCOL_REQUIREMENTS, Domain.generateProfileTable true WorkflowProtocol.profile)
             .Replace(ARC_RUN_REQUIREMENTS, Domain.generateProfileTable false ARCRun.profile)
             .Replace(WORKFLOW_INVOCATION_REQUIREMENTS, Domain.generateProfileTable true WorkflowInvocation.profile)
-            .Replace(DATASET_PROFILE_REQUIREMENTS, Domain.generateProfileTable true Dataset.profile)
             .Replace(FORMAL_PARAMETER_PROFILE_REQUIREMENTS, Domain.generateProfileTable true FormalParameter.profile)
             .Replace(PROPERTY_VALUE_PROFILE_REQUIREMENTS, Domain.generateProfileTable true PropertyValue.profile)
             .Replace(WORKFLOW_INPUT_PROFILE_REQUIREMENTS, Domain.generateProfileTable true WorkflowInput.profile)

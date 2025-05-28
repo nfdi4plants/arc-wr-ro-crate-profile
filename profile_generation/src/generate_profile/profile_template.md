@@ -120,10 +120,6 @@ A multitype object that combines [`CreateAction`](https://schema.org/CreateActio
 
 [[WORKFLOW_INVOCATION_REQUIREMENTS]]
 
-### Dataset
-
-[[DATASET_PROFILE_REQUIREMENTS]]
-
 ### FormalParameter
 
 [[FORMAL_PARAMETER_PROFILE_REQUIREMENTS]]
