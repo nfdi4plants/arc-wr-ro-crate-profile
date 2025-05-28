@@ -54,7 +54,7 @@ The 4 main entities described by the **arc-wr** profiles are:
 * [**`ARC Workflow`**](#arc-workflow)
   * A `Dataset` container object that describes a `workflow folder` inside an ARC.
   * Can be used to enrich a [`Workflow Protocol`](#workflow-protocol) with additional ISA metadata.
-  * Contains a  `mainEntity` following the [`Workflow Protocol` profile](#workflow-protocol) that describes the _Main Workflow_ of this `workflow folder`, analogous to [Workflow RO Crates](https://about.workflowhub.eu/Workflow-RO-Crate/).
+  * Contains a `mainEntity` following the [`Workflow Protocol` profile](#workflow-protocol) that describes the _Main Workflow_ of this `workflow folder`, analogous to [Workflow RO Crates](https://about.workflowhub.eu/Workflow-RO-Crate/).
   * Can be a valid [Workflow RO Crate](https://about.workflowhub.eu/Workflow-RO-Crate/), see the [Compatibility section](#compatibility-with-underlying-profiles).
 * [**`Workflow Protocol`**](#workflow-protocol)
   * Contains prospective metadata of a workflow, e.g. descriptions of inputs and outputs.
@@ -92,21 +92,31 @@ workflow --mainEntity--> workflowProtocol
 
 ### ARC Workflow
 
+An ARC Run is an object that bundles ISA-compliant administrative metadata (e.g., the person that created it) and the prospective provenance of the workflow in form of [Workflow Protocol(s)](#workflow-protocol).
+It is based upon [schema.org/Dataset](https://schema.org/Dataset) and maps to the [ISA-XLSX **Workflow**](https://github.com/nfdi4plants/ARC-specification/blob/release/ISA-XLSX.md#workflow-section).
+In the context of an ARC, an ARC Workflow can be seen as the top-level object describing the contents and provenance of a single _workflow folder_ inside the _workflows folder_.
+
+An ARC Workflow contains a `mainEntity` following the [`Workflow Protocol` profile](#workflow-protocol) that describes the _Main Workflow_ of this `workflow folder`, analogous to [Workflow RO Crates](https://about.workflowhub.eu/Workflow-RO-Crate/).
+
 [[ARC_WORKFLOW_REQUIREMENTS]]
 
 ### Workflow Protocol
+
+A multitype object that combines [`ComputationalWorkflow`](https://bioschemas.org/types/ComputationalWorkflow/1.0-RELEASE) and [`LabProtocol`](https://bioschemas.org/types/LabProtocol/0.5-DRAFT), providing prospective provenance of computational workflows that can be understood as traditional workflows as well as from a protocol perspective.
 
 [[WORKFLOW_PROTOCOL_REQUIREMENTS]]
 
 ### ARC Run
 
 An ARC Run is an object that bundles ISA-compliant administrative metadata (e.g., the person that executed it) and the retrospective provenance of the run in form of [Workflow Invocation(s)](#workflow-invocation).
-It is based upon [schema.org/Dataset](https://schema.org/Dataset) and maps to the [ISA-XLSX **Run**]().
+It is based upon [schema.org/Dataset](https://schema.org/Dataset) and maps to the [ISA-XLSX **Run**](https://github.com/nfdi4plants/ARC-specification/blob/release/ISA-XLSX.md#run-section).
 In the context of an ARC, an ARC Run can be seen as the top-level object describing the contents and provenance of a single _run folder_ inside the _runs folder_.
 
 [[ARC_RUN_REQUIREMENTS]]
 
 ### Workflow Invocation
+
+A multitype object that combines [`CreateAction`](https://schema.org/CreateAction) and [`LabProcess`](https://bioschemas.org/types/LabProcess/0.1-DRAFT), providing retrospective provenance of computational workflow execution that can be understood as traditional workflow runs as well as from a process sequence perspective.
 
 [[WORKFLOW_INVOCATION_REQUIREMENTS]]
 
