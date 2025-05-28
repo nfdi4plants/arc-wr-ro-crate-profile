@@ -27,7 +27,7 @@ let requiredProfileProperties = [
 
 let recommendedProfileProperties = [
     // Required -> Recommended
-    ProfileRow.create("name",               Required, ONE,       [   (Schema.Text, END)], 
+    ProfileRow.create("name",               Recommended, ONE,       [   (Schema.Text, END)], 
                                                                     "The name of the item.", 
                                                                     "https://schema.org/Thing")
 ]

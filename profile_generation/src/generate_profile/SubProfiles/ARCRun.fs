@@ -57,10 +57,10 @@ let recommendedProfileProperties = [
 
 ]
 let optionalProfileProperties = [
-    ProfileRow.create("url",                    Recommended, ONE,           [   (Schema.URL, END)],
+    ProfileRow.create("url",                    Optional, ONE,              [   (Schema.URL, END)],
                                                                             "The filename or path of the metadata file describing the run. Optional, since in some contexts like an ARC the filename is implicit.",
                                                                             "**THIS PROFILE**")
-    ProfileRow.create("variableMeasured",       Recommended, ONE,           [   (Schema.Text, OR)
+    ProfileRow.create("variableMeasured",       Optional, ONE,              [   (Schema.Text, OR)
                                                                                 (Schema.PropertyValue, END)
                                                                             ],
                                                                             "A term to qualify the endpoint, or what is being computed (e.g. gene expression profiling or protein identification). The term can be free text or from, for example, a controlled vocabulary or an ontology.",

@@ -39,10 +39,10 @@ let recommendedProfileProperties = [
                                                                             "**THIS PROFILE**")
 ]
 let optionalProfileProperties = [
-    ProfileRow.create("url",                    Recommended, ONE,           [   (Schema.URL, END)],
+    ProfileRow.create("url",                    Optional, ONE,              [   (Schema.URL, END)],
                                                                             "The filename or path of the metadata file describing the run. Optional, since in some contexts like an ARC the filename is implicit.",
                                                                             "**THIS PROFILE**")
-    ProfileRow.create("version",                Recommended, ONE,           [   (Schema.Number, OR)
+    ProfileRow.create("version",                Optional, ONE,              [   (Schema.Number, OR)
                                                                                 (Schema.Text, END)
                                                                             ],
                                                                             "The filename or path of the metadata file describing the run. Optional, since in some contexts like an ARC the filename is implicit.",

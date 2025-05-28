@@ -18,6 +18,9 @@ let requiredProfileProperties = [
                                                                           (BioSchemas.ComputationalWorkflow, END)], 
                                                                           "Identifier of the executed tool or workflow in case of a Workflow RO-Crate.", 
                                                                           "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate; https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate")
+    ProfileRow.create("executesLabProtocol",  Required, ONE,          [   (BioSchemas.LabProtocol, END)], 
+                                                                          "The Workflow Protocol executed. MUST be equal to the `instrument` property", 
+                                                                          "https://bioschemas.org/types/LabProcess/0.1-DRAFT")
     ProfileRow.create("agent",                Required, ONE,          [   (Schema.Organization, OR)
                                                                           (Schema.Person, END)], 
                                                                           "Identifier of a Person or Organization contextual entity that started/executed this tool.", 
@@ -43,9 +46,6 @@ let requiredProfileProperties = [
 ]
 let optionalProfileProperties = [
 // The following two properties are from LabProcess
-    ProfileRow.create("executesLabProtocol",  Optional, ONE,          [   (BioSchemas.LabProtocol, END)], 
-                                                                          "The protocol executed. In this case, it refers to the multitype entity of the ARC CWL Workflow Profile with File, SoftwareSourceCode, ComputationalWorkflow and LabProtocol", 
-                                                                          "https://bioschemas.org/types/LabProcess/0.1-DRAFT")
     ProfileRow.create("parameterValue",       Optional, ONE,          [   (Schema.PropertyValue, END)], 
                                                                           "A parameter value of the workflow process, usually a key-value pair using ontology terms", 
                                                                           "https://bioschemas.org/types/LabProcess/0.1-DRAFT")

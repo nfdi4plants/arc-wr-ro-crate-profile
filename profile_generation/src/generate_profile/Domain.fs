@@ -180,6 +180,21 @@ type Profile = {
     Optional: ProfileRow list
 } with
     static member create (name: string, required: ProfileRow list, ?recommended: ProfileRow list, ?optional: ProfileRow list) =
+
+        let sanityCheck () =
+            let req = required |> List.exists (fun row -> row.Required <> Required.Required)
+            let recom = recommended |> Option.map (List.exists (fun row -> row.Required <> Required.Recommended)) |> Option.defaultValue false
+            let opt = optional |> Option.map (List.exists (fun row -> row.Required <> Required.Optional)) |> Option.defaultValue false
+
+            if req then
+                failwithf "Required properties of profile '%s' contains rows with incorrect Requirement status." name
+            if recom then
+                failwithf "Recommended properties of profile '%s' contains rows with incorrect Requirement status." name
+            if opt then
+                failwithf "Optional properties of profile '%s' contains rows with incorrect Requirement status." name
+
+        sanityCheck()
+
         { 
             Name = name
             Required = required
