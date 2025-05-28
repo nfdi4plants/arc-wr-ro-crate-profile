@@ -14,12 +14,11 @@ let requiredProfileProperties = [
                                                                       ], 
                                                                           "MUST be 'Workflow Invocation' or ontology term to identify it as a Workflow Invocation", 
                                                                           "**THIS PROFILE**")
-    ProfileRow.create("instrument",           Required, MANY,         [   (Schema.SoftwareApplication, OR)
-                                                                          (BioSchemas.ComputationalWorkflow, END)], 
-                                                                          "Identifier of the executed tool or workflow in case of a Workflow RO-Crate.", 
+    ProfileRow.create("instrument",           Required, MANY,         [   (MultiTypes.WorkflowProtocol, END)], 
+                                                                          "The executed Workflow Protocol. MUST follow the [Workflow Protocol profile](#workflow-protocol). MUST be equal to the `executesLabProtocol` property.", 
                                                                           "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate; https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate")
-    ProfileRow.create("executesLabProtocol",  Required, ONE,          [   (BioSchemas.LabProtocol, END)], 
-                                                                          "The Workflow Protocol executed. MUST be equal to the `instrument` property", 
+    ProfileRow.create("executesLabProtocol",  Required, ONE,          [   (MultiTypes.WorkflowProtocol, END)],
+                                                                          "The executed Workflow Protocol. MUST follow the [Workflow Protocol profile](#workflow-protocol). MUST be equal to the `instrument` property.", 
                                                                           "https://bioschemas.org/types/LabProcess/0.1-DRAFT")
 // Expected types of result and object come from https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate
     ProfileRow.create("result",               Required, MANY,         [   (Schema.MediaObject, OR)
@@ -27,14 +26,14 @@ let requiredProfileProperties = [
                                                                           (Schema.Collection, OR)
                                                                           (Schema.CreativeWork, OR)
                                                                           (Schema.PropertyValue, END)], 
-                                                                          "The identifier of one or more entities that were created or modified by this action, e.g. output files. Entities referenced by an action�s object or result SHOULD be of type File (an RO-Crate alias for MediaObject) for files, Dataset for directories and Collection for multi-file datasets, but MAY be a CreativeWork for other types of data (e.g. an online database); they MAY be of type PropertyValue to capture numbers/strings that are not stored as files.", 
+                                                                          "The identifier of one or more entities that were created or modified by this action, e.g. output files. Entities referenced by an action's object or result SHOULD be of type File (an RO-Crate alias for MediaObject) for files, Dataset for directories and Collection for multi-file datasets, but MAY be a CreativeWork for other types of data (e.g. an online database); they MAY be of type PropertyValue to capture numbers/strings that are not stored as files.", 
                                                                           "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate, https://bioschemas.org/types/LabProcess/0.1-DRAFT")
     ProfileRow.create("object",               Required, MANY,         [   (Schema.MediaObject, OR)
                                                                           (Schema.Dataset, OR)
                                                                           (Schema.Collection, OR)
                                                                           (Schema.CreativeWork, OR)
                                                                           (Schema.PropertyValue, END)], 
-                                                                          "The identifier of one or more entities of the RO-Crate that were consumed by this action, e.g. input files or reference datasets. Entities referenced by an action�s object or result SHOULD be of type File (an RO-Crate alias for MediaObject) for files, Dataset for directories and Collection for multi-file datasets, but MAY be a CreativeWork for other types of data (e.g. an online database); they MAY be of type PropertyValue to capture numbers/strings that are not stored as files.", 
+                                                                          "The identifier of one or more entities of the RO-Crate that were consumed by this action, e.g. input files or reference datasets. Entities referenced by an action's object or result SHOULD be of type File (an RO-Crate alias for MediaObject) for files, Dataset for directories and Collection for multi-file datasets, but MAY be a CreativeWork for other types of data (e.g. an online database); they MAY be of type PropertyValue to capture numbers/strings that are not stored as files.", 
                                                                           "https://www.researchobject.org/workflow-run-crate/profiles/process_run_crate, https://bioschemas.org/types/LabProcess/0.1-DRAFT")
     ProfileRow.create("name",                 Required, ONE,          [   (Schema.Text, END)], 
                                                                           "Short human-readable description of the execution.", 
