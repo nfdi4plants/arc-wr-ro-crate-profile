@@ -14,7 +14,6 @@
     * [Workflow Protocol](#workflow-protocol)
     * [ARC Run](#arc-run)
     * [Workflow Invocation](#workflow-invocation)
-    * [Dataset](#dataset)
     * [FormalParameter](#formalparameter)
     * [PropertyValue](#propertyvalue)
       * [PropertyValue - Workflow Input](#propertyvalue---workflow-input)
@@ -92,7 +91,7 @@ workflow --mainEntity--> workflowProtocol
 
 ### ARC Workflow
 
-An ARC Run is an object that bundles ISA-compliant administrative metadata (e.g., the person that created it) and the prospective provenance of the workflow in form of [Workflow Protocol(s)](#workflow-protocol).
+An ARC Workflow is an object that bundles ISA-compliant administrative metadata (e.g., the person that created it) and the prospective provenance of the workflow in form of [Workflow Protocol(s)](#workflow-protocol).
 It is based upon [schema.org/Dataset](https://schema.org/Dataset) and maps to the [ISA-XLSX **Workflow**](https://github.com/nfdi4plants/ARC-specification/blob/release/ISA-XLSX.md#workflow-section).
 In the context of an ARC, an ARC Workflow can be seen as the top-level object describing the contents and provenance of a single _workflow folder_ inside the _workflows folder_.
 
