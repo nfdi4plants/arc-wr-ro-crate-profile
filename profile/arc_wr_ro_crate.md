@@ -192,6 +192,9 @@ A multitype object that combines [`CreateAction`](https://schema.org/CreateActio
 
 ### FormalParameter
 
+`FormalParameter`s are used to describe shape and type of `input`s and `output`s of a [Workflow Protocol](#workflow-protocol).
+They provide prospective provenance, while their realized values are described by [`Workflow Input`s](#propertyvalue---workflow-input) in [Workflow Invocations](#workflow-invocation).
+
 | Property | Required | Cardinality | Expected Type | Description | Source Profile |
 |----------|----------|-------------|---------------|-------------|----------------|
 | <h4>Required Properties</h4><br> | | | | | |
@@ -210,20 +213,7 @@ A multitype object that combines [`CreateAction`](https://schema.org/CreateActio
 
 ### PropertyValue
 
-| Property | Required | Cardinality | Expected Type | Description | Source Profile |
-|----------|----------|-------------|---------------|-------------|----------------|
-| <h4>Required Properties</h4><br> | | | | | |
-| **`@id`** | Required | ONE | [IRI](https://datatracker.ietf.org/doc/html/rfc3987#section-2) | Used to distinguish the resource being described in JSON-LD. For other serialisations use the appropriate approach. | https://schema.org/PropertyValue |
-| **`@type`** | Required | MANY | [schema.org/PropertyValue](https://schema.org/PropertyValue) | Schema.org class for the resource declared using JSON-LD syntax. For other serialisations please use the appropriate mechanism. While it is permissible to provide multiple types, it is preferred to use a single type. | https://schema.org/PropertyValue |
-| **`name`** | Required | ONE | [schema.org/Text](https://schema.org/Text) | The name of the item. | https://schema.org/Thing |
-| <h4>Recommended Properties</h4><br> | | | | | |
-| **`value`** | Recommended | ONE | [schema.org/Boolean](https://schema.org/Boolean)<br>OR [schema.org/Number](https://schema.org/Number)<br>OR [schema.org/StructuredValue](https://schema.org/StructuredValue)<br>OR [schema.org/Text](https://schema.org/Text) | The value of a QuantitativeValue (including Observation) or property value node. For QuantitativeValue and MonetaryAmount, the recommended type for values is 'Number'. For PropertyValue, it can be 'Text', 'Number', 'Boolean', or 'StructuredValue'. Use values from 0123456789 [Add to Citavi project by ISBN] (Unicode 'DIGIT ZERO' (U+0030) to 'DIGIT NINE' (U+0039)) rather than superficially similar Unicode symbols. Use '.' (Unicode 'FULL STOP' (U+002E)) rather than ',' to indicate a decimal point. Avoid using these symbols as a readability separator. | https://schema.org/PropertyValue |
-| **`propertyID`** | Recommended | ONE | [schema.org/Text](https://schema.org/Text)<br>OR [schema.org/URL](https://schema.org/URL) | A commonly used identifier for the characteristic represented by the property, e.g. a manufacturer or a standard code for a property. propertyID can be (1) a prefixed string, mainly meant to be used with standards for product properties; (2) a site-specific, non-prefixed string (e.g. the primary key of the property or the vendor-specific ID of the property), or (3) a URL indicating the type of the property, either pointing to an external vocabulary, or a Web resource that describes the property (e.g. a glossary entry). Standards bodies should promote a standard prefix for the identifiers of properties from their standards. | https://schema.org/PropertyValue |
-| <h4>Optional Properties</h4><br> | | | | | |
-| **`exampleOfWork`** | Optional | ONE | [IRI](https://datatracker.ietf.org/doc/html/rfc3987#section-2) | Identifier of the FormalParameter instance realized by this entity. | https://schema.org/PropertyValue |
-| **`unitCode`** | Optional | ONE | [schema.org/Text](https://schema.org/Text)<br>OR [schema.org/URL](https://schema.org/URL) | The unit of measurement given using the UN/CEFACT Common Code (3 characters) or a URL. Other codes than the UN/CEFACT Common Code may be used with a prefix followed by a colon. | https://schema.org/PropertyValue |
-| **`unitText`** | Optional | ONE | [schema.org/Text](https://schema.org/Text) | A string or text indicating the unit of measurement. Useful if you cannot provide a standard unit code for unitCode. | https://schema.org/PropertyValue |
-| **`valueReference`** | Optional | MANY | [schema.org/DefinedTerm](https://schema.org/DefinedTerm)<br>OR [schema.org/Enumeration](https://schema.org/Enumeration)<br>OR [schema.org/MeasurementTypeEnumeration](https://schema.org/MeasurementTypeEnumeration)<br>OR [schema.org/PropertyValue](https://schema.org/PropertyValue)<br>OR [schema.org/QualitativeValue](https://schema.org/QualitativeValue)<br>OR [schema.org/QuantitativeValue](https://schema.org/QuantitativeValue)<br>OR [schema.org/StructuredValue](https://schema.org/StructuredValue)<br>OR [schema.org/Text](https://schema.org/Text) | A secondary value that provides additional information on the original value, e.g. a reference temperature or a type of measurement. | https://schema.org/PropertyValue |
+Where possible, PropertyValues representing `parameterValue`s in process sequences of [WorkflowInvocations](#workflow-invocation) SHOULD follow the respective (sub)profile defined in the [ISA RO-Crate Profile](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate.md#propertyvalue)
 
 #### PropertyValue - Workflow Input
 

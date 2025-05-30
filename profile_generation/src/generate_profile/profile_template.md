@@ -121,11 +121,14 @@ A multitype object that combines [`CreateAction`](https://schema.org/CreateActio
 
 ### FormalParameter
 
+`FormalParameter`s are used to describe shape and type of `input`s and `output`s of a [Workflow Protocol](#workflow-protocol).
+They provide prospective provenance, while their realized values are described by [`Workflow Input`s](#propertyvalue---workflow-input) in [Workflow Invocations](#workflow-invocation).
+
 [[FORMAL_PARAMETER_PROFILE_REQUIREMENTS]]
 
 ### PropertyValue
 
-[[PROPERTY_VALUE_PROFILE_REQUIREMENTS]]
+Where possible, PropertyValues representing `parameterValue`s in process sequences of [WorkflowInvocations](#workflow-invocation) SHOULD follow the respective (sub)profile defined in the [ISA RO-Crate Profile](https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate.md#propertyvalue)
 
 #### PropertyValue - Workflow Input
 
