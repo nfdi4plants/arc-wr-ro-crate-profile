@@ -9,11 +9,8 @@ let requiredProfileProperties = [
                                                                     "Schema.org/Bioschemas class for the resource declared using JSON-LD syntax. For other serialisations please use the appropriate mechanism. While it is permissible to provide multiple types, it is preferred to use a single type.", 
                                                                     "https://bioschemas.org/profiles/FormalParameter/1.1-DRAFT")
     ProfileRow.create("additionalType",     Required, ONE,          [   (Schema.Text, OR)
-                                                                        (Schema.Dataset, OR)
-                                                                        (Schema.Collection, OR)
-                                                                        (Schema.PropertyValue, OR)
-                                                                        (Schema.DataType, END)
-                                                                    ], 
+                                                                        (Schema.URL, END)
+                                                                    ],
                                                                     "SHOULD include: File, Dataset or Collection if it maps to a file, directory or multi-file dataset, respectively; PropertyValue if it maps to a dictionary-like structured value (e.g. a CWL record); DataType or one of its subtypes (e.g. Integer) if it maps to a non-structured value.", 
                                                                     "https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate")
 ]
