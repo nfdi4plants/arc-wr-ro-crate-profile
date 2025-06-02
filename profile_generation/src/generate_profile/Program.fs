@@ -62,7 +62,6 @@ let main argv =
             .Replace(ARC_RUN_REQUIREMENTS, Domain.generateProfileTable false ARCRun.profile)
             .Replace(WORKFLOW_INVOCATION_REQUIREMENTS, Domain.generateProfileTable true WorkflowInvocation.profile)
             .Replace(FORMAL_PARAMETER_PROFILE_REQUIREMENTS, Domain.generateProfileTable true FormalParameter.profile)
-            .Replace(PROPERTY_VALUE_PROFILE_REQUIREMENTS, Domain.generateProfileTable true PropertyValue.profile)
             .Replace(WORKFLOW_INPUT_PROFILE_REQUIREMENTS, Domain.generateProfileTable true WorkflowInput.profile)
             .Replace(SOFTWARE_APPLICATION_PROFILE_REQUIREMENTS, Domain.generateProfileTable true SoftwareApplication.profile)
             // Replacement by example JSON files

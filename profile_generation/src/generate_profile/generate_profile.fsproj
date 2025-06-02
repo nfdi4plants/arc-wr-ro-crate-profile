@@ -20,7 +20,6 @@
     <Compile Include="SubProfiles\ARCRun.fs" />
     <Compile Include="SubProfiles\WorkflowInvocation.fs" />
     <Compile Include="SubProfiles\FormalParameter.fs" />
-    <Compile Include="SubProfiles\PropertyValue.fs" />
     <Compile Include="SubProfiles\WorkflowInput.fs" />
     <Compile Include="SubProfiles\SoftwareApplication.fs" />
     <Compile Include="Program.fs" />
