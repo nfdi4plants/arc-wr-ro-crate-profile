@@ -111,7 +111,6 @@ An ARC Workflow contains a `mainEntity` following the [`Workflow Protocol` profi
 | **`hasPart`** | Recommended | MANY | [schema.org/MediaObject](https://schema.org/MediaObject)<br>OR [WorkflowProtocol](#workflow-protocol) | All data files that are part of the ARC Workflow. In an ARC, this SHOULD include all contents of the respective `workflow folder` represented by the ARC Workflow object. Can also be used so signify sub-workflows that are part of this workflow's intended orchestration - if this is the case, MUST follow the [Workflow Protocol profile](#workflow-protocol). |
 | <h4>Optional Properties</h4><br> | | | | |
 | **`url`** | Optional | ONE | [schema.org/URL](https://schema.org/URL) | The filename or path of the metadata file describing the run. Optional, since in some contexts like an ARC the filename is implicit. |
-| **`version`** | Optional | ONE | [schema.org/Number](https://schema.org/Number)<br>OR [schema.org/Text](https://schema.org/Text) | The filename or path of the metadata file describing the run. Optional, since in some contexts like an ARC the filename is implicit. |
 
 ### Workflow Protocol
 
