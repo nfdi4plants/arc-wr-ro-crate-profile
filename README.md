@@ -1,10 +1,10 @@
-## ARC CWL RO-Crate Profile
+## ARC Workflow Run RO-Crate Profile
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.13734332.svg)](https://doi.org/10.5281/zenodo.13734332)
 
-[Latest version](profile/arc_cwl_ro_crate.md)
+[Latest version](profile/arc_wr_ro_crate.md)
 
-The ARC CWL RO-Crate profile describes how documentations of computational workflows and their invocations (runs) in Annotated Research Contexts (ARC) can be annotated in RO-Crate metadata.
+The ARC Workflow Run RO-Crate profile describes how documentations of computational workflows and their invocations (runs) in Annotated Research Contexts (ARC) can be annotated in RO-Crate metadata.
 
 When computational analysis is performed on experimental samples or on the data resulting from an assay, this process is referred to as a run.
 
@@ -15,6 +15,18 @@ A workflow, on the other hand, is the computational protocol detailing how the d
 <img src="./images/documentation-principle-workflow.png" width="300">
 
 To annotate metadata provided in CWL in accordance with this separation, the profile uses concepts from [Workflow Run Crate](https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate/). For seamless integration into other ARC metadata, it extends the existing profile by incorporating [ISA](https://isa-specs.readthedocs.io/en/latest/isamodel.html) terms which do the same separation into description and execution. A `LabProtocol` is used to annotate workflows, a `LabProcess` for runs.
+
+## Change and generate profile
+
+The profile is generated programmatically from the runnable project in the `profile_generation` folder.
+
+To change or add profiles, take a look at [these files](./profile_generation/src/generate_profile/SubProfiles)
+
+To generate a new version of the profile, run the following command in the repo root:
+
+```bash
+dotnet run --project .\profile_generation\src\generate_profile\generate_profile.fsproj -- -o ./profile -on arc_wr_ro_crate.md -v <version string here>
+```
 
 ## Contributing to this repository
 

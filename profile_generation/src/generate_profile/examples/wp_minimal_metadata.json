@@ -1,0 +1,71 @@
+{
+    "@context": "https://w3id.org/ro/crate/1.1/context",
+    "@graph": [
+        {
+            "@type": "CreativeWork",
+            "@id": "ro-crate-metadata.json",
+            "conformsTo": [
+                {
+                    "@id": "https://w3id.org/ro/crate/1.1"
+                },
+                {
+                    "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#arc-wr-workflow-profile"
+                }
+            ],
+            "about": {
+                "@id": "./workflows"
+            }
+        },
+        {
+            "@id": "workflows/FixedScript/workflow.cwl",
+            "@type": [
+                "File",
+                "SoftwareSourceCode",
+                "ComputationalWorkflow",
+                "LabProtocol"
+            ],
+            "conformsTo": {
+                "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#computationalworkflow--softwaresourcecode--text--labprotocol"
+            },
+            "creator": {
+                "@id": "https://orcid.org/0000-0003-3925-6778"
+            },
+            "computationalTool": {
+                "@id": "ProcessParameterValue/Data Transformation=Addition"
+            }
+        },
+        {
+            "@id": "https://orcid.org/0000-0003-3925-6778",
+            "@type": "Person",
+            "givenName": "Timo",
+            "familyName": "Mühlhaus",
+            "email": "muehlhaus@bio.uni-kl.de",
+            "affiliation": {
+                "@id": "RPTU"
+            },
+            "jobTitle": {
+                "@id": "https://credit.niso.org/contributor-roles/formal-analysis/"
+            }
+        },
+        {
+            "@id": "RPTU",
+            "@type": "Organization",
+            "name": "Rheinland-Pfälzische Technische Universität Kaiserslautern-Landau",
+            "url": "https://rptu.de/"
+        },
+        {
+            "@id": "https://credit.niso.org/contributor-roles/formal-analysis/",
+            "@type": "DefinedTerm",
+            "inDefinedTermSet": "CRT",
+            "name": "Formal Analysis",
+            "termCode": "https://credit.niso.org/contributor-roles/formal-analysis/"
+        },
+        {
+            "@id": "ProcessParameterValue/Data Transformation=Addition",
+            "@type": "PropertyValue",
+            "additionalType": "ProcessParameter",
+            "name": "Data Transformation",
+            "propertyID": "NCIT:C43582"
+        }
+    ]
+}
