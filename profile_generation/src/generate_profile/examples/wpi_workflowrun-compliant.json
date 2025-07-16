@@ -1,0 +1,220 @@
+{
+    "@context": [
+        "https://w3id.org/ro/terms/workflow-run/context"
+    ],
+    "@graph": [
+        {
+            "@type": "CreativeWork",
+            "@id": "ro-crate-metadata.json",
+            "conformsTo": [
+                {
+                    "@id": "https://w3id.org/ro/crate/1.1"
+                },
+                {
+                    "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#arc-wr-workflow-profile"
+                }
+            ],
+            "about": {
+                "@id": "./workflows"
+            }
+        },
+        {
+            "@id": "./workflows",
+            "@type": "Dataset",
+            "conformsTo": [
+                {
+                    "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#workflow-run-profile"
+                },
+                {
+                    "@id": "https://github.com/nfdi4plants/isa-ro-crate-profile/blob/release/profile/isa_ro_crate.md#assay"
+                }
+            ],
+            "additionalType": "Assay",
+            "identifier": "ColumnAddition",
+            "hasPart": [
+                {
+                    "@id": "workflows/FixedScript/workflow.cwl"
+                },
+                {
+                    "@id": "./assays/measurement1/dataset/table.csv"
+                },
+                {
+                    "@id": "runs/FixedScriptResult/result.csv"
+                }
+            ],
+            "mainEntity": {
+                "@id": "workflows/FixedScript/workflow.cwl"
+            }
+        },
+        {
+            "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#workflow-run-profile",
+            "@type": "CreativeWork",
+            "name": "ARC Workflow Run RO-Crate"
+        },
+        {
+            "@id": "workflows/FixedScript/workflow.cwl",
+            "@type": [
+                "File",
+                "SoftwareSourceCode",
+                "ComputationalWorkflow",
+                "LabProtocol"
+            ],
+            "conformsTo": {
+                "@id": "https://github.com/nfdi4plants/arc-wr-ro-crate-profile/blob/resolve_workflowRun/profile/arc_wr_ro_crate.md#computationalworkflow--softwaresourcecode--text--labprotocol"
+            },
+            "name": "Column Addition",
+            "programmingLanguage": [
+                {
+                    "@id": "#FSharp"
+                },
+                {
+                    "@id": "https://w3id.org/workflowhub/workflow-ro-crate#cwl"
+                }
+            ],
+            "creator": {
+                "@id": "https://orcid.org/0000-0003-3925-6778"
+            },
+            "dateCreated": "2024-02-05",
+            "license": "https://opensource.org/license/osl-3-0-php",
+            "sdPublisher": {
+                "@id": "#datahub"
+            },
+            "url": "https://git.nfdi4plants.org/muehlhaus/ArcPrototype/-/blob/main/workflows/FixedScript/workflow.cwl?ref_type=heads",
+            "version": "0.1",
+            "input": [
+                {
+                    "@id": "intensity_table"
+                },
+                {
+                    "@id": "file_name"
+                }
+            ],
+            "output": [
+                {
+                    "@id": "summed_intensities"
+                }
+            ]
+        },
+        {
+            "@id": "#FSharp",
+            "@type": "ProgrammingLanguage",
+            "name": "F Sharp",
+            "alternateName": "F#",
+            "url": "https://dotnet.microsoft.com/en-us/languages/fsharp",
+            "version": "6.0",
+            "additionalType": "File"
+        },
+        {
+            "@id": "https://w3id.org/workflowhub/workflow-ro-crate#cwl",
+            "@type": "computerlanguage",
+            "name": "common workflow language",
+            "alternatename": "cwl",
+            "identifier": "https://w3id.org/cwl/v1.2/",
+            "url": "https://www.commonwl.org/"
+        },
+        {
+            "@id": "https://orcid.org/0000-0003-3925-6778",
+            "@type": "Person",
+            "givenName": "Timo",
+            "familyName": "Mühlhaus"
+        },
+        {
+            "@id": "#datahub",
+            "@type": "Organization",
+            "name": "DataPlant DataHub",
+            "url": "https://git.nfdi4plants.org/explore"
+        },
+        {
+            "@id": "intensity_table",
+            "@type": "FormalParameter",
+            "conformsTo": {
+                "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/"
+            },
+            "format": {
+                "@id": "http://edamontology.org/format_3752"
+            },
+            "additionalType": "File"
+        },
+        {
+            "@id": "file_name",
+            "@type": "FormalParameter",
+            "conformsTo": {
+                "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/"
+            },
+            "additionalType": "Text"
+        },
+        {
+            "@id": "summed_intensities",
+            "@type": "FormalParameter",
+            "conformsTo": {
+                "@id": "https://bioschemas.org/profiles/FormalParameter/0.1-DRAFT-2020_07_21/"
+            },
+            "encodingFormat": {
+                "@id": "http://edamontology.org/format_3475"
+            },
+            "additionalType": "File"
+        },
+        {
+            "@id": "http://edamontology.org/format_3752",
+            "@type": "Thing",
+            "name": "Comma-separated values"
+        },
+        {
+            "@id": "http://edamontology.org/format_3475",
+            "@type": "Thing",
+            "name": "Tab-separated values"
+        },
+        {
+            "@id": "#wfrun-fixed-script",
+            "@type": [
+                "CreateAction",
+                "LabProcess"
+            ],
+            "instrument": {
+                "@id": "workflows/FixedScript/workflow.cwl"
+            },
+            "name": "Column Addition with fixed script",
+            "agent": {
+                "@id": "https://orcid.org/0000-0003-1512-9504"
+            },
+            "object": [
+                {
+                    "@id": "./assays/measurement1/dataset/table.csv"
+                },
+                {
+                    "@id": "file_name_filled"
+                }
+            ],
+            "result": {
+                "@id": "./runs/fsResult1/result.csv"
+            }
+        },
+        {
+            "@id": "https://orcid.org/0000-0003-1512-9504",
+            "@type": "Person",
+            "givenName": "Caroline",
+            "familyName": "Ott"
+        },
+        {
+            "@id": "./assays/measurement1/dataset/table.csv",
+            "@type": "File",
+            "exampleOfWork": {
+                "@id": "intensity_table"
+            }
+        },
+        {
+            "@id": "#file_name_filled",
+            "@type": "PropertyValue",
+            "exampleOfWork": {
+                "@id": "file_name"
+            }
+        },
+        {
+            "@id": "./runs/fsResult1/result.csv",
+            "@type": "File",
+            "exampleOfWork": {
+                "@id": "summed_intensities"
+            }
+        }
+    ]
+}
