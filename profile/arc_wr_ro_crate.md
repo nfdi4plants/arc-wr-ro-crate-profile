@@ -1,6 +1,6 @@
 # ARC Workflow Run RO-Crate Profiles
 
-* Version: 1.0.0-draft.1
+* Version: 1.0.0-draft.2
 * Permalink: https://doi.org/10.5281/zenodo.13734332
 * Authors
   * Caroline Ott - https://orcid.org/0000-0003-1512-9504
@@ -17,6 +17,8 @@
     * [FormalParameter](#formalparameter)
     * [PropertyValue](#propertyvalue)
       * [PropertyValue - Workflow Input](#propertyvalue---workflow-input)
+      * [PropertyValue - Workflow Input](#propertyvalue---prefix)
+      * [PropertyValue - Workflow Input](#propertyvalue---position)
     * [SoftwareApplication](#softwareapplication)
   * [Compatibility with underlying profiles](#compatibility-with-underlying-profiles)
   * [Workflow Run Crate configuration in ARCs](#workflow-run-crate-configuration-in-arcs)
@@ -200,6 +202,7 @@ They provide prospective provenance, while their realized values are described b
 | **`workExample`** | Optional | ONE | [IRI](https://datatracker.ietf.org/doc/html/rfc3987#section-2) | Identifier of the data entity or PropertyValue instance that realizes this parameter. The data entity or PropertyValue instance SHOULD refer to this parameter via exampleOfWork. | https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate/ |
 | **`defaultValue`** | Optional | ONE | [schema.org/Text](https://schema.org/Text)<br>OR [schema.org/Thing](https://schema.org/Thing) | The default value of the input. For literals, this is a literal value. For objects, it is an ID reference. | https://bioschemas.org/types/FormalParameter/1.0-RELEASE |
 | **`valueRequired`** | Optional | ONE | [schema.org/Boolean](https://schema.org/Boolean) | For an input, whether a value must be specified for the workflow to be run. Default is false. | https://bioschemas.org/types/FormalParameter/1.0-RELEASE |
+| **`identifier`** | Optional | MANY | [schema.org/PropertyValue](https://schema.org/PropertyValue) | A description for the prefix or position of a FormalParameter as an input. MUST be [PropertyValue - Prefix](#propertyvalue-prefix) or [PropertyValue - Position](#propertyvalue-position) | https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate |
 
 ### PropertyValue
 
@@ -219,6 +222,34 @@ A `PropertyValue` that is used as an `object` in a [Workflow Invocation](#workfl
 | **`value`** | Required | ONE | [schema.org/Boolean](https://schema.org/Boolean)<br>OR [schema.org/Number](https://schema.org/Number)<br>OR [schema.org/StructuredValue](https://schema.org/StructuredValue)<br>OR [schema.org/Text](https://schema.org/Text) | The value of a QuantitativeValue (including Observation) or property value node. For QuantitativeValue and MonetaryAmount, the recommended type for values is 'Number'. For PropertyValue, it can be 'Text', 'Number', 'Boolean', or 'StructuredValue'. Use values from 0123456789 [Add to Citavi project by ISBN] (Unicode 'DIGIT ZERO' (U+0030) to 'DIGIT NINE' (U+0039)) rather than superficially similar Unicode symbols. Use '.' (Unicode 'FULL STOP' (U+002E)) rather than ',' to indicate a decimal point. Avoid using these symbols as a readability separator. | https://schema.org/PropertyValue |
 | <h4>Recommended Properties</h4><br> | | | | | |
 | **`name`** | Recommended | ONE | [schema.org/Text](https://schema.org/Text) | The name of the item. | https://schema.org/Thing |
+| <h4>Optional Properties</h4><br> | | | | | |
+
+#### PropertyValue - Prefix
+
+A `PropertyValue` that is used to describe the prefix of an `input` of a [Workflow Protocol](#workflow-protocol) described by a [FormalParameter](#formalparameter).
+
+| Property | Required | Cardinality | Expected Type | Description | Source Profile |
+|----------|----------|-------------|---------------|-------------|----------------|
+| <h4>Required Properties</h4><br> | | | | | |
+| **`@id`** | Required | ONE | [IRI](https://datatracker.ietf.org/doc/html/rfc3987#section-2) | Used to distinguish the resource being described in JSON-LD. For other serialisations use the appropriate approach. | https://schema.org/PropertyValue |
+| **`@type`** | Required | MANY | [schema.org/PropertyValue](https://schema.org/PropertyValue) | Schema.org class for the resource declared using JSON-LD syntax. For other serialisations please use the appropriate mechanism. While it is permissible to provide multiple types, it is preferred to use a single type. | https://schema.org/PropertyValue |
+| **`additionalType`** | Required | ONE | [schema.org/Text](https://schema.org/Text)<br>OR [schema.org/URL](https://schema.org/URL) | MUST be 'Prefix' | **THIS PROFILE** |
+| **`value`** | Required | ONE | [schema.org/Text](https://schema.org/Text) | The CLI prefix of an input from a [Workflow Protocol profile](#workflow-protocol) described by a [FormalParameter](#formalparameter) | **THIS PROFILE** |
+| <h4>Recommended Properties</h4><br> | | | | | |
+| <h4>Optional Properties</h4><br> | | | | | |
+
+#### PropertyValue - Position
+
+A `PropertyValue` that is used to describe the position of an `input` of a [Workflow Protocol](#workflow-protocol) described by a [FormalParameter](#formalparameter).
+
+| Property | Required | Cardinality | Expected Type | Description | Source Profile |
+|----------|----------|-------------|---------------|-------------|----------------|
+| <h4>Required Properties</h4><br> | | | | | |
+| **`@id`** | Required | ONE | [IRI](https://datatracker.ietf.org/doc/html/rfc3987#section-2) | Used to distinguish the resource being described in JSON-LD. For other serialisations use the appropriate approach. | https://schema.org/PropertyValue |
+| **`@type`** | Required | MANY | [schema.org/PropertyValue](https://schema.org/PropertyValue) | Schema.org class for the resource declared using JSON-LD syntax. For other serialisations please use the appropriate mechanism. While it is permissible to provide multiple types, it is preferred to use a single type. | https://schema.org/PropertyValue |
+| **`additionalType`** | Required | ONE | [schema.org/Text](https://schema.org/Text)<br>OR [schema.org/URL](https://schema.org/URL) | MUST be 'Position' | **THIS PROFILE** |
+| **`value`** | Required | ONE | [schema.org/Number](https://schema.org/Number) | The position of an input from a [Workflow Protocol profile](#workflow-protocol) described by a [FormalParameter](#formalparameter) | **THIS PROFILE** |
+| <h4>Recommended Properties</h4><br> | | | | | |
 | <h4>Optional Properties</h4><br> | | | | | |
 
 ### SoftwareApplication

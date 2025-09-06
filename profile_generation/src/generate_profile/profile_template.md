@@ -17,6 +17,8 @@
     * [FormalParameter](#formalparameter)
     * [PropertyValue](#propertyvalue)
       * [PropertyValue - Workflow Input](#propertyvalue---workflow-input)
+      * [PropertyValue - Workflow Input](#propertyvalue---prefix)
+      * [PropertyValue - Workflow Input](#propertyvalue---position)
     * [SoftwareApplication](#softwareapplication)
   * [Compatibility with underlying profiles](#compatibility-with-underlying-profiles)
   * [Workflow Run Crate configuration in ARCs](#workflow-run-crate-configuration-in-arcs)
@@ -135,6 +137,18 @@ Where possible, PropertyValues representing `parameterValue`s in process sequenc
 A `PropertyValue` that is used as an `object` in a [Workflow Invocation](#workflow-invocation) to describe the realized value for an `input` of a [Workflow Protocol](#workflow-protocol). Distinguishes this `PropertyValue` from process sequence related `object`s by linking it to the realized `input` via the `exampleOfWork` property.
 
 [[WORKFLOW_INPUT_PROFILE_REQUIREMENTS]]
+
+#### PropertyValue - Prefix
+
+A `PropertyValue` that is used to describe the prefix of an `input` of a [Workflow Protocol](#workflow-protocol) described by a [FormalParameter](#formalparameter).
+
+[[PREFIX_PROFILE_REQUIREMENTS]]
+
+#### PropertyValue - Position
+
+A `PropertyValue` that is used to describe the position of an `input` of a [Workflow Protocol](#workflow-protocol) described by a [FormalParameter](#formalparameter).
+
+[[POSITION_PROFILE_REQUIREMENTS]]
 
 ### SoftwareApplication
 

@@ -47,6 +47,9 @@ let optionalProfileProperties = [
     ProfileRow.create("valueRequired",      Optional, ONE,          [   (Schema.Boolean, END)], 
                                                                     "For an input, whether a value must be specified for the workflow to be run. Default is false.", 
                                                                     "https://bioschemas.org/types/FormalParameter/1.0-RELEASE")
+    ProfileRow.create("identifier",        Optional, MANY,          [   (Schema.PropertyValue, END)], 
+                                                                    "A description for the prefix or position of a FormalParameter as an input. MUST be [PropertyValue - Prefix](#propertyvalue-prefix) or [PropertyValue - Position](#propertyvalue-position)", 
+                                                                    "https://www.researchobject.org/workflow-run-crate/profiles/workflow_run_crate")
 ]
 
 open System.IO
