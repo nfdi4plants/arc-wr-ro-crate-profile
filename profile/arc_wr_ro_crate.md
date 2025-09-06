@@ -233,7 +233,7 @@ A `PropertyValue` that is used to describe the prefix of an `input` of a [Workfl
 | <h4>Required Properties</h4><br> | | | | | |
 | **`@id`** | Required | ONE | [IRI](https://datatracker.ietf.org/doc/html/rfc3987#section-2) | Used to distinguish the resource being described in JSON-LD. For other serialisations use the appropriate approach. | https://schema.org/PropertyValue |
 | **`@type`** | Required | MANY | [schema.org/PropertyValue](https://schema.org/PropertyValue) | Schema.org class for the resource declared using JSON-LD syntax. For other serialisations please use the appropriate mechanism. While it is permissible to provide multiple types, it is preferred to use a single type. | https://schema.org/PropertyValue |
-| **`additionalType`** | Required | ONE | [schema.org/Text](https://schema.org/Text)<br>OR [schema.org/URL](https://schema.org/URL) | MUST be 'Prefix' | **THIS PROFILE** |
+| **`name`** | Required | ONE | [schema.org/Text](https://schema.org/Text) | MUST be 'Prefix' | **THIS PROFILE** |
 | **`value`** | Required | ONE | [schema.org/Text](https://schema.org/Text) | The CLI prefix of an input from a [Workflow Protocol profile](#workflow-protocol) described by a [FormalParameter](#formalparameter) | **THIS PROFILE** |
 | <h4>Recommended Properties</h4><br> | | | | | |
 | <h4>Optional Properties</h4><br> | | | | | |
@@ -247,7 +247,7 @@ A `PropertyValue` that is used to describe the position of an `input` of a [Work
 | <h4>Required Properties</h4><br> | | | | | |
 | **`@id`** | Required | ONE | [IRI](https://datatracker.ietf.org/doc/html/rfc3987#section-2) | Used to distinguish the resource being described in JSON-LD. For other serialisations use the appropriate approach. | https://schema.org/PropertyValue |
 | **`@type`** | Required | MANY | [schema.org/PropertyValue](https://schema.org/PropertyValue) | Schema.org class for the resource declared using JSON-LD syntax. For other serialisations please use the appropriate mechanism. While it is permissible to provide multiple types, it is preferred to use a single type. | https://schema.org/PropertyValue |
-| **`additionalType`** | Required | ONE | [schema.org/Text](https://schema.org/Text)<br>OR [schema.org/URL](https://schema.org/URL) | MUST be 'Position' | **THIS PROFILE** |
+| **`name`** | Required | ONE | [schema.org/Text](https://schema.org/Text) | MUST be 'Position' | **THIS PROFILE** |
 | **`value`** | Required | ONE | [schema.org/Number](https://schema.org/Number) | The position of an input from a [Workflow Protocol profile](#workflow-protocol) described by a [FormalParameter](#formalparameter) | **THIS PROFILE** |
 | <h4>Recommended Properties</h4><br> | | | | | |
 | <h4>Optional Properties</h4><br> | | | | | |

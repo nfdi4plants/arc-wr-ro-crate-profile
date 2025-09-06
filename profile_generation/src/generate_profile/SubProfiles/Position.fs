@@ -8,8 +8,7 @@ let requiredProfileProperties = [
     ProfileRow.create("@type",              Required, MANY,         [   (Schema.PropertyValue, END)], 
                                                                     "Schema.org class for the resource declared using JSON-LD syntax. For other serialisations please use the appropriate mechanism. While it is permissible to provide multiple types, it is preferred to use a single type.", 
                                                                     "https://schema.org/PropertyValue")
-    ProfileRow.create("additionalType",     Required, ONE,          [    (Schema.Text, OR)
-                                                                         (Schema.URL, END)
+    ProfileRow.create("name",     Required, ONE,                    [    (Schema.Text, END)
                                                                     ], 
                                                                     "MUST be 'Position'", 
                                                                     "**THIS PROFILE**")
