@@ -8,6 +8,8 @@ let [<Literal>] WORKFLOW_INVOCATION_REQUIREMENTS = """[[WORKFLOW_INVOCATION_REQU
 let [<Literal>] FORMAL_PARAMETER_PROFILE_REQUIREMENTS = """[[FORMAL_PARAMETER_PROFILE_REQUIREMENTS]]"""
 let [<Literal>] PROPERTY_VALUE_PROFILE_REQUIREMENTS = """[[PROPERTY_VALUE_PROFILE_REQUIREMENTS]]"""
 let [<Literal>] WORKFLOW_INPUT_PROFILE_REQUIREMENTS = """[[WORKFLOW_INPUT_PROFILE_REQUIREMENTS]]"""
+let [<Literal>] PREFIX_PROFILE_REQUIREMENTS = """[[PREFIX_PROFILE_REQUIREMENTS]]"""
+let [<Literal>] POSITION_PROFILE_REQUIREMENTS = """[[POSITION_PROFILE_REQUIREMENTS]]"""
 let [<Literal>] SOFTWARE_APPLICATION_PROFILE_REQUIREMENTS = """[[SOFTWARE_APPLICATION_PROFILE_REQUIREMENTS]]"""
 let [<Literal>] WP_MINIMAL_JSON = """[[WP_MINIMAL_JSON]]"""
 let [<Literal>] WPI_MINIMAL_JSON = """[[WPI_MINIMAL_JSON]]"""
@@ -63,6 +65,8 @@ let main argv =
             .Replace(WORKFLOW_INVOCATION_REQUIREMENTS, Domain.generateProfileTable true WorkflowInvocation.profile)
             .Replace(FORMAL_PARAMETER_PROFILE_REQUIREMENTS, Domain.generateProfileTable true FormalParameter.profile)
             .Replace(WORKFLOW_INPUT_PROFILE_REQUIREMENTS, Domain.generateProfileTable true WorkflowInput.profile)
+            .Replace(PREFIX_PROFILE_REQUIREMENTS, Domain.generateProfileTable true Prefix.profile)
+            .Replace(POSITION_PROFILE_REQUIREMENTS, Domain.generateProfileTable true Position.profile)
             .Replace(SOFTWARE_APPLICATION_PROFILE_REQUIREMENTS, Domain.generateProfileTable true SoftwareApplication.profile)
             // Replacement by example JSON files
             .Replace(WP_MINIMAL_JSON, EmbeddedResource.load("examples.wp_minimal.json"))

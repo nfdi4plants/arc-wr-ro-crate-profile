@@ -21,6 +21,8 @@
     <Compile Include="SubProfiles\WorkflowInvocation.fs" />
     <Compile Include="SubProfiles\FormalParameter.fs" />
     <Compile Include="SubProfiles\WorkflowInput.fs" />
+    <Compile Include="SubProfiles\Prefix.fs" />
+    <Compile Include="SubProfiles\Position.fs" />
     <Compile Include="SubProfiles\SoftwareApplication.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
