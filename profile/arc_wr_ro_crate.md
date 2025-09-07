@@ -1,6 +1,6 @@
 # ARC Workflow Run RO-Crate Profiles
 
-* Version: 1.0.0-draft.2
+* Version: 1.0.0
 * Permalink: https://doi.org/10.5281/zenodo.13734332
 * Authors
   * Caroline Ott - https://orcid.org/0000-0003-1512-9504
