@@ -21,6 +21,7 @@ This is the mapping between the Workflow and Run portions of the ARC Scaffold an
 |Run Measurement Type|variableMeasured||
 |[Comments](https://github.com/nfdi4plants/ARC-specification/blob/release/ISA-XLSX.md#attention)|comment||
 |Run File Name|url||
+|-|hasPart|From the ARC file system|
 
 ----------
 
@@ -34,7 +35,9 @@ This is the mapping between the Workflow and Run portions of the ARC Scaffold an
 |Workflow Identifier|identifier||
 |Workflow Title|name||
 |Workflow Description|description||
-|[WORKFLOW CONTACTS](https://github.com/nfdi4plants/ARC-specification/blob/release/ISA-XLSX.md#workflow-contacts)|creators|People objects defined in the WORKFLOW CONTACTS section of the isa.workflow.xlsx file|
+|-|mainEntity|The `workflow.cwl` file|
+|[WORKFLOW CONTACTS](https://github.com/nfdi4plants/ARC-specification/blob/release/ISA-XLSX.md#workflow-contacts)|creator|People objects defined in the WORKFLOW CONTACTS section of the isa.workflow.xlsx file|
+|-|hasPart|From the ARC file system|
 |comments|comment||
 ----------
 
@@ -54,7 +57,11 @@ This is the mapping between the Workflow and Run portions of the ARC Scaffold an
 |Components|computationalTool|Component entities from the Annotation Tables in the `isa.workflow.xlsx`.|
 |Workflow URI|url||
 |Workflow Version |version||
-
+|Workflow Type|programmingLanguage||
+|-|dateCreated|From the current time during export|
+|-|license| From the `LICENSE` file in the ARC root|
+|[WORKFLOW CONTACTS](https://github.com/nfdi4plants/ARC-specification/blob/release/ISA-XLSX.md#workflow-contacts)|creators|People objects defined in the WORKFLOW CONTACTS section of the isa.workflow.xlsx file|
+|-|sdPublisher|Sets DataPlant as publisher|
 ---------------
 
 ## Workflow Invocation
